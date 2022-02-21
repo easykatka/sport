@@ -13,7 +13,10 @@ import next from 'next';
 	controllers: [AppController],
 	providers: [AppService],
 	imports: [
-		RenderModule.forRootAsync(next({ dev: true }), { viewsDir: null }),
+		RenderModule.forRootAsync(
+			next({ dev: process.env.NODE_ENV === 'development' }),
+			{ viewsDir: null }
+		),
 		ConfigModule.forRoot({
 			envFilePath: `.${process.env.NODE_ENV}.env`
 		}),
