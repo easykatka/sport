@@ -7,10 +7,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getPostgresConfig } from './configs/posrgres-config';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
+import { RenderModule } from 'nest-next';
+import next from 'next';
 @Module({
 	controllers: [AppController],
 	providers: [AppService],
 	imports: [
+		RenderModule.forRootAsync(next({ dev: true }), { viewsDir: null }),
 		ConfigModule.forRoot({
 			envFilePath: `.${process.env.NODE_ENV}.env`
 		}),
