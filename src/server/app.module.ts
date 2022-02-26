@@ -9,6 +9,7 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
 import next from 'next';
+console.log(process.env.NODE_ENV)
 @Module({
 	controllers: [AppController],
 	providers: [AppService],

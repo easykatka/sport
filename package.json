@@ -12,7 +12,7 @@
 		"build:nest": "nest build --path ./tsconfig.server.json",
 		"start": "node ./dist/server/main.js",
 		"start:next": "next dev",
-		"start:dev": "nest start --path ./tsconfig.server.json --watch",
+		"start:dev": "cross-env NODE_ENV=development nest start --path ./tsconfig.server.json --watch",
 		"start:debug": "nest start --path ./tsconfig.server.json --debug --watch",
 		"start:prod": "node dist/main"
 	},
