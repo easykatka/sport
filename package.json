@@ -6,6 +6,7 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
+		"prettier": "prettier  --write  src/**/*.ts",
 		"prebuild": "rimraf dist",
 		"build": "npx build:next && npx build:nest",
 		"build:next": "next build",
