@@ -2,7 +2,7 @@ const filterUnserializable = (
 	obj: Record<string, unknown>,
 	filteredValues: unknown[] = [undefined],
 ) => {
-	Object.keys(obj).forEach(key => {
+	Object.keys(obj).forEach((key) => {
 		if (filteredValues.includes(obj[key])) {
 			delete obj[key];
 			return;
