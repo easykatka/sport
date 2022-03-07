@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { UserModel } from './user.model';
 
 @ApiTags('Пользователи')
-@Controller('user')
+@Controller('api/user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
     @ApiOperation({ summary: 'Создание пользователя' })
