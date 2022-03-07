@@ -5,19 +5,19 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ParamsInterceptor implements NestInterceptor {
-	intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-		const request = context.switchToHttp().getRequest() as Request;
+    intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+        const request = context.switchToHttp().getRequest() as Request;
 
-		/* после выполнения обработчика запроса подложим
+        /* после выполнения обработчика запроса подложим
 				возвращаемому значению параметры запроса */
-		return next.handle().pipe(
-			map((data) => {
-				return {
-					...request.query,
-					...request.params,
-					...data,
-				};
-			})
-		);
-	}
+        return next.handle().pipe(
+            map((data) => {
+                return {
+                    ...request.query,
+                    ...request.params,
+                    ...data,
+                };
+            })
+        );
+    }
 }

@@ -5,12 +5,12 @@ import { CONFIG } from '../config';
 
 @Injectable()
 export class ConfigInterceptor implements NestInterceptor {
-	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-		return next.handle().pipe(
-			map((data) => ({
-				...data,
-				config: CONFIG,
-			}))
-		);
-	}
+    intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+        return next.handle().pipe(
+            map((data) => ({
+                ...data,
+                config: CONFIG,
+            }))
+        );
+    }
 }

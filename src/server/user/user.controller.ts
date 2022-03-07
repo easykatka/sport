@@ -7,19 +7,18 @@ import { UserModel } from './user.model';
 @ApiTags('Пользователи')
 @Controller('user')
 export class UserController {
-	constructor(private readonly userService: UserService) { }
-	@ApiOperation({ summary: 'Создание пользователя' })
-	@ApiResponse({ status: 200, type: UserModel })
+    constructor(private readonly userService: UserService) {}
+    @ApiOperation({ summary: 'Создание пользователя' })
+    @ApiResponse({ status: 200, type: UserModel })
+    @Post()
+    create(@Body() dto: CreateUserDto) {
+        return this.userService.createUser(dto);
+    }
 
-	@Post()
-	create(@Body() dto: CreateUserDto) {
-		return this.userService.createUser(dto);
-	}
-
-	@ApiOperation({ summary: 'Получение пользователей' })
-	@ApiResponse({ status: 200, type: [UserModel] })
-	@Get()
-	getAllUsers() {
-		return this.userService.getAllUsers();
-	}
+    @ApiOperation({ summary: 'Получение пользователей' })
+    @ApiResponse({ status: 200, type: [UserModel] })
+    @Get()
+    getAllUsers() {
+        return this.userService.getAllUsers();
+    }
 }

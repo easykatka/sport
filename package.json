@@ -13,7 +13,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "node dist/server/main.js",
 		"start:next": "next dev",
-		"start:dev": "NODE_ENV=development nest build --webpack --webpackPath webpack-hmr.config.js --watch --path tsconfig.server.json",
+		"start:dev": "cross-env NODE_ENV=development nest build --webpack --webpackPath webpack-hmr.config.js --watch --path tsconfig.server.json",
 		"start:debug": "nest start --path ./tsconfig.server.json --debug --watch",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.tsx?\" --fix"
 	},

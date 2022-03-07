@@ -6,18 +6,19 @@ import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class UserService {
-	constructor(@InjectModel(UserModel) private readonly userModel: typeof UserModel,
-		private readonly roleService: RoleService
-	) { }
+    constructor(
+        @InjectModel(UserModel) private readonly userModel: typeof UserModel,
+        private readonly roleService: RoleService
+    ) {}
 
-	async createUser(dto: CreateUserDto) {
-		const user = await this.userModel.create(dto);
-		const defaultRole = await this.roleService.getRoleByName('USER');
-		await user.$set('roles', [defaultRole.id])
-		return user;
-	}
+    async createUser(dto: CreateUserDto) {
+        const user = await this.userModel.create(dto);
+        const defaultRole = await this.roleService.getRoleByName('USER');
+        await user.$set('roles', [defaultRole.id]);
+        return user;
+    }
 
-	async getAllUsers() {
-		return this.userModel.findAll({ include: ['roles'] });
-	}
+    async getAllUsers() {
+        return this.userModel.findAll({ include: ['roles'] });
+    }
 }

@@ -3,20 +3,18 @@ import { ApiTags } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 
-
 @ApiTags('Роли')
 @Controller('role')
 export class RoleController {
-	constructor(private readonly roleService: RoleService) { }
+    constructor(private readonly roleService: RoleService) {}
 
-	@Post()
-	create(@Body() dto: CreateRoleDto) {
-		return this.roleService.createRole(dto);
-	};
+    @Post()
+    create(@Body() dto: CreateRoleDto) {
+        return this.roleService.createRole(dto);
+    }
 
-	@Get('/:name')
-	getByName(@Param('name') name: string) {
-		return this.roleService.getRoleByName(name)
-	}
+    @Get('/:name')
+    getByName(@Param('name') name: string) {
+        return this.roleService.getRoleByName(name);
+    }
 }
-

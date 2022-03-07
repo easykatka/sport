@@ -1,4 +1,4 @@
 export type Config = {
-	features: Record<string, boolean>;
-	basePath: string;
+    features: Record<string, boolean>;
+    basePath: string;
 };

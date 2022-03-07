@@ -6,13 +6,13 @@ import { CreateRoleDto } from './dto/create-role.dto';
 
 @Injectable()
 export class RoleService {
-	constructor(@InjectModel(RoleModel) private readonly roleModel: typeof RoleModel) { }
+    constructor(@InjectModel(RoleModel) private readonly roleModel: typeof RoleModel) {}
 
-	async createRole(CreateRoleDto) {
-		return await this.roleModel.create(CreateRoleDto);
-	}
+    async createRole(CreateRoleDto) {
+        return await this.roleModel.create(CreateRoleDto);
+    }
 
-	async getRoleByName(name: string) {
-		return await this.roleModel.findOne({ where: { name } })
-	}
+    async getRoleByName(name: string) {
+        return await this.roleModel.findOne({ where: { name } });
+    }
 }
