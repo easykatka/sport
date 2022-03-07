@@ -39,7 +39,7 @@ export class AppModule {
 			providers: [AppService],
 			imports: [renderModule,
 				ConfigModule.forRoot({
-					envFilePath: `src/shared/constants/.${NODE_ENV}.env`,
+					envFilePath: `.${NODE_ENV}.env`,
 				}),
 				SequelizeModule.forRootAsync({
 					imports: [ConfigModule],
