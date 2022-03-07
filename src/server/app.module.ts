@@ -11,23 +11,23 @@ import { RenderModule } from 'nest-next';
 import next from 'next';
 console.log(process.env.NODE_ENV);
 @Module({
-  controllers: [AppController],
-  providers: [AppService],
-  imports: [
-    RenderModule.forRootAsync(next({ dev: process.env.NODE_ENV === 'development' }), {
-      viewsDir: null,
-    }),
-    ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`,
-    }),
-    SequelizeModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getPostgresConfig,
-    }),
-    UserModule,
-    RoleModule,
-    AuthModule,
-  ],
+	controllers: [AppController],
+	providers: [AppService],
+	imports: [
+		RenderModule.forRootAsync(next({ dev: process.env.NODE_ENV === 'development' }), {
+			viewsDir: null,
+		}),
+		ConfigModule.forRoot({
+			envFilePath: `.${process.env.NODE_ENV}.env`,
+		}),
+		SequelizeModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: getPostgresConfig,
+		}),
+		UserModule,
+		RoleModule,
+		AuthModule,
+	],
 })
-export class AppModule {}
+export class AppModule { }

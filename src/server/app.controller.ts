@@ -1,7 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Render, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ParamsInterceptor } from './params.interceptor';
-import { ConfigInterceptor } from './config.interceptor';
+import { ParamsInterceptor } from './interceptors/params.interceptor';
+import { ConfigInterceptor } from './interceptors/config.interceptor';
 
 @Controller()
 export class AppController {
