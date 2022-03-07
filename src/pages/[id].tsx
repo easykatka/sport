@@ -24,7 +24,6 @@ const Blog: FC<TBlogProps> = ({ post = {} }) => {
 
 export const getServerSideProps = buildServerSideProps<TBlogProps, TBlogQuery>(
 	async (ctx) => {
-		console.log(ctx.query)
 		const id = ctx.query.id;
 		const post = await fetch(`/api/blog-posts/${id}`);
 
