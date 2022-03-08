@@ -8,17 +8,24 @@ import { UserModel } from '../models/user.model';
 @Controller('api/user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
-    @ApiOperation({ summary: 'Создание пользователя' })
-    @ApiResponse({ status: 200, type: UserModel })
-    @Post()
-    create(@Body() dto: CreateUserDto) {
-        return this.userService.createUser(dto);
-    }
+    // @ApiOperation({ summary: 'Создание пользователя' })
+    // @ApiResponse({ status: 200, type: UserModel })
+    // @Post()
+    // create(@Body() dto: CreateUserDto) {
+    //     return this.userService.createUser(dto);
+    // }
 
     @ApiOperation({ summary: 'Получение пользователей' })
     @ApiResponse({ status: 200, type: [UserModel] })
     @Get()
     getAllUsers() {
         return this.userService.getAllUsers();
+    }
+
+    @ApiOperation({ summary: 'Получение пользователя' })
+    @ApiResponse({ status: 200, type: UserModel })
+    @Get()
+    findUserByEmail(email:string) {
+        return this.userService.findUser(email);
     }
 }
