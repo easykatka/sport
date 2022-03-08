@@ -1,0 +1,1 @@
+export const ALREADY_REGISTERED_ERROR = 'Роль с таким именем уже существует'
