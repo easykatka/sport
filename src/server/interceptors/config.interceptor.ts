@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CONFIG } from '../config';
+import { APP_CONFIG } from '../configs/app.config';
 
 @Injectable()
 export class ConfigInterceptor implements NestInterceptor {
@@ -9,7 +9,7 @@ export class ConfigInterceptor implements NestInterceptor {
         return next.handle().pipe(
             map((data) => ({
                 ...data,
-                config: CONFIG,
+                config: APP_CONFIG,
             }))
         );
     }

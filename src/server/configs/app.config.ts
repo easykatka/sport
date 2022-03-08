@@ -1,10 +1,10 @@
 import type { Config } from 'src/shared/types/config';
 
-const CONFIG: Config = {
+const APP_CONFIG: Config = {
     features: {
         blog_link: true,
     },
     basePath: process.env.BASE_PATH || '',
 };
 
-export { CONFIG };
+export { APP_CONFIG };

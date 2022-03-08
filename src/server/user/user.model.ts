@@ -10,6 +10,7 @@ interface UserModelCreationAttrs {
 
 @Table({ tableName: 'User' })
 export class UserModel extends Model<UserModel, UserModelCreationAttrs> {
+
     @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
     @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
     id: number;
@@ -20,17 +21,9 @@ export class UserModel extends Model<UserModel, UserModelCreationAttrs> {
 
     @ApiProperty({ example: 'pass123word', description: 'Пароль пользователя' })
     @Column({ type: DataType.STRING, allowNull: false })
-    password: string;
-
-    //* создать отдельную таблицу забанненых
-    @ApiProperty({ example: 'true', description: 'Флаг бана' })
-    @Column({ type: DataType.BOOLEAN, defaultValue: false })
-    banned: boolean;
-
-    @ApiProperty({ example: 'За хулиганство', description: 'Причина бана' })
-    @Column({ type: DataType.STRING, allowNull: true })
-    banReason: string;
+    passwordHash: string;
 
     @BelongsToMany(() => RoleModel, () => UserRoleModel)
     roles: RoleModel[];
+    
 }

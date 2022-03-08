@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getPostgresConfig } from './configs/posrgres-config';
+import { getPostgresConfig } from './configs/posrgres.config';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
