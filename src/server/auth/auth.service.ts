@@ -11,7 +11,7 @@ import { AuthDto } from './dto/auth.tdo';
 export class AuthService {
 	constructor(
 		@InjectModel(UserModel)
-		private readonly userRepository: ModelType<UserModel>,
+		private readonly userRepository: typeof UserModel,
 		private readonly jwtService: JwtService
 
 	) { }

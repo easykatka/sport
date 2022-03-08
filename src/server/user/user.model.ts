@@ -13,7 +13,7 @@ export class UserModel extends Model<UserModel> {
     @Column({ type: DataType.STRING, unique: true, allowNull: false })
     email: string;
 
-    @ApiProperty({ example: 'pass123word', description: 'Пароль пользователя' })
+    @ApiProperty({ example: '1234qwer', description: 'Пароль пользователя' })
     @Column({ type: DataType.STRING, allowNull: false })
     passwordHash: string;
 

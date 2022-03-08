@@ -8,8 +8,8 @@ import { CreateRoleDto } from './dto/create-role.dto';
 export class RoleService {
     constructor(@InjectModel(RoleModel) private readonly roleModel: typeof RoleModel) {}
 
-    async createRole(CreateRoleDto) {
-        return await this.roleModel.create(CreateRoleDto);
+    async createRole(dto:CreateRoleDto) {
+        return await this.roleModel.create(dto);
     }
 
     async getRoleByName(name: string) {
