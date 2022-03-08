@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
 import { compare } from 'bcryptjs';
@@ -10,8 +10,7 @@ import { AuthDto } from './dto/auth.tdo';
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectModel(UserModel)
-        private readonly userService: UserService,
+        private userService: UserService,
         private readonly jwtService: JwtService
     ) {}
 
@@ -37,10 +36,10 @@ export class AuthService {
     async registration(dto: AuthDto) {
         const candidate = await this.userService.getUserByLogin(dto.login);
         if (candidate) {
-            throw new BadRequestException(USER_ALREADY_REGISTERED_ERROR);
+            throw new HttpException(USER_ALREADY_REGISTERED_ERROR,401);
         }
         const user = await this.userService.createUser(dto);
-        return this.generateToken(user)
+        return this.generateToken(user);
     }
 
     generateToken({ login, id, roles }: UserModel) {

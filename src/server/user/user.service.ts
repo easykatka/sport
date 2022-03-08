@@ -13,6 +13,7 @@ export class UserService {
     }
 
     async getUserByLogin(login: string) {
+        console.log('132')
         return this.userRepository.findOne({ where: { login }, include: { all: true } });
     }
 
