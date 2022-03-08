@@ -29,16 +29,12 @@ async function bootstrap() {
 
     await app.listen(PORT, () => console.log('\x1b[32m', `Server is started on port:${PORT} in ${NODE_ENV} mode`));
 
-
     //* замена ошибок у рендер модуля
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
-        console.log(err,'eerr')
+        console.log(err, 'eerr');
         if (err.status !== 404) {
-            res.send({
-                statusCode: err.status,
-                message: err.message
-            })
+            res.send(err.response);
         }
     });
 }
