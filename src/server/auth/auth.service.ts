@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { ModelType } from 'sequelize-typescript';
-import { UserModel } from '../user/user.model';
+import { UserModel } from '../models/user.model';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
 import { AuthDto } from './dto/auth.tdo';
 

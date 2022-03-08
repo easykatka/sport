@@ -24,6 +24,8 @@ async function bootstrap() {
     SwaggerModule.setup('api/docs', app, document);
     
     //* SERVER
+    // app.setGlobalPrefix('api')
+    
     await app.listen(PORT, () => console.log('\x1b[32m', `Server is started on port:${PORT} in ${NODE_ENV} mode`));
 }
 bootstrap();

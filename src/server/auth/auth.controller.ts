@@ -3,7 +3,7 @@ import { AuthDto } from './dto/auth.tdo';
 import { AuthService } from './auth.service';
 import { ALREADY_REGISTERED_ERROR } from './auth.constants';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
 	constructor(private readonly authService: AuthService) { }
 

@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
-import { MODELS } from './models';
+import { MODELS } from '../models/models';
 
 export const getPostgresConfig = async (ConfigService: ConfigService): Promise<SequelizeModuleOptions> => {
     return {
