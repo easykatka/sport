@@ -6,22 +6,24 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJWTConfig } from '../configs/jwt.config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { UserModel } from '../models/user.model';
+import { RoleModel } from '../models/role.model';
+import { UserRoleModel } from '../models/user-role.model';
+import { UserModule } from '../user/user.module';
+
 @Module({
 	controllers: [AuthController],
 	imports: [
-		// TypegooseModule.forFeature([{
-		// 	typegooseClass: UserModel,
-		// 	schemaOptions: {
-		// 		collection: 'User'
-		// 	}
-		// }]), 
+		SequelizeModule.forFeature([UserModel, RoleModel, UserRoleModel]),
 		ConfigModule,
 		JwtModule.registerAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: getJWTConfig
 		}),
-		PassportModule
+		PassportModule,
+		UserModule
 	],
 	providers: [AuthService, JwtStrategy]
 })

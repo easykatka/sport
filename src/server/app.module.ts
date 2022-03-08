@@ -38,7 +38,7 @@ export class AppModule {
             controllers: [AppController],
             providers: [AppService],
             imports: [
-                // renderModule,
+                renderModule,
                 ConfigModule.forRoot({
                     envFilePath: `.${NODE_ENV}.env`,
                 }),
@@ -49,7 +49,7 @@ export class AppModule {
                 }),
                 UserModule,
                 RoleModule,
-                // AuthModule,
+                AuthModule,
             ],
         };
     }

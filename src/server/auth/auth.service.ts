@@ -1,51 +1,52 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/sequelize';
-import { compare, genSalt, hash } from 'bcryptjs';
-import { ModelType } from 'sequelize-typescript';
+import { compare } from 'bcryptjs';
 import { UserModel } from '../models/user.model';
-import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
+import { UserService } from '../user/user.service';
+import { USER_ALREADY_REGISTERED_ERROR, USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './auth.constants';
 import { AuthDto } from './dto/auth.tdo';
 
 @Injectable()
 export class AuthService {
-	constructor(
-		@InjectModel(UserModel)
-		private readonly userRepository: typeof UserModel,
-		private readonly jwtService: JwtService
+    constructor(
+        @InjectModel(UserModel)
+        private readonly userService: UserService,
+        private readonly jwtService: JwtService
+    ) {}
 
-	) { }
+    async validateUser(login: string, password: string): Promise<Pick<UserModel, 'login'>> {
+        const user = await this.userService.getUserByLogin(login);
+        if (!user) {
+            throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
+        }
+        const isCorrectPassword = await compare(password, user.password);
+        if (!isCorrectPassword) {
+            throw new UnauthorizedException(WRONG_PASSWORD_ERROR);
+        }
+        return { login: user.login };
+    }
 
-	async createUser(dto: AuthDto) {
-		const salt = await genSalt(10);
-		const newUser = new this.userRepository({
-			email: dto.login,
-			passwordHash: await hash(dto.password, salt)
-		});
-		return newUser.save();
-	};
+    async login(dto: AuthDto) {
+        const { login } = await this.validateUser(dto.login, dto.password);
+        return {
+            access_token: await this.jwtService.signAsync(login),
+        };
+    }
 
-	async findUser(email: string) {
-		return this.userRepository.findOne({ email }).exec();
-	};
+    async registration(dto: AuthDto) {
+        const candidate = await this.userService.getUserByLogin(dto.login);
+        if (candidate) {
+            throw new BadRequestException(USER_ALREADY_REGISTERED_ERROR);
+        }
+        const user = await this.userService.createUser(dto);
+        return this.generateToken(user)
+    }
 
-	async validateUser(email: string, password: string): Promise<Pick<UserModel, 'email'>> {
-		const user = await this.findUser(email);
-		if (!user) {
-			throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
-		}
-		const isCorrectPassword = await compare(password, user.passwordHash);
-		if (!isCorrectPassword) {
-			throw new UnauthorizedException(WRONG_PASSWORD_ERROR);
-		}
-		return { email: user.email }
-	}
-
-	async login(email: string) {
-		const payload = { email };
-		return {
-			access_token: await this.jwtService.signAsync(payload)
-		}
-	}
-
+    generateToken({ login, id, roles }: UserModel) {
+        const payload = { login, id, roles };
+        return {
+            token: this.jwtService.sign(payload),
+        };
+    }
 }
