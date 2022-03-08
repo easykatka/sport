@@ -1,1 +1,0 @@
-export const AD_VALIDATION_ERROR = 'Неверный формат id';

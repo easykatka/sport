@@ -49,7 +49,7 @@ export class AppModule {
                 }),
                 UserModule,
                 RoleModule,
-                AuthModule,
+                // AuthModule,
             ],
         };
     }
