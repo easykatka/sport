@@ -1,5 +1,6 @@
 import {  Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
 import { compare } from 'bcryptjs';
 import { UserModel } from '../models/user.model';
 import { UserService } from '../user/user.service';
@@ -38,7 +39,7 @@ export class AuthService {
         }
         const isCorrectPassword = await compare(dto.password, user.password);
         if (!isCorrectPassword) {
-            throw new AuthenticationException(WRONG_USER_DATA_ERROR);
+            throw new UnauthorizedException(WRONG_USER_DATA_ERROR);
         }
         return user;
     }
