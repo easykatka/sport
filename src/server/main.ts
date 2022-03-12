@@ -32,7 +32,6 @@ async function bootstrap() {
     //* замена ошибок у рендер модуля
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
-        console.log(err, 'eerr');
         if (err.status !== 404) {
             res.send(err.response);
         }
