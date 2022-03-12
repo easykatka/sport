@@ -1,5 +1,3 @@
-import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 import { FC } from 'react';
 import { BlogPost } from 'src/shared/types/blog-post';
 import { fetch } from 'src/shared/utils/fetch';
@@ -12,7 +10,6 @@ type THomeProps = {
 
 const Home: FC<THomeProps> = ({ blogPosts }) => {
 	const linkFeature = useFeature('blog_link');
-	console.log(linkFeature,'link')
 	return (
 		<div>
 			<h1>Home</h1>

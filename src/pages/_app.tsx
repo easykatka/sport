@@ -22,7 +22,7 @@ class App extends NextApp<AppProps> {
             <>
                 <Head>
                     <title>СОЮЗ любителей мини-футбола</title>
-                    <link rel='icon' href='/favicon.ico' />
+                    <link rel='icon' href='/static/favicon.ico' />
                     <link rel='preconnect' href='https://fonts.googleapis.com' />
                     <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
                     <link
