@@ -18,6 +18,9 @@
 		"lint": "eslint \"{src,apps,libs,test}/**/*.tsx?\" --fix"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^2.8.8",
+		"@material-ui/core": "^4.12.3",
+		"@material-ui/icons": "^4.11.2",
 		"@nestjs/common": "^8.0.0",
 		"@nestjs/config": "^1.2.0",
 		"@nestjs/core": "^8.0.0",
@@ -42,14 +45,17 @@
 		"pg-hstore": "^2.3.4",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"react-hook-form": "^7.27.1",
 		"reflect-metadata": "^0.1.13",
 		"rimraf": "^3.0.2",
 		"rxjs": "^7.2.0",
+		"sass": "^1.49.9",
 		"sequelize": "^6.16.1",
 		"sequelize-typescript": "^2.1.2",
 		"sharp": "^0.30.1",
 		"swagger-ui-express": "^4.3.0",
-		"telegraf": "^4.7.0"
+		"telegraf": "^4.7.0",
+		"yup": "^0.32.11"
 	},
 	"devDependencies": {
 		"@nestjs/cli": "^8.0.0",
