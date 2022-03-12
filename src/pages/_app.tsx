@@ -5,6 +5,8 @@ import { AppData } from 'src/shared/types/app-data';
 import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
 import { theme } from '../client/theme';
 import { Header } from '../client/components/Header';
+import '../client/styles/globals.scss';
+import 'macro-css';
 
 class App extends NextApp<AppProps> {
     appData: AppData;
@@ -30,13 +32,14 @@ class App extends NextApp<AppProps> {
                         rel='stylesheet'
                     ></link>
                 </Head>
-                <AppDataContext.Provider value={this.appData}>
-                    <MuiThemeProvider theme={theme}>
+
+                <MuiThemeProvider theme={theme}>
+                    <AppDataContext.Provider value={this.appData}>
                         <CssBaseline />
                         <Header />
                         <Component {...pageProps} />
-                    </MuiThemeProvider>
-                </AppDataContext.Provider>
+                    </AppDataContext.Provider>
+                </MuiThemeProvider>
             </>
         );
     }

@@ -1,27 +1,21 @@
 import { FC } from 'react';
-import { BlogPost } from 'src/shared/types/blog-post';
 import { fetch } from 'src/shared/utils/fetch';
 import { buildServerSideProps } from 'src/client/ssr/buildServerSideProps';
 import { useFeature } from 'src/client/hooks/useFeatures';
+import { MainLayout } from '../client/layouts/MainLayout';
 
-type THomeProps = {
-	blogPosts: BlogPost[];
+const Home: FC = () => {
+    const linkFeature = useFeature('blog_link');
+    return (
+        <MainLayout>
+            <div>123</div>
+        </MainLayout>
+    );
 };
 
-const Home: FC<THomeProps> = ({ blogPosts }) => {
-	const linkFeature = useFeature('blog_link');
-	return (
-		<div>
-			<h1>Home</h1>
-		
-		</div>
-	);
-};
-
-
-export const getServerSideProps = buildServerSideProps<THomeProps>(async () => {
-	const blogPosts = await fetch('/api/blog-posts');
-	return { blogPosts };
+export const getServerSideProps = buildServerSideProps(async () => {
+    const blogPosts = await fetch('/api/blog-posts');
+    return { blogPosts };
 });
 
 export default Home;
