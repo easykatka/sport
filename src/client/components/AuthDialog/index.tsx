@@ -11,8 +11,14 @@ interface AuthDialogProps {
     visible: boolean;
 }
 
+enum FormValues {
+    MAIN = 'MAIN',
+    LOGIN = 'LOGIN',
+    REGISTER = 'REGISTER',
+}
+
 export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
-    const [formType, setFormType] = React.useState<'main' | 'login' | 'register'>('main');
+    const [formType, setFormType] = React.useState<FormValues>(FormValues.MAIN);
 
     return (
         <Dialog open={visible} onClose={onClose} maxWidth='xs' fullWidth>
@@ -20,20 +26,22 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
                 <DialogContentText>
                     <div className={styles.content}>
                         <Typography className={styles.title}>
-                            {formType === 'main' ? (
-                                'Вход в TJ'
+                            {formType === FormValues.MAIN ? (
+                                'Вход в СОЮЗ'
                             ) : (
-                                <p onClick={() => setFormType('main')} className={styles.backTitle}>
+                                <p onClick={() => setFormType(FormValues.MAIN)} className={styles.backTitle}>
                                     <ArrowBackIcon /> К авторизации
                                 </p>
                             )}
                         </Typography>
-                        {formType === 'main' && <MainForm onOpenLogin={() => setFormType('login')} />}
-                        {formType === 'login' && <LoginForm onOpenRegister={() => setFormType('register')} />}
-                        {formType === 'register' && (
+                        {formType === FormValues.MAIN && <MainForm onOpenLogin={() => setFormType(FormValues.LOGIN)} />}
+                        {formType === FormValues.LOGIN && (
+                            <LoginForm onOpenRegister={() => setFormType(FormValues.REGISTER)} />
+                        )}
+                        {formType === FormValues.REGISTER && (
                             <RegisterForm
-                                onOpenRegister={() => setFormType('register')}
-                                onOpenLogin={() => setFormType('login')}
+                                onOpenRegister={() => setFormType(FormValues.REGISTER)}
+                                onOpenLogin={() => setFormType(FormValues.LOGIN)}
                             />
                         )}
                     </div>
