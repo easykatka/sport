@@ -31,10 +31,11 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin 
                 <FormField name='email' label='почта' />
                 <FormField name='password' label='пароль' />
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className='d-flex align-center justify-between'>
+                    <div className='d-flex align-center justify-center'>
                         <Button
                             color='primary'
                             variant='contained'
+                            size='small'
                             type='submit'
                             disabled={!form.formState.isValid}
                             onClick={onOpenRegister}

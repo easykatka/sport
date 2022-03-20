@@ -20,7 +20,7 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField name='login' label='почта' />
                     <FormField name='password' label='пароль' />
-                    <div className='d-flex align-center justify-between flex-column'>
+                    <div className='d-flex align-center justify-between flex-column fullWidth'>
                         <div>
                             <Button className='mb-15' variant='contained' fullWidth>
                                 <Image src='/static/img/vk.svg' width='24' height='24' /> ВКонтакте
@@ -29,12 +29,20 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                                 <Image src='/static/img/google.svg' width='24' height='24' /> Google
                             </Button>
                         </div>
-                        <Button color='primary' variant='contained' type='submit' disabled={!form.formState.isValid}>
+                        <div>                        <Button
+                            color='primary'
+                            variant='contained'
+                            type='submit'
+                            size='small'
+                            disabled={!form.formState.isValid}
+                        >
                             Войти
                         </Button>
-                        <Button color='primary' variant='text' className='ml-10' onClick={onOpenRegister}>
+                        <Button color='primary' variant='text' className='ml-10' size='small' onClick={onOpenRegister}>
                             Регистрация
                         </Button>
+                        </div>
+
                     </div>
                 </form>
             </FormProvider>

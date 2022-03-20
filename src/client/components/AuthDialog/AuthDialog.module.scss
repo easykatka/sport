@@ -1,5 +1,5 @@
 .content {
-  width: 70%;
+  width: 60%;
   margin: 30px auto;
 
   button {
@@ -15,10 +15,11 @@
 }
 
 .title {
-  font-size: 18px;
+  display: block;
   color: black !important;
   margin-bottom: 25px !important;
   font-weight: 500 !important;
+  text-align: center;
 }
 
 .backTitle {
