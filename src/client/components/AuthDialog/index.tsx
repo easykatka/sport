@@ -12,28 +12,26 @@ interface AuthDialogProps {
 }
 
 enum FormValues {
-    MAIN = 'MAIN',
     LOGIN = 'LOGIN',
     REGISTER = 'REGISTER',
 }
 
 export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
-    const [formType, setFormType] = React.useState<FormValues>(FormValues.MAIN);
+    const [formType, setFormType] = React.useState<FormValues>(FormValues.LOGIN);
 
     return (
         <Dialog open={visible} onClose={onClose} maxWidth='xs' fullWidth>
             <DialogContent>
                 <div className={styles.content}>
                     <Typography className={styles.title}>
-                    {formType === FormValues.MAIN ? (
+                    {formType === FormValues.LOGIN ? (
                         'Вход в СОЮЗ'
                     ) : (
-                        <div onClick={() => setFormType(FormValues.MAIN)} className={styles.backTitle}>
+                        <div onClick={() => setFormType(FormValues.LOGIN)} className={styles.backTitle}>
                             <ArrowBackIcon /> К авторизации
                         </div>
                     )}
                     </Typography>
-                    {formType === FormValues.MAIN && <MainForm onOpenLogin={() => setFormType(FormValues.LOGIN)} />}
                     {formType === FormValues.LOGIN && <LoginForm onOpenRegister={() => setFormType(FormValues.REGISTER)} />}
                     {formType === FormValues.REGISTER && <RegisterForm onOpenRegister={() => setFormType(FormValues.REGISTER)} onOpenLogin={() => setFormType(FormValues.LOGIN)}/>}
                 </div>

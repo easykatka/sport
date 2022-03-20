@@ -3,7 +3,6 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@material-ui/core';
 import { RegisterSchema } from '../../../utils/yupSchemaValidation';
-
 import { FormField } from '../../FormField';
 
 interface LoginForm {
@@ -12,12 +11,19 @@ interface LoginForm {
 }
 
 export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin }) => {
-    const form = useForm({
-        mode: 'onChange',
-        resolver: yupResolver(RegisterSchema),
-    });
+    const form = useForm({ mode: 'onChange', resolver: yupResolver(RegisterSchema) });
 
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async (data) => {
+        let res = await fetch('http://localhost:3000/api/auth/registration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ login: data.email, password: data.password }),
+        });
+        res = await res.json();
+        console.log(res);
+    };
 
     return (
         <div>
@@ -29,15 +35,11 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin 
                         <Button
                             color='primary'
                             variant='contained'
-                            className='ml-10'
                             type='submit'
                             disabled={!form.formState.isValid}
                             onClick={onOpenRegister}
                         >
                             Зарегестрироватся!
-                        </Button>
-                        <Button color='primary' variant='text' className='ml-10' onClick={onOpenLogin}>
-                            Войти
                         </Button>
                     </div>
                 </form>
