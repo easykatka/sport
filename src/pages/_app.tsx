@@ -19,7 +19,7 @@ class App extends NextApp<AppProps> {
 
     render() {
         const { Component, pageProps } = this.props;
-
+        console.log(Component , '>>>>>>>>>>>>>>>>',this.props);
         return (
             <>
                 <Head>

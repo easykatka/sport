@@ -9,32 +9,11 @@
         padding: 0 30px;
         height: 100%;
         max-width: 1400px;
-        width: 100%;
         margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-}
-
-.logo {
-    width: 32px;
-    height: 42px;
-    margin-right: 25px;
-    margin-left: 10px;
-}
-
-.avatar {
-    margin-left: 15px;
-    border-radius: 20% !important;
-    margin-right: 6px;
-}
-
-.penButton {
-    min-width: 40px !important;
-    text-transform: inherit !important;
-    font-size: 16px !important;
-    letter-spacing: 0 !important;
 }
 
 .loginButton {

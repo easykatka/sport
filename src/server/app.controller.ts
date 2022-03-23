@@ -14,20 +14,10 @@ export class AppController {
         return {};
     }
 
-    @Get(':id')
-    @Render('[id]')
+    @Get('/rules/')
+    @Render('rules')
     @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
-    public blogPost() {
+    rules() {
         return {};
-    }
-
-    @Get('/api/blog-posts')
-    public listBlogPosts() {
-        return this.appService.getBlogPosts();
-    }
-
-    @Get('/api/blog-posts/:id')
-    public getBlogPostById(@Param('id', new ParseIntPipe()) id: number) {
-        return this.appService.getBlogPost(id);
     }
 }

@@ -13,9 +13,9 @@ const Home: FC = () => {
     );
 };
 
-export const getServerSideProps = buildServerSideProps(async () => {
-    const blogPosts = await fetch('/api/blog-posts');
-    return { blogPosts };
-});
+// export const getServerSideProps = buildServerSideProps(async () => {
+//     const blogPosts = await fetch('/api/blog-posts');
+//     return { blogPosts };
+// });
 
 export default Home;
