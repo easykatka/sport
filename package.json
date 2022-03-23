@@ -14,6 +14,7 @@
 		"start": "node dist/server/main.js",
 		"start:next": "next dev",
 		"start:dev": "cross-env NODE_ENV=development nest build --webpack --webpackPath webpack-hmr.config.js --watch --path tsconfig.server.json",
+		"start:prod": "cross-env NODE_ENV=production nest build --path tsconfig.server.json",
 		"start:debug": "nest start --path ./tsconfig.server.json --debug --watch",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.tsx?\" --fix"
 	},

@@ -38,9 +38,8 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin 
                             size='small'
                             type='submit'
                             disabled={!form.formState.isValid}
-                            onClick={onOpenRegister}
-                        >
-                            Зарегестрироватся!
+                            onClick={onOpenRegister}>
+                            Зарегестрироватся
                         </Button>
                     </div>
                 </form>
