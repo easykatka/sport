@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { Paper, IconButton } from '@material-ui/core';
-import { Menu as MenuIcon, AccountCircleOutlined as UserIcon } from '@material-ui/icons';
-
+import { Paper } from '@material-ui/core';
+import { AccountCircleOutlined as UserIcon } from '@material-ui/icons';
 import styles from './Header.module.scss';
 import { AuthDialog } from '../AuthDialog';
+import Image from 'next/image';
 
 export const Header: React.FC = () => {
     const [authVisible, setAuthVisible] = React.useState(false);
@@ -13,15 +13,12 @@ export const Header: React.FC = () => {
     const closeAuthDialog = () => setAuthVisible(false);
 
     return (
-        <Paper classes={{ root: styles.root }} elevation={0}>
+        <Paper classes={{ root: styles.root }}>
             <div className={styles.wrapper}>
                 <div className='d-flex align-center'>
-                    {/* <IconButton>
-                        <MenuIcon />
-                    </IconButton> */}
                     <Link href='/'>
                         <a>
-                            <img height={35} className='mr-20' src='static/img/logo.svg' alt='Logo' />
+                            <Image src='/static/img/logo.png' width='130' height='110' />
                         </a>
                     </Link>
                 </div>
