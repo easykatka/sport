@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { SideBar } from '../components/Sidebar';
+import { Header } from '../components/Header';
 
 interface MainLayoutProps {
     hideComments?: boolean;
@@ -17,13 +18,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     className,
 }) => {
     return (
-        <div className={clsx('wrapper', className)}>
-            {!hideMenu && (
-                <div className='sidebar'>
-                    <SideBar />
-                </div>
-            )}
-            <div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
-        </div>
+        <>
+            <Header />
+            <div className='wrapper'>
+                {!hideMenu && (
+                    <div className='sidebar'>
+                        <SideBar />
+                    </div>
+                )}
+                <div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
+            </div>
+        </>
     );
 };

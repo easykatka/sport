@@ -7,9 +7,7 @@ import { MainLayout } from '../client/layouts/MainLayout';
 const Home: FC = () => {
     // const linkFeature = useFeature('blog_link');
     return (
-        <MainLayout>
-            <div>123</div>
-        </MainLayout>
+        <div> 123</div>
     );
 };
 

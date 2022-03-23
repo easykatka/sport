@@ -15,18 +15,15 @@ export const Header: React.FC = () => {
     return (
         <Paper classes={{ root: styles.root }}>
             <div className={styles.wrapper}>
-                <div className='d-flex align-center'>
-                    <Link href='/'>
-                        <a>
-                            <Image src='/static/img/logo.png' width='130' height='110' />
-                        </a>
-                    </Link>
-                </div>
-                <div className='d-flex align-center'>
-                    <div className={styles.loginButton} onClick={openAuthDialog}>
-                        <UserIcon />
-                        Войти
-                    </div>
+                <Link href='/'>
+                    <a>
+                        <Image src='/static/img/logo.png' width='130' height='110' />
+                    </a>
+                </Link>
+
+                <div className={styles.loginButton} onClick={openAuthDialog}>
+                    <UserIcon />
+                    Войти
                 </div>
             </div>
             <AuthDialog onClose={closeAuthDialog} visible={authVisible} />
