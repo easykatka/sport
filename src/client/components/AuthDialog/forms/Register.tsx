@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { RegisterSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 

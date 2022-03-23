@@ -2,9 +2,8 @@ import Head from 'next/head';
 import NextApp, { AppProps } from 'next/app';
 import { AppDataContext } from 'src/client/ssr/appData';
 import { AppData } from 'src/shared/types/app-data';
-import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from '../client/theme';
-import { Header } from '../client/components/Header';
 import '../client/styles/globals.scss';
 import 'macro-css';
 import { MainLayout } from 'src/client/layouts/MainLayout';
@@ -20,7 +19,6 @@ class App extends NextApp<AppProps> {
 
     render() {
         const { Component, pageProps } = this.props;
-        console.log(Component, '>>>>>>>>>>>>>>>>', this.props);
         return (
             <>
                 <Head>
@@ -33,14 +31,14 @@ class App extends NextApp<AppProps> {
                         rel='stylesheet'></link>
                 </Head>
 
-                <MuiThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
                     <AppDataContext.Provider value={this.appData}>
                         <CssBaseline />
                         <MainLayout>
                             <Component {...pageProps} />
                         </MainLayout>
                     </AppDataContext.Provider>
-                </MuiThemeProvider>
+                </ThemeProvider>
             </>
         );
     }

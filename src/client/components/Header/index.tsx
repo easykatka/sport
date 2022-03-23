@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Paper } from '@material-ui/core';
-import { AccountCircleOutlined as UserIcon } from '@material-ui/icons';
+import { Paper } from '@mui/material';
+import { AccountCircleOutlined as UserIcon } from '@mui/icons-material';
 import styles from './Header.module.scss';
 import { AuthDialog } from '../AuthDialog';
 import Image from 'next/image';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import Image from 'next/image';
@@ -29,20 +29,25 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                                 <Image src='/static/img/google.svg' width='24' height='24' /> Google
                             </Button>
                         </div>
-                        <div>                        <Button
-                            color='primary'
-                            variant='contained'
-                            type='submit'
-                            size='small'
-                            disabled={!form.formState.isValid}
-                        >
-                            Войти
-                        </Button>
-                        <Button color='primary' variant='text' className='ml-10' size='small' onClick={onOpenRegister}>
-                            Регистрация
-                        </Button>
+                        <div>
+                            {' '}
+                            <Button
+                                color='primary'
+                                variant='contained'
+                                type='submit'
+                                size='small'
+                                disabled={!form.formState.isValid}>
+                                Войти
+                            </Button>
+                            <Button
+                                color='primary'
+                                variant='text'
+                                className='ml-10'
+                                size='small'
+                                onClick={onOpenRegister}>
+                                Регистрация
+                            </Button>
                         </div>
-
                     </div>
                 </form>
             </FormProvider>

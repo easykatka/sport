@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import {
     WhatshotOutlined as FireIcon,
     SmsOutlined as MessageIcon,
     TrendingUpOutlined as TrendingIcon,
     FormatListBulletedOutlined as ListIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import styles from './SideBar.module.scss';
 import { useRouter } from 'next/router';
