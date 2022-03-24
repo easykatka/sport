@@ -6,9 +6,7 @@ import { MainLayout } from '../client/layouts/MainLayout';
 
 const Home: FC = () => {
     // const linkFeature = useFeature('blog_link');
-    return (
-        <div> 123</div>
-    );
+    return <MainLayout> 123</MainLayout>;
 };
 
 // export const getServerSideProps = buildServerSideProps(async () => {

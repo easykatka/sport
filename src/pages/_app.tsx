@@ -26,15 +26,13 @@ class App extends NextApp<AppProps> {
                     <link rel='icon' href='/static/favicon.ico' />
                     <link rel='preconnect' href='https://fonts.googleapis.com' />
                     <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
-                
                 </Head>
 
                 <ThemeProvider theme={theme}>
                     <AppDataContext.Provider value={this.appData}>
                         <CssBaseline />
-                        <MainLayout>
-                            <Component {...pageProps} />
-                        </MainLayout>
+
+                        <Component {...pageProps} />
                     </AppDataContext.Provider>
                 </ThemeProvider>
             </>
