@@ -10,7 +10,3 @@ export const LoginSchema = yup.object().shape({
     .min(6, 'Длина пароля не менее 6 символов')
     .required('Пароль обязателен'),
 });
-
-export const RegisterSchema = yup
-  .object()
-  .concat(LoginSchema);

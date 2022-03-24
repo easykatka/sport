@@ -18,7 +18,7 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
         <div>
             <FormProvider {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField name='login' label='почта' />
+                    <FormField name='email' label='почта' />
                     <FormField name='password' label='пароль' />
                     <div className='d-flex align-center justify-between flex-column fullWidth'>
                         <div>
@@ -33,15 +33,15 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                             {' '}
                             <Button
                                 color='primary'
-                                variant='contained'
+                            	variant='contained'
                                 type='submit'
                                 size='small'
-                                disabled={!form.formState.isValid}>
+                            	disabled={!form.formState.isValid}>
                                 Войти
                             </Button>
                             <Button
                                 color='primary'
-                                variant='text'
+                                variant='contained'
                                 className='ml-10'
                                 size='small'
                                 onClick={onOpenRegister}>

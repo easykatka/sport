@@ -19,16 +19,16 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
     const [formType, setFormType] = React.useState<FormValues>(FormValues.LOGIN);
 
     return (
-        <Dialog open={visible} onClose={onClose} maxWidth='xs' fullWidth>
+        <Dialog open={visible} onClose={onClose}  fullWidth>
             <DialogContent>
                 <div className={styles.content}>
                     <Typography className={styles.title}>
                         {formType === FormValues.LOGIN ? (
                             'Вход в СОЮЗ'
                         ) : (
-                            <div onClick={() => setFormType(FormValues.LOGIN)} className={styles.backTitle}>
+                            <span onClick={() => setFormType(FormValues.LOGIN)} className={styles.backTitle}>
                                 <ArrowBackIcon /> К авторизации
-                            </div>
+                            </span>
                         )}
                     </Typography>
                     {formType === FormValues.LOGIN && (

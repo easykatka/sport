@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LoginDto } from './types';
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: 'localhost:3000',
 });
 
