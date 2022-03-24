@@ -7,7 +7,8 @@ export const getPostgresConfig = async (ConfigService: ConfigService): Promise<S
         dialect: 'postgres',
         autoLoadModels: true,
         synchronize: true,
-        sync: { alter: true },
+        // sync: { alter: true },
+
         models: MODELS,
         ...getConfigOptions(ConfigService),
     };
