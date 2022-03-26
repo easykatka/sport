@@ -31,7 +31,6 @@ class App extends NextApp<AppProps> {
                 <ThemeProvider theme={theme}>
                     <AppDataContext.Provider value={this.appData}>
                         <CssBaseline />
-
                         <Component {...pageProps} />
                     </AppDataContext.Provider>
                 </ThemeProvider>

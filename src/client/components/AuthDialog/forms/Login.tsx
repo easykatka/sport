@@ -33,10 +33,10 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                             {' '}
                             <Button
                                 color='primary'
-                            	variant='contained'
+                                variant='contained'
                                 type='submit'
                                 size='small'
-                            	disabled={!form.formState.isValid}>
+                                disabled={!form.formState.isValid}>
                                 Войти
                             </Button>
                             <Button

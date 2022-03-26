@@ -1,4 +1,4 @@
-import {  Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { compare } from 'bcryptjs';
@@ -20,16 +20,18 @@ export class AuthService {
         return this.generateToken(user);
     }
 
+    async login(dto: AuthDto) {
+        const user = await this.validateUser(dto);
+        return this.generateToken(user);
+    }
+
+
+
     private generateToken({ login, id, roles }: UserModel) {
         const payload = { login, id, roles };
         return {
             token: this.jwtService.sign(payload),
         };
-    }
-
-    async login(dto: AuthDto) {
-        const user = await this.validateUser(dto);
-        return this.generateToken(user);
     }
 
     private async validateUser(dto: AuthDto): Promise<UserModel> {

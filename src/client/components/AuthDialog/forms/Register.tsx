@@ -14,9 +14,12 @@ interface LoginForm {
 export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin }) => {
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
-    const onSubmit = async (data) => {
-        const res = await UserApi.register(data);
-        console.log(res,'111')
+    const onSubmit = async ({ email, password }) => {
+        const res = await UserApi.register({
+            login: email,
+            password,
+        });
+        console.log(res, '111');
     };
 
     return (
