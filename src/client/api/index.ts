@@ -2,12 +2,12 @@ import axios from 'axios';
 import { LoginDto } from './types';
 
 export const instance = axios.create({
-    baseURL: 'localhost:3000',
+    baseURL: 'http://localhost:3000/api',
 });
 
 export const UserApi = {
-    async register(dto: LoginDto) {
-        const { data } = await instance.post('auth/register', dto);
+    async registration(dto: LoginDto) {
+        const { data } = await instance.post('auth/registration', dto);
         return data;
     },
 

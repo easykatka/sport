@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { RenderService } from 'nest-next';
@@ -27,6 +28,15 @@ async function bootstrap() {
     //* SERVER
     // app.setGlobalPrefix('api')
 
+    app.useGlobalPipes(new ValidationPipe());
+    app.enableCors({
+        origin: [/^(.*)/],
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 200,
+        credentials: true,
+        allowedHeaders: 'Origin,X-Requested-With,Conent-Type,Accept,Authorization,authorization,X-forwarded-for',
+    });
     await app.listen(PORT, () => console.log('\x1b[32m', `Server is started on port:${PORT} in ${NODE_ENV} mode`));
 
     //* замена ошибок у рендер модуля

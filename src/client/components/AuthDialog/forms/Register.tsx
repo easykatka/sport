@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@mui/material';
 import { LoginSchema } from 'src/client/utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
-import { UserApi } from 'src/client/utils/api/';
+import { UserApi } from 'src/client/api';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -14,12 +14,14 @@ interface LoginForm {
 export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin }) => {
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
-    const onSubmit = async ({ email, password }) => {
-        const res = await UserApi.register({
-            login: email,
-            password,
-        });
-        console.log(res, '111');
+    const onSubmit = async (data) => {
+        try {
+            const res = await UserApi.registration({
+                login: data.email,
+                password: String(data.paswword),
+            });
+            console.log(res, '111');
+        } catch (e) { console.log(e, 'error');}
     };
 
     return (
@@ -33,7 +35,7 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin 
                         variant='contained'
                         size='small'
                         type='submit'
-                        disabled={!form.formState.isValid}
+                        disabled={!form.formState.isValid || form.formState.isSubmitting}
                         onClick={onOpenRegister}>
                         Зарегестрироватся
                     </Button>

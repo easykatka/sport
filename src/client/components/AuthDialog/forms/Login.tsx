@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import Image from 'next/image';
+import { UserApi } from 'src/client/api';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -12,7 +13,13 @@ interface LoginForm {
 
 export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async (data) => {
+        const res = await UserApi.login({
+            login: data.email,
+            password: String(data.paswword),
+        });
+        console.log(res,'>>>>>>>>>');
+    };
 
     return (
         <div>
