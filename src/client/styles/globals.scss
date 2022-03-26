@@ -22,9 +22,9 @@ a {
 }
 
 .content {
-    max-width: 640px;
-    width: 100%;
-    margin: 0 auto;
+    // max-width: 640px;
+    width: 100%; 
+    margin-left: 220px;
     & > * {
         height: 100% !important;
         align-items: center;
