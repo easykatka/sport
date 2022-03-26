@@ -19,7 +19,7 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
     const [formType, setFormType] = React.useState<FormValues>(FormValues.LOGIN);
 
     return (
-        <Dialog open={visible} onClose={onClose}  fullWidth>
+        <Dialog open={visible} onClose={onClose} fullWidth>
             <DialogContent>
                 <div className={styles.content}>
                     <Typography className={styles.title}>

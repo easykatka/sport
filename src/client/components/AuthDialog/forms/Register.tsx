@@ -12,7 +12,7 @@ interface LoginForm {
     onOpenLogin: () => void;
 }
 
-export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin }) => {
+export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const [responseError, setResponseError] = React.useState(false);
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
