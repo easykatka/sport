@@ -25,8 +25,6 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-
-
     private generateToken({ login, id, roles }: UserModel) {
         const payload = { login, id, roles };
         return {

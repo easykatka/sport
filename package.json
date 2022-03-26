@@ -44,6 +44,7 @@
 		"macro-css": "^1.0.5",
 		"nest-next": "^9.6.0",
 		"next": "^11.0.1",
+		"nookies": "^2.5.2",
 		"npm": "^8.5.5",
 		"passport": "^0.5.2",
 		"passport-jwt": "^4.0.0",

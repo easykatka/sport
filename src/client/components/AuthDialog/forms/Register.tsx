@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { LoginSchema } from 'src/client/utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import { UserApi } from 'src/client/api';
+import { setCookie } from 'nookies';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -16,12 +17,17 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister, onOpenLogin 
 
     const onSubmit = async (data) => {
         try {
-            const res = await UserApi.registration({
+            const { token } = await UserApi.registration({
                 login: data.email,
                 password: String(data.paswword),
             });
-            console.log(res, '111');
-        } catch (e) { console.log(e, 'error');}
+            setCookie(null, 'token', token, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            });
+        } catch (e) {
+            console.log(e, 'error');
+        }
     };
 
     return (
