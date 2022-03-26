@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import Image from 'next/image';
@@ -13,20 +13,15 @@ interface LoginForm {
 }
 
 export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
+    const [responseError, setResponseError] = React.useState(false);
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
     const onSubmit = async (data) => {
+        setResponseError(false);
         try {
-            const { token } = await UserApi.login({
-                login: data.email,
-                password: String(data.paswword),
-            });
-            setCookie(null, 'token', token, {
-                maxAge: 30 * 24 * 60 * 60,
-                path: '/',
-            });
-        } catch (e) {
-            // form.setError('serverError', e.response.data.message);
-            // console.log(e.response.data, '>>>>>>>>>');
+            const { token } = await UserApi.login({ login: data.email, password: String(data.paswword) });
+            setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+        } catch (err: any) {
+            setResponseError(err.response.data.message);
         }
     };
 
@@ -37,6 +32,11 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField name='email' label='почта' />
                     <FormField name='password' label='пароль' />
+                    {responseError && (
+                        <Alert className='mb-20' severity='error'>
+                            {responseError}
+                        </Alert>
+                    )}
                     <div className='d-flex align-center justify-between flex-column fullWidth'>
                         {/* <div>
                             <Button className='mb-15' variant='contained' fullWidth>
@@ -52,7 +52,7 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                                 variant='contained'
                                 type='submit'
                                 size='small'
-                                disabled={!form.formState.isValid}>
+                                disabled={!form.formState.isValid || form.formState.isSubmitting}>
                                 Войти
                             </Button>
                             <Button
