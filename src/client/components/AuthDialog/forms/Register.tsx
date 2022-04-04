@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
-import { LoginSchema } from 'src/client/utils/yupSchemaValidation';
+import { RegistrationSchema } from 'src/client/utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import { UserApi } from 'src/client/api';
 import { setCookie } from 'nookies';
@@ -16,7 +16,7 @@ interface LoginForm {
 
 export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const [responseError, setResponseError] = React.useState(false);
-    const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
+    const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
     const onSubmit = async (data: RegistrationDto) => {
         setResponseError(false);
@@ -40,6 +40,9 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
         <FormProvider {...form}>
             <FormField name='email' label='почта' />
             <FormField name='password' label='пароль' />
+            <FormField name='lastName' label='Фамилия' />
+            <FormField name='firstName' label='Имя' />
+            <FormField name='middleName' label='Отчество' />
             {responseError && (
                 <Alert className='mb-20' severity='error'>
                     {responseError}
