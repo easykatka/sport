@@ -1,7 +1,7 @@
 import { ParsedUrlQuery } from 'querystring';
-import { AppData } from 'src/shared/types/app-data';
-import { Config } from 'src/shared/types/config';
-import { GetServerSideProps, GetServerSidePropsContext } from 'src/shared/types/next';
+import { AppData } from 'shared/types/app-data';
+import { Config } from 'shared/types/config';
+import { GetServerSideProps, GetServerSidePropsContext } from 'shared/types/next';
 import { extractAppData } from './extractAppData';
 
 type StaticProps = {

@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { RenderService } from 'nest-next';
-import { NODE_ENV, PORT } from 'src/shared/constants/env';
+import { NODE_ENV, PORT } from 'shared/constants/env';
 import { AppModule } from './app.module';
 
 declare const module: any;

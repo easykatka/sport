@@ -9,7 +9,7 @@ import { getPostgresConfig } from './configs/posrgres.config';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
-import { NODE_ENV } from 'src/shared/constants/env';
+import { NODE_ENV } from 'shared/constants/env';
 
 declare const module: any;
 

@@ -4,9 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
 import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
-import { UserApi } from 'src/client/api';
+import { UserApi } from 'client/api';
 import { setCookie } from 'nookies';
-import { LoginDto } from 'src/client/api/types';
+import { LoginDto } from 'client/api/types';
 import axios from 'axios';
 
 interface LoginForm {

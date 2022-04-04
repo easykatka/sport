@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { MainLayout } from '../client/layouts/MainLayout';
-import { fetch } from 'src/shared/utils/fetch';
-import { buildServerSideProps } from 'src/client/ssr/buildServerSideProps';
+import { fetch } from 'shared/utils/fetch';
+import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import Head from 'next/head';
 
 type Player = {

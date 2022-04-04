@@ -1,4 +1,4 @@
-import type { Config } from 'src/shared/types/config';
+import type { Config } from 'shared/types/config';
 
 const APP_CONFIG: Config = {
     features: {

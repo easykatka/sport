@@ -2,11 +2,11 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
-import { RegistrationSchema } from 'src/client/utils/yupSchemaValidation';
+import { RegistrationSchema } from 'client/utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
-import { UserApi } from 'src/client/api';
+import { UserApi } from 'client/api';
 import { setCookie } from 'nookies';
-import { RegistrationDto } from 'src/client/api/types';
+import { RegistrationDto } from 'client/api/types';
 import axios from 'axios';
 
 interface LoginForm {

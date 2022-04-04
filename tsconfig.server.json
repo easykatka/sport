@@ -4,8 +4,8 @@
 		"noEmit": false
 	},
 	"include": [
-		"./src/server/**/*.ts",
-		"./src/shared/**/*.ts",
+		"server/**/*.ts",
+		"shared/**/*.ts",
 		"./@types/**/*.d.ts"
 	]
 }
