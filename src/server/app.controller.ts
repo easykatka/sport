@@ -20,7 +20,7 @@ export class AppController {
     rules() {
         return {};
     }
-    
+
     @Get('/rating/')
     @Render('rating')
     @UseInterceptors(ParamsInterceptor, ConfigInterceptor)

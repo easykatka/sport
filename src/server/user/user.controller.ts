@@ -8,4 +8,9 @@ import { UserModel } from '../models/user.model';
 @Controller('api/user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
+
+    @Get('/getAllUsers')
+    getAllUsers() {
+        return this.userService.getAllUsers();
+    }
 }

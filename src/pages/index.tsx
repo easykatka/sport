@@ -9,9 +9,6 @@ const Home: FC = () => {
     return <MainLayout> 123</MainLayout>;
 };
 
-// export const getServerSideProps = buildServerSideProps(async () => {
-//     const blogPosts = await fetch('/api/blog-posts');
-//     return { blogPosts };
-// });
+
 
 export default Home;
