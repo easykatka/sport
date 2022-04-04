@@ -1,9 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@mui/material';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import {
-    WhatshotOutlined as FireIcon,
-    SmsOutlined as MessageIcon,
     TrendingUpOutlined as TrendingIcon,
     FormatListBulletedOutlined as ListIcon,
 } from '@mui/icons-material';
@@ -12,7 +11,7 @@ import styles from './SideBar.module.scss';
 import { useRouter } from 'next/router';
 
 const menu = [
-    { text: 'Игры', icon: <FireIcon />, path: '/' },
+    { text: 'Игры', icon: <SportsSoccerIcon />, path: '/' },
     { text: 'Правила', icon: <ListIcon />, path: '/rules' },
     { text: 'Рейтинг Игроков', icon: <TrendingIcon />, path: '/rating' },
 ];
