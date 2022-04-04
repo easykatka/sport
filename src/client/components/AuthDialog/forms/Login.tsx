@@ -4,9 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
 import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
-import Image from 'next/image';
 import { UserApi } from 'src/client/api';
 import { setCookie } from 'nookies';
+import { LoginDto } from 'src/client/api/types';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -15,17 +15,24 @@ interface LoginForm {
 export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const [responseError, setResponseError] = React.useState(false);
     const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
-    const onSubmit = async (data) => {
+
+    const onSubmit = async (data: LoginDto) => {
         setResponseError(false);
         try {
-            const { token } = await UserApi.login({ login: data.email, password: String(data.paswword) });
+            const { token } = await UserApi.login({ email: data.email, password: String(data.password) });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
-        } catch (err: any) {
-            setResponseError(err.response.data.message);
+        } catch (err) {
+            if (axios.isAxiosError(error)) {
+                handleAxiosError(error);
+              } else {
+                handleUnexpectedError(error);
+              }
+            if (err.response) {
+                setResponseError(err.response.data.message);
+            }
         }
     };
 
-    console.log(form.formState.errors);
     return (
         <div>
             <FormProvider {...form}>

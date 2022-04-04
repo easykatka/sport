@@ -1,4 +1,10 @@
 export type LoginDto = {
-    login: string;
+    email: string;
     password: string;
 };
+
+export type RegistrationDto = {
+    firstName: string;
+    lastName: string;
+    middleName: string;
+} & LoginDto;
