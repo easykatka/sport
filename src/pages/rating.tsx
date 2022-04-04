@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { MainLayout } from '../client/layouts/MainLayout';
 import { fetch } from 'src/shared/utils/fetch';
 import { buildServerSideProps } from 'src/client/ssr/buildServerSideProps';
+import Head from 'next/head';
 
 type Player = {
     id: number;
@@ -11,15 +12,20 @@ type Player = {
 
 const Rules: FC = ({ players }: any) => {
     return (
-        <MainLayout>
-            {players.map((player: Player) => (
-                <div>
-                    <div>{player.id}</div>
-                    <div>{player.login}</div>
-                    <div>{player.password}</div>
-                </div>
-            ))}
-        </MainLayout>
+        <>
+            <Head>
+                <title>Рейтинг игроков | СОЮЗ</title>
+            </Head>
+            <MainLayout>
+                {players.map((player: Player) => (
+                    <div>
+                        <div>{player.id}</div>
+                        <div>{player.login}</div>
+                        <div>{player.password}</div>
+                    </div>
+                ))}
+            </MainLayout>
+        </>
     );
 };
 

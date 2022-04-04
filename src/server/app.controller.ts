@@ -8,7 +8,7 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get('/')
-    @Render('index')
+    @Render('games')
     @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
     home() {
         return {};
@@ -25,6 +25,13 @@ export class AppController {
     @Render('rating')
     @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
     rating() {
+        return {};
+    }
+
+    @Get('/games/')
+    @Render('games')
+    @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
+    games() {
         return {};
     }
 }
