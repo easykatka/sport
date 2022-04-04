@@ -6,6 +6,8 @@ import { LoginSchema } from 'src/client/utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import { UserApi } from 'src/client/api';
 import { setCookie } from 'nookies';
+import { RegistrationDto } from 'src/client/api/types';
+import axios from 'axios';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -14,15 +16,23 @@ interface LoginForm {
 
 export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const [responseError, setResponseError] = React.useState(false);
-    const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
+    const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: RegistrationDto) => {
         setResponseError(false);
         try {
-            const { token } = await UserApi.registration({ login: data.email, password: String(data.paswword) });
+            const { token } = await UserApi.registration({
+                email: data.email,
+                password: String(data.password),
+                firstName: String(data.firstName),
+                middleName: String(data.middleName),
+                lastName: String(data.lastName),
+            });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
-        } catch (err: any) {
-            setResponseError(err.response.data.message);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setResponseError(error.response.data.message);
+            }
         }
     };
 

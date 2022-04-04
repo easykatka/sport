@@ -7,6 +7,7 @@ import { FormField } from '../../FormField';
 import { UserApi } from 'src/client/api';
 import { setCookie } from 'nookies';
 import { LoginDto } from 'src/client/api/types';
+import axios from 'axios';
 
 interface LoginForm {
     onOpenRegister: () => void;
@@ -14,21 +15,16 @@ interface LoginForm {
 
 export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
     const [responseError, setResponseError] = React.useState(false);
-    const form = useForm({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
+    const form = useForm<LoginDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
     const onSubmit = async (data: LoginDto) => {
         setResponseError(false);
         try {
             const { token } = await UserApi.login({ email: data.email, password: String(data.password) });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
-        } catch (err) {
+        } catch (error) {
             if (axios.isAxiosError(error)) {
-                handleAxiosError(error);
-              } else {
-                handleUnexpectedError(error);
-              }
-            if (err.response) {
-                setResponseError(err.response.data.message);
+                setResponseError(error.response.data.message);
             }
         }
     };
