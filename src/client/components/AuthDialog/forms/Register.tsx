@@ -10,11 +10,10 @@ import { RegistrationDto } from 'src/client/api/types';
 import axios from 'axios';
 
 interface LoginForm {
-    onOpenRegister: () => void;
-    onOpenLogin: () => void;
+    onClose: () => void;
 }
 
-export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
+export const RegisterForm: React.FC<LoginForm> = ({ onClose }) => {
     const [responseError, setResponseError] = React.useState(false);
     const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
@@ -29,6 +28,7 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                 lastName: String(data.lastName),
             });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+            onClose();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setResponseError(error.response.data.message);
@@ -50,13 +50,7 @@ export const RegisterForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
             )}
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className='d-flex align-center justify-center'>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        size='small'
-                        type='submit'
-                        disabled={!form.formState.isValid || form.formState.isSubmitting}
-                        onClick={onOpenRegister}>
+                    <Button color='primary' variant='contained' size='small' type='submit'>
                         Зарегестрироватся
                     </Button>
                 </div>

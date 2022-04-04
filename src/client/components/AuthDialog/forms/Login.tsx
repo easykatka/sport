@@ -11,9 +11,10 @@ import axios from 'axios';
 
 interface LoginForm {
     onOpenRegister: () => void;
+    onClose: () => void;
 }
 
-export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
+export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister, onClose }) => {
     const [responseError, setResponseError] = React.useState(false);
     const form = useForm<LoginDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
@@ -22,6 +23,7 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
         try {
             const { token } = await UserApi.login({ email: data.email, password: String(data.password) });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+            onClose();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setResponseError(error.response.data.message);
@@ -41,14 +43,6 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister }) => {
                         </Alert>
                     )}
                     <div className='d-flex align-center justify-between flex-column fullWidth'>
-                        {/* <div>
-                            <Button className='mb-15' variant='contained' fullWidth>
-                                <Image src='/static/img/vk.svg' width='24' height='24' /> ВКонтакте
-                            </Button>
-                            <Button className='mb-15' variant='contained' fullWidth>
-                                <Image src='/static/img/google.svg' width='24' height='24' /> Google
-                            </Button>
-                        </div> */}
                         <div>
                             <Button
                                 color='primary'

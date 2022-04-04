@@ -1,17 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-
 import { compare } from 'bcryptjs';
 import { UserModel } from '../models/user.model';
 import { UserService } from '../user/user.service';
 import { USER_ALREADY_REGISTERED_ERROR, WRONG_USER_DATA_ERROR } from './auth.constants';
-import { AuthDto } from './dto/auth.tdo';
+import { LoginDto } from './dto/login.dto';
+import { RegistrationDto } from './dto/registration.dto';
 
 @Injectable()
 export class AuthService {
     constructor(private userService: UserService, private readonly jwtService: JwtService) {}
 
-    async registration(dto: AuthDto) {
+    async registration(dto: RegistrationDto) {
         const candidate = await this.userService.getUserByLogin(dto.login);
         if (candidate) {
             throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
@@ -20,7 +20,7 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    async login(dto: Pick<AuthDto, 'login' | 'password'>) {
+    async login(dto: LoginDto) {
         const user = await this.validateUser(dto);
         return this.generateToken(user);
     }
@@ -32,7 +32,7 @@ export class AuthService {
         };
     }
 
-    private async validateUser(dto: Pick<AuthDto, 'login' | 'password'>): Promise<UserModel> {
+    private async validateUser(dto: LoginDto): Promise<UserModel> {
         const user = await this.userService.getUserByLogin(dto.login);
         if (!user) {
             throw new UnauthorizedException(WRONG_USER_DATA_ERROR);

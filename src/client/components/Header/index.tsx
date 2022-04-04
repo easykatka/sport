@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
                     Войти
                 </div>
             </div>
-            <AuthDialog onClose={closeAuthDialog} visible={authVisible} />
+            {authVisible && <AuthDialog onClose={closeAuthDialog} visible={authVisible} />}
         </Paper>
     );
 };

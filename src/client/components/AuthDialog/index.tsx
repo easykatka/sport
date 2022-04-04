@@ -17,7 +17,6 @@ enum FormValues {
 
 export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
     const [formType, setFormType] = React.useState<FormValues>(FormValues.LOGIN);
-
     return (
         <Dialog open={visible} onClose={onClose} fullWidth>
             <DialogContent>
@@ -32,12 +31,11 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
                         )}
                     </Typography>
                     {formType === FormValues.LOGIN && (
-                        <LoginForm onOpenRegister={() => setFormType(FormValues.REGISTER)} />
+                        <LoginForm onOpenRegister={() => setFormType(FormValues.REGISTER)} onClose={onClose} />
                     )}
                     {formType === FormValues.REGISTER && (
                         <RegisterForm
-                            onOpenRegister={() => setFormType(FormValues.REGISTER)}
-                            onOpenLogin={() => setFormType(FormValues.LOGIN)}
+                            onClose={onClose}
                         />
                     )}
                 </div>
