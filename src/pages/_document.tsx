@@ -1,4 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { fetch } from 'src/shared/utils/fetch';
+import { buildServerSideProps } from 'src/client/ssr/buildServerSideProps';
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
