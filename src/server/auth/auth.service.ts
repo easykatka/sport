@@ -20,7 +20,7 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    async login(dto: AuthDto) {
+    async login(dto: Pick<AuthDto, 'login' | 'password'>) {
         const user = await this.validateUser(dto);
         return this.generateToken(user);
     }
@@ -32,7 +32,7 @@ export class AuthService {
         };
     }
 
-    private async validateUser(dto: AuthDto): Promise<UserModel> {
+    private async validateUser(dto: Pick<AuthDto, 'login' | 'password'>): Promise<UserModel> {
         const user = await this.userService.getUserByLogin(dto.login);
         if (!user) {
             throw new UnauthorizedException(WRONG_USER_DATA_ERROR);

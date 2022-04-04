@@ -14,7 +14,7 @@ export class AuthController {
 
     @UsePipes(new ValidationPipe())
     @Post('login')
-    login(@Body() dto: AuthDto) {
+    login(@Body() dto: Pick<AuthDto, 'login' | 'password'>) {
         return this.authService.login(dto);
     }
 }

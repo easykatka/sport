@@ -10,7 +10,7 @@
 		"build:next": "next build",
 		"build:nest": "nest build --path ./tsconfig.server.json",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-		"start": "node dist/server/main.js",
+		"start": "cross-env NODE_ENV=production node dist/server/main.js",
 		"start:dev": "cross-env NODE_ENV=development nest build --webpack --webpackPath webpack-hmr.config.js --watch --path tsconfig.server.json",
 		"start:prod": "cross-env NODE_ENV=production nest build --path tsconfig.server.json"
 	},

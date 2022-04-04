@@ -3,11 +3,16 @@ import { MainLayout } from '../client/layouts/MainLayout';
 import { fetch } from 'src/shared/utils/fetch';
 import { buildServerSideProps } from 'src/client/ssr/buildServerSideProps';
 
+type Player = {
+    id: number;
+    login: string;
+    password: string;
+};
+
 const Rules: FC = ({ players }: any) => {
-    console.log('🚀 ~ file: rating.tsx ~ line 7 ~ players', players);
     return (
         <MainLayout>
-            {players.map((player) => (
+            {players.map((player: Player) => (
                 <div>
                     <div>{player.id}</div>
                     <div>{player.login}</div>
