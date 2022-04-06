@@ -48,7 +48,7 @@
         "pg": "^8.7.3",
         "pg-hstore": "^2.3.4",
         "react": "^17.0.2",
-        "react-dom": "^18.0.0",
+        "react-dom": "^17.0.2",
         "react-hook-form": "^7.29.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
@@ -109,5 +109,6 @@
         ],
         "coverageDirectory": "../coverage",
         "testEnvironment": "node"
-    }
+    },
+x
 }
