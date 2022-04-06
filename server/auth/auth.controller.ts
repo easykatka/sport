@@ -10,7 +10,6 @@ export class AuthController {
     @UsePipes(new ValidationPipe())
     @Post('registration')
     registration(@Body() dto: RegistrationDto) {
-        console.log('🚀 ~ file: auth.controller.ts ~ line 12 ~ AuthController ~ registration ~ dto', dto);
         return this.authService.registration(dto);
     }
 

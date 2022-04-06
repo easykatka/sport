@@ -12,8 +12,8 @@ export class UserService {
         return this.userRepository.findAll({ include: { all: true } });
     }
 
-    async getUserByLogin(login: string) {
-        return this.userRepository.findOne({ where: { login }, include: { all: true } });
+    async getUserByEmail(email: string) {
+        return this.userRepository.findOne({ where: { email }, include: { all: true } });
     }
 
     async createUser(dto: RegistrationDto) {
