@@ -5,9 +5,10 @@ import { TextField } from '@mui/material';
 interface FormFieldProps {
     name: string;
     label: string;
+    noErrorMessage: boolean;
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
+export const FormField: React.FC<FormFieldProps> = ({ name, label, noErrorMessage = false }) => {
     const { register, formState } = useFormContext();
 
     return (
@@ -18,8 +19,8 @@ export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
             size='small'
             label={label}
             variant='outlined'
-            error={!!formState.errors[name]?.message}
-            helperText={formState.errors[name]?.message}
+            error={noErrorMessage ? undefined : !!formState.errors[name]?.message}
+            helperText={noErrorMessage ? undefined : formState.errors[name]?.message}
             fullWidth
         />
     );

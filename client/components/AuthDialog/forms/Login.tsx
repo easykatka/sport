@@ -35,8 +35,8 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister, onClose }) => {
         <div>
             <FormProvider {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField name='email' label='почта' />
-                    <FormField name='password' label='пароль' />
+                    <FormField name='email' label='почта' noErrorMessage={true} />
+                    <FormField name='password' label='пароль' noErrorMessage={true} />
                     {responseError && (
                         <Alert className='mb-20' severity='error'>
                             {responseError}
