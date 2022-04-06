@@ -5,12 +5,13 @@ import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import Head from 'next/head';
 
 const User: FC = ({ user }: any) => {
+console.log("🚀 ~ file: [id].tsx ~ line 8 ~ user", user.roles)
     return (
         <>
             <Head>
                 <title>Рейтинг игроков | СОЮЗ</title>
             </Head>
-            <MainLayout>{user.email}</MainLayout>
+            <MainLayout>{user.email} {user.roles.map(i => i.name)}</MainLayout>
         </>
     );
 };
