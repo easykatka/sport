@@ -23,7 +23,11 @@ const getFetchUrl = (url: string) => {
 const envAwareFetch = (url: string, options?: Partial<RequestInit>) => {
     const fetchUrl = getFetchUrl(url);
 
-    return fetch(fetchUrl, options).then((res) => res.json());
+    return fetch(fetchUrl, options).then((res) =>
+        res.text().then(function (text) {
+            return text ? JSON.parse(text) : {};
+        })
+    );
 };
 
 export { envAwareFetch as fetch, initializeFetch };
