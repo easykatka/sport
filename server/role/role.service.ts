@@ -13,7 +13,7 @@ export class RoleService {
         if (oldRole) {
 			throw new BadRequestException(ALREADY_REGISTERED_ERROR)
 		}
-        return await this.roleModel.create(dto);;
+        return await this.roleModel.create(dto);
     }
 
     async getRoleByName(name: string) {
