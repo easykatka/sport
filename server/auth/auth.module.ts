@@ -13,18 +13,18 @@ import { UserRoleModel } from '../models/user-role.model';
 import { UserModule } from '../user/user.module';
 
 @Module({
-	controllers: [AuthController],
-	imports: [
-		SequelizeModule.forFeature([UserModel, RoleModel, UserRoleModel]),
-		ConfigModule,
-		JwtModule.registerAsync({
-			imports: [ConfigModule],
-			inject: [ConfigService],
-			useFactory: getJWTConfig
-		}),
-		PassportModule,
-		UserModule
-	],
-	providers: [AuthService, JwtStrategy]
+    controllers: [AuthController],
+    imports: [
+        SequelizeModule.forFeature([UserModel, RoleModel, UserRoleModel]),
+        ConfigModule,
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: getJWTConfig,
+        }),
+        PassportModule,
+        UserModule,
+    ],
+    providers: [AuthService, JwtStrategy],
 })
-export class AuthModule { }
+export class AuthModule {}

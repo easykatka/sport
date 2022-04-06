@@ -6,7 +6,6 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from '../client/theme';
 import '../client/styles/globals.scss';
 import 'macro-css';
-import { MainLayout } from 'client/layouts/MainLayout';
 
 class App extends NextApp<AppProps> {
     appData: AppData;

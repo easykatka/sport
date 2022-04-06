@@ -8,11 +8,11 @@ import { ALREADY_REGISTERED_ERROR } from './role.constants';
 export class RoleService {
     constructor(@InjectModel(RoleModel) private readonly roleModel: typeof RoleModel) {}
 
-    async createRole(dto:CreateRoleDto) {
+    async createRole(dto: CreateRoleDto) {
         const oldRole = await this.getRoleByName(dto.name);
         if (oldRole) {
-			throw new BadRequestException(ALREADY_REGISTERED_ERROR)
-		}
+            throw new BadRequestException(ALREADY_REGISTERED_ERROR);
+        }
         return await this.roleModel.create(dto);
     }
 

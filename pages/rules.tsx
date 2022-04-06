@@ -3,7 +3,8 @@ import { FC } from 'react';
 import { MainLayout } from '../client/layouts/MainLayout';
 
 const Rules: FC = () => {
-    return <>
+    return (
+        <>
             <Head>
                 <title>Правила | СОЮЗ</title>
             </Head>
@@ -129,6 +130,7 @@ const Rules: FC = () => {
                 </div>
             </MainLayout>
         </>
+    );
 };
 
 export default Rules;

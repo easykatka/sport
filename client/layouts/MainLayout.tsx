@@ -13,9 +13,7 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = ({
     children,
     contentFullWidth,
-
     hideMenu,
-    className,
 }) => {
     return (
         <>

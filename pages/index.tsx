@@ -5,6 +5,4 @@ const Home: FC = () => {
     return <MainLayout> 123</MainLayout>;
 };
 
-
-
 export default Home;

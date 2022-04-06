@@ -16,7 +16,7 @@ export class UserService {
         return this.userRepository.findOne({ where: { login }, include: { all: true } });
     }
 
-    async createUser(dto:RegistrationDto) {
+    async createUser(dto: RegistrationDto) {
         const salt = await genSalt(10);
         const newUser = new this.userRepository({
             ...dto,
