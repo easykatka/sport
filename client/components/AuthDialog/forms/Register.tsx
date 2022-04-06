@@ -22,10 +22,10 @@ export const RegisterForm: React.FC<LoginForm> = ({ onClose }) => {
         try {
             const { token } = await UserApi.registration({
                 email: data.email,
-                password: String(data.password),
-                firstName: String(data.firstName),
-                middleName: String(data.middleName),
-                lastName: String(data.lastName),
+                password: data.password,
+                firstName: data.firstName,
+                middleName: data.middleName,
+                lastName: data.lastName,
             });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
             onClose();

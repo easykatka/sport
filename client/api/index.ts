@@ -6,11 +6,8 @@ export const instance = axios.create({
 });
 
 export const UserApi = {
-    async registration({ email, ...dto }: RegistrationDto) {
-        const { data } = await instance.post('auth/registration', {
-            ...dto,
-            login: email,
-        });
+    async registration(dto: RegistrationDto) {
+        const { data } = await instance.post('auth/registration', dto);
         return data;
     },
 

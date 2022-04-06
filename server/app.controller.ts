@@ -8,10 +8,9 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 	
 	@Get('/user/:id')
-    @Render('user')
+    @Render('user/[id]')
     @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
 	user() {
-		console.log('here')
         return {};
     }
 
