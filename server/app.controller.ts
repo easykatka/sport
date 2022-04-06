@@ -6,6 +6,14 @@ import { ConfigInterceptor } from './interceptors/config.interceptor';
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService) {}
+	
+	@Get('/user/:id')
+    @Render('user')
+    @UseInterceptors(ParamsInterceptor, ConfigInterceptor)
+	user() {
+		console.log('here')
+        return {};
+    }
 
     @Get('/')
     @Render('games')
@@ -34,4 +42,6 @@ export class AppController {
     games() {
         return {};
     }
+
+
 }

@@ -6,10 +6,14 @@ import { UserModel } from '../models/user.model';
 @ApiTags('Пользователи')
 @Controller('api/user')
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UserService) { }
 
-    @Get('/getAllUsers')
-    getAllUsers() {
-        return this.userService.getAllUsers();
-    }
+	@Get('/getAllUsers')
+	getAllUsers() {
+		return this.userService.getAllUsers();
+	}
+	@Get('/getUserByEmail')
+	getUserByEmail(email: string) {
+		return this.userService.getUserByEmail(email);
+	}
 }
