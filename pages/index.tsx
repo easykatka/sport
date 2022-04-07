@@ -17,7 +17,6 @@ export const getServerSideProps = buildServerSideProps(async (ctx) => {
     try {
         const { token } = parseCookies(ctx);
         const userData = token !== 'undefined' ? await UserApi.me(token) : undefined;
-        console.log('🚀 ~ file: index.tsx ~ line 20 ~ getServerSideProps ~ userData', userData);
         return { props: {} };
     } catch (e) {
         console.log(e);
