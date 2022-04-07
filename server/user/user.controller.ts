@@ -24,7 +24,6 @@ export class UserController {
     @UseGuards(jwtAuthGuard)
     @Get('me')
     getProfile(@Request() req) {
-        console.log("🚀 ~ file: user.controller.ts ~ line 27 ~ UserController ~ getProfile ~ req", req.user.id)
         return this.userService.findById(req.user.id);
     }
 
