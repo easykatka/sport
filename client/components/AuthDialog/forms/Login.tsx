@@ -2,17 +2,23 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
-import { LoginSchema } from '../../../utils/yupSchemaValidation';
 import { FormField } from '../../FormField';
 import { UserApi } from 'client/api';
 import { setCookie } from 'nookies';
 import { LoginDto } from 'client/api/types';
 import axios from 'axios';
+import * as yup from 'yup';
+
 
 interface LoginForm {
     onOpenRegister: () => void;
     onClose: () => void;
 }
+
+const LoginSchema = yup.object().shape({
+    email: yup.string().email('email введен не корректно').required('Введите email'),
+    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
+});
 
 export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister, onClose }) => {
     const [responseError, setResponseError] = React.useState(false);
