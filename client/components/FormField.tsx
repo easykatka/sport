@@ -5,7 +5,7 @@ import { TextField } from '@mui/material';
 interface FormFieldProps {
     name: string;
     label: string;
-    noErrorMessage: boolean;
+    noErrorMessage?: boolean;
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ name, label, noErrorMessage = false }) => {

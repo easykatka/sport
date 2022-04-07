@@ -9,7 +9,6 @@ import { LoginDto } from 'client/api/types';
 import axios from 'axios';
 import * as yup from 'yup';
 
-
 interface LoginForm {
     onOpenRegister: () => void;
     onClose: () => void;
@@ -27,7 +26,7 @@ export const LoginForm: React.FC<LoginForm> = ({ onOpenRegister, onClose }) => {
     const onSubmit = async (data: LoginDto) => {
         setResponseError(false);
         try {
-            const { token } = await UserApi.login({ email: data.email, password: String(data.password) });
+            const token = await UserApi.login({ email: data.email, password: String(data.password) });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
             onClose();
         } catch (error) {

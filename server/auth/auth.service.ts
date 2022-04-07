@@ -12,7 +12,7 @@ export class AuthService {
     constructor(private userService: UserService, private readonly jwtService: JwtService) {}
 
     async registration(dto: RegistrationDto) {
-		const candidate = await this.userService.getUserByEmail(dto.email);
+        const candidate = await this.userService.getUserByEmail(dto.email);
         if (candidate) {
             throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
         }
@@ -25,10 +25,13 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    private generateToken(user: UserModel) {
-        return {
-            token: this.jwtService.sign(user),
-        };
+    private generateToken({ email }: Pick<UserModel, 'email'>) {
+        try {
+            const token = this.jwtService.sign({ email });
+            return token;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     private async validateUser(dto: LoginDto): Promise<UserModel> {

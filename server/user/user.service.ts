@@ -9,10 +9,12 @@ export class UserService {
     constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) {}
 
     async findById(id: number) {
-        return this.userRepository.findByPk(id, { include: { all: true } });
+        const user = await this.userRepository.findByPk(id, { include: { all: true } });
+        user.password = undefined;
+        return user;
     }
 
-    async findAll() {
+    findAll() {
         return this.userRepository.findAll();
     }
 
@@ -23,11 +25,11 @@ export class UserService {
         }
     }
 
-    async getAllUsers() {
+    getAllUsers() {
         return this.userRepository.findAll({ include: { all: true } });
     }
 
-    async getUserByEmail(email: string) {
+    getUserByEmail(email: string) {
         return this.userRepository.findOne({ where: { email }, include: { all: true } });
     }
 

@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Patch, Request, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-
 import { jwtAuthGuard } from 'server/auth/guards/jwt.guard';
 
 @ApiTags('Пользователи')
@@ -22,14 +21,16 @@ export class UserController {
         return this.userService.getUserByEmail(id);
     }
 
+    @UseGuards(jwtAuthGuard)
     @Get('me')
     getProfile(@Request() req) {
+        console.log("🚀 ~ file: user.controller.ts ~ line 27 ~ UserController ~ getProfile ~ req", req.user.id)
         return this.userService.findById(req.user.id);
     }
 
+    @UseGuards(jwtAuthGuard)
     @Patch('/me')
     updateProfile(@Request() req) {
-        console.log('🚀 ~ file: user.controller.ts ~ line 32 ~ UserController ~ updateProfile ~ req', req.user);
         return req.user;
     }
 }

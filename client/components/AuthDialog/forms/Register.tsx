@@ -28,7 +28,7 @@ export const RegisterForm: React.FC<LoginForm> = ({ onClose }) => {
     const onSubmit = async (data: RegistrationDto) => {
         setResponseError(false);
         try {
-            const { token } = await UserApi.registration({
+            const token = await UserApi.registration({
                 email: data.email,
                 password: data.password,
                 firstName: data.firstName,

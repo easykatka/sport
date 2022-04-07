@@ -8,11 +8,12 @@ export const instance = axios.create({
 export const UserApi = {
     async registration(dto: RegistrationDto) {
         const { data } = await instance.post('auth/registration', dto);
+        console.log('🚀 ~ file: index.ts ~ line 11 ~ registration ~ token', data);
         return data;
     },
 
-    async login(dto: LoginDto) {
-        const { data } = await instance.post('auth/login', { login: dto.email, password: dto.password });
+    async login({ email, password }: LoginDto) {
+        const { data } = await instance.post('auth/login', { email, password });
         return data;
     },
 
