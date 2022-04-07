@@ -8,6 +8,21 @@ import { RegistrationDto } from '../auth/dto/registration.dto';
 export class UserService {
     constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) {}
 
+    async findById(id: number) {
+        return this.userRepository.findByPk(id, { include: { all: true } });
+    }
+
+    async findAll() {
+        return this.userRepository.findAll();
+    }
+
+    async update(id: number, dto) {
+        const instance = await this.findById(id);
+        if (id) {
+            return instance.update(dto);
+        }
+    }
+
     async getAllUsers() {
         return this.userRepository.findAll({ include: { all: true } });
     }
