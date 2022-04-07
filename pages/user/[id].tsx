@@ -2,25 +2,16 @@ import { FC } from 'react';
 import { MainLayout } from 'client/layouts/MainLayout';
 import { fetch } from 'shared/utils/fetch';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
-import Head from 'next/head';
 import { inject, observer } from 'mobx-react';
 
-const User: FC = inject('store')(({ user, store }: any) => {
-    console.log(store, '333333');
+const User: FC = ({ user, store }: any) => {
     return (
-        <>
-            <Head>
-                <title>Рейтинг игроков | СОЮЗ</title>
-            </Head>
-            <MainLayout>
-                {user.email} {user.roles.map((i) => i.name)}
-                {store.users.map((i) => (
-                    <div>{i.email}</div>
-                ))}
-            </MainLayout>
-        </>
+        <MainLayout>
+            {user.email} {user.roles.map((i) => i.name)}
+            {store.users && store.users.map((i) => <div>{i.email}</div>)}
+        </MainLayout>
     );
-});
+};
 
 export const getServerSideProps = buildServerSideProps(async (ctx: any) => {
     try {
@@ -32,4 +23,4 @@ export const getServerSideProps = buildServerSideProps(async (ctx: any) => {
     }
 });
 
-export default User;
+export default inject('store')(observer(User));

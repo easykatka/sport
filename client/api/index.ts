@@ -15,4 +15,13 @@ export const UserApi = {
         const { data } = await instance.post('auth/login', { login: dto.email, password: dto.password });
         return data;
     },
+
+    async me(token: string) {
+        const { data } = await instance.get('user/me', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return data;
+    },
 };

@@ -1,4 +1,3 @@
-import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { FC } from 'react';
 import { MainLayout } from '../client/layouts/MainLayout';
 
