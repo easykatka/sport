@@ -7,19 +7,17 @@ import { theme } from '../client/theme';
 import '../client/styles/globals.scss';
 import 'macro-css';
 import { Provider } from 'mobx-react';
-import { useStore } from 'client/store/store';
+import { useStore } from 'client/hooks';
+import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 
 export default function App({ Component, pageProps }) {
     const { appData, initialState } = pageProps;
     const store = useStore(initialState);
+    console.log("🚀 ~ file: _app.tsx ~ line 16 ~ App ~ store", store)
+    const users = store.users;
+    console.log('🚀 ~ file: _app.tsx ~ line 19 ~ App ~ users', users);
     return (
         <>
-            <Head>
-                <title>СОЮЗ любителей мини-футбола</title>
-                <link rel='icon' href='/static/img/favicon.ico' />
-                <link rel='preconnect' href='https://fonts.googleapis.com' />
-                <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
-            </Head>
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <AppDataContext.Provider value={appData}>
@@ -31,3 +29,7 @@ export default function App({ Component, pageProps }) {
         </>
     );
 }
+
+// export function getServerSideProps() {
+//     return { props: { initialState: { lastUpdate: Date.now() } } }
+//   }

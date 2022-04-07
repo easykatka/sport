@@ -1,27 +1,27 @@
-import { makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable, runInAction } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
+import { fetch } from 'shared/utils/fetch';
 
 enableStaticRendering(typeof window === 'undefined');
 
 let store;
 
 class Store {
-    xep = null;
+    users = null;
     constructor() {
         makeAutoObservable(this);
     }
 
-    hydrate = (data) => {
-        if (!data) return;
-        this.xep = '123';
+    hydrate = async () => {
+        runInAction(async () => {
+            this.users = await fetch(`/api/user/getAllUsers`);
+        });
     };
 }
 
 export function initializeStore(initialData = null) {
     const _store = store ?? new Store();
-    if (initialData) {
-        _store.hydrate(initialData);
-    }
+    _store.hydrate(initialData);
     if (typeof window === 'undefined') return _store;
     if (!store) store = _store;
     return _store;
