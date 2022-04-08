@@ -14,14 +14,14 @@ import { AuthDialog } from '../AuthDialog';
 
 import { Paper, Button, IconButton, Avatar, ListItem, List } from '@mui/material';
 import { inject } from 'mobx-react';
-import { StoreType } from 'client/api/store';
+import { IStore } from 'client/api/store';
 
 interface IHeader {
-    store?: StoreType;
+    store?: IStore;
 }
 
 export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
-    const userData = store.user;
+    const { user, toggleShowSidebar } = store;
     const [authVisible, setAuthVisible] = React.useState(false);
 
     const openAuthDialog = () => {
@@ -33,20 +33,20 @@ export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
     };
 
     useEffect(() => {
-        if (authVisible && userData) {
+        if (authVisible && user) {
             setAuthVisible(false);
         }
-    }, [authVisible, userData]);
+    }, [authVisible, user]);
 
     return (
         <Paper classes={{ root: styles.root }} elevation={0}>
             <div className='d-flex align-center'>
-                <IconButton>
+                <IconButton onClick={() => toggleShowSidebar()}>
                     <MenuIcon />
                 </IconButton>
                 <Link href='/'>
                     <a>
-                        <img height={35} className='mr-20' src='/static/img/logo.svg' alt='Logo' />
+                        <img height={35} className='mr-20' src='/static/img/logo.png' alt='Logo' />
                     </a>
                 </Link>
             </div>
@@ -57,17 +57,15 @@ export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
                 <IconButton>
                     <NotificationIcon />
                 </IconButton>
-                {userData ? (
-                    <Link href='/profile/1'>
-                        <a className='d-flex align-center'>
-                            <Avatar
-                                className={styles.avatar}
-                                alt='Remy Sharp'
-                                src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
-                            />
-                            <ArrowBottom />
-                        </a>
-                    </Link>
+                {user ? (
+                    <>
+                        <Avatar
+                            className={styles.avatar}
+                            alt='Remy Sharp'
+                            src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
+                        />
+                        <ArrowBottom />
+                    </>
                 ) : (
                     <div className={styles.loginButton} onClick={openAuthDialog}>
                         <UserIcon />

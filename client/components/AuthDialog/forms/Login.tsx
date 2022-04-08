@@ -9,14 +9,14 @@ import { LoginDto } from 'shared/types/user';
 import axios from 'axios';
 import * as yup from 'yup';
 import { inject } from 'mobx-react';
-import { StoreType } from 'client/api/store';
+import { IStore } from 'client/api/store';
 import styles from '../AuthDialog.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface LoginForm {
     onOpenRegister: () => void;
     onClose: () => void;
-    store?: StoreType;
+    store?: IStore;
 }
 
 const LoginSchema = yup.object().shape({

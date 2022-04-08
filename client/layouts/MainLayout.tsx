@@ -1,35 +1,35 @@
 import React from 'react';
 import clsx from 'clsx';
-import { LeftMenu } from '../components/LeftMenu';
+import { Sidebar } from '../components/Sidebar';
 import { SideComments } from '../components/SideComments';
+import { inject, observer } from 'mobx-react';
+import { IStore } from 'client/api/store';
 
 interface MainLayoutProps {
     hideComments?: boolean;
     hideMenu?: boolean;
     contentFullWidth?: boolean;
     className?: string;
+    store?: IStore;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({
-    children,
-    contentFullWidth,
-    hideComments,
-    hideMenu,
-    className,
-}) => {
-    return (
-        <div className={clsx('wrapper', className)}>
-            {!hideMenu && (
-                <div className='leftSide'>
-                    <LeftMenu />
-                </div>
-            )}
-            <div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
-            {!hideComments && (
-                <div className='rightSide'>
-                    <SideComments />
-                </div>
-            )}
-        </div>
-    );
-};
+export const MainLayout: React.FC<MainLayoutProps> = inject('store')(
+    observer(({ children, contentFullWidth, hideComments, store, className }) => {
+        const { showSidebar } = store;
+        return (
+            <div className={clsx('wrapper', className)}>
+                {showSidebar && (
+                    <div className='leftSide'>
+                        <Sidebar />
+                    </div>
+                )}
+                <div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
+                {!hideComments && (
+                    <div className='rightSide'>
+                        <SideComments />
+                    </div>
+                )}
+            </div>
+        );
+    })
+);

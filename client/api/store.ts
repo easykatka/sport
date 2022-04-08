@@ -1,20 +1,21 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
 import { UserDto } from 'shared/types/user';
-
-export type StoreType = {
-    user: UserDto | null;
-};
-
 enableStaticRendering(typeof window === 'undefined');
-
-let store;
+export interface IStore {
+    user: UserDto | null;
+    showSidebar: boolean;
+    toggleShowSidebar: () => void;
+}
 
 class Store {
     user = null;
+    showSidebar = true;
     constructor() {
         makeAutoObservable(this);
     }
+
+    toggleShowSidebar = () => (this.showSidebar = !this.showSidebar);
 
     hydrate = async (initialState) => {
         if (!initialState) return;
@@ -25,6 +26,7 @@ class Store {
     };
 }
 
+let store;
 export function initializeStore(initialState = null) {
     const _store = store ?? new Store();
     _store.hydrate(initialState);

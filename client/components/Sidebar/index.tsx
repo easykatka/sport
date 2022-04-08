@@ -2,12 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import {
-    TrendingUpOutlined as TrendingIcon,
-    FormatListBulletedOutlined as ListIcon,
-} from '@mui/icons-material';
-
-import styles from './SideBar.module.scss';
+import { TrendingUpOutlined as TrendingIcon, FormatListBulletedOutlined as ListIcon } from '@mui/icons-material';
+import styles from './Sidebar.module.scss';
 import { useRouter } from 'next/router';
 
 const menu = [
@@ -16,7 +12,7 @@ const menu = [
     { text: 'Рейтинг Игроков', icon: <TrendingIcon />, path: '/rating' },
 ];
 
-export const SideBar: React.FC = () => {
+export const Sidebar: React.FC = () => {
     const router = useRouter();
 
     return (

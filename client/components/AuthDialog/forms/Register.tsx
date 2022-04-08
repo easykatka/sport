@@ -9,12 +9,12 @@ import { UserDto } from 'shared/types/user';
 import axios from 'axios';
 import * as yup from 'yup';
 import { inject } from 'mobx-react';
-import { StoreType } from 'client/api/store';
+import { IStore } from 'client/api/store';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface LoginForm {
     onClose: () => void;
-    store?: StoreType;
+    store?: IStore;
 }
 
 const RegistrationSchema = yup.object().shape({
