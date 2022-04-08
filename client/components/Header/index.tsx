@@ -15,6 +15,7 @@ import { AuthDialog } from '../AuthDialog';
 import { Paper, Button, IconButton, Avatar, ListItem, List } from '@mui/material';
 import { inject, observer } from 'mobx-react';
 import { IStore } from 'client/api/store';
+import { setCookie } from 'nookies';
 
 interface IHeader {
     store?: IStore;
@@ -38,6 +39,11 @@ export const Header: React.FC<IHeader> = inject('store')(
                 setAuthVisible(false);
             }
         }, [authVisible, user]);
+
+        const logout = () => {
+            setCookie(null, 'token', null, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+            store.user = null;
+        };
 
         return (
             <Paper classes={{ root: styles.root }} elevation={0}>
@@ -65,7 +71,7 @@ export const Header: React.FC<IHeader> = inject('store')(
                                 alt='Remy Sharp'
                                 src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
                             />
-                            <ArrowBottom onClick={() => (store.user = null)} />
+                            <ArrowBottom onClick={logout} />
                         </>
                     ) : (
                         <div className={styles.loginButton} onClick={openAuthDialog}>
