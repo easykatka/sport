@@ -27,8 +27,7 @@ export class AuthService {
 
     private generateToken({ email }: Pick<UserModel, 'email'>) {
         try {
-            const token = this.jwtService.sign({ email });
-            return token;
+            return this.jwtService.sign({ email });
         } catch (e) {
             console.log(e);
         }

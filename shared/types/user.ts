@@ -3,8 +3,9 @@ export type LoginDto = {
     password: string;
 };
 
-export type RegistrationDto = {
+export type UserDto = LoginDto & {
     firstName: string;
     lastName: string;
     middleName: string;
-} & LoginDto;
+    roles?: [];
+};

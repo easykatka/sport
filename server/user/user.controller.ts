@@ -23,8 +23,11 @@ export class UserController {
 
     @UseGuards(jwtAuthGuard)
     @Get('me')
-    getProfile(@Request() req) {
-        return this.userService.findById(req.user.id);
+    async getProfile(@Request() req) {
+        const profile = await this.userService.findById(req.user.id);
+        profile.password = undefined;
+        console.log('here', profile);
+        return profile;
     }
 
     @UseGuards(jwtAuthGuard)

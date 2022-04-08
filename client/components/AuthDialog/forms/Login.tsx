@@ -5,7 +5,7 @@ import { Alert, Button } from '@mui/material';
 import { FormField } from '../../FormField';
 import { UserApi } from 'client/api';
 import { setCookie } from 'nookies';
-import { LoginDto } from 'client/api/types';
+import { LoginDto } from 'shared/types/user';
 import axios from 'axios';
 import * as yup from 'yup';
 

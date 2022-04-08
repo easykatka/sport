@@ -5,13 +5,17 @@ import { AccountCircleOutlined as UserIcon } from '@mui/icons-material';
 import styles from './Header.module.scss';
 import { AuthDialog } from '../AuthDialog';
 import Image from 'next/image';
+import { inject } from 'mobx-react';
+import { StoreType } from '../../api/store';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+    store: StoreType;
+}
+
+export const Header: React.FC<HeaderProps> = inject('store')(({ store }) => {
     const [authVisible, setAuthVisible] = React.useState(false);
-
     const openAuthDialog = () => setAuthVisible(true);
     const closeAuthDialog = () => setAuthVisible(false);
-
     return (
         <Paper classes={{ root: styles.root }}>
             <div className={styles.wrapper}>
@@ -20,13 +24,20 @@ export const Header: React.FC = () => {
                         <Image src='/static/img/logo.png' width='130' height='110' />
                     </a>
                 </Link>
-
-                <div className={styles.loginButton} onClick={openAuthDialog}>
-                    <UserIcon />
-                    Войти
-                </div>
+                {}
+                {store.user ? (
+                    <div className={styles.loginButton} onClick={openAuthDialog}>
+                        <UserIcon />
+                        {store.user.firstName}
+                    </div>
+                ) : (
+                    <div className={styles.loginButton} onClick={openAuthDialog}>
+                        <UserIcon />
+                        Войти
+                    </div>
+                )}
             </div>
             {authVisible && <AuthDialog onClose={closeAuthDialog} visible={authVisible} />}
         </Paper>
     );
-};
+});

@@ -9,9 +9,7 @@ export class UserService {
     constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) {}
 
     async findById(id: number) {
-        const user = await this.userRepository.findByPk(id, { include: { all: true } });
-        user.password = undefined;
-        return user;
+        return this.userRepository.findByPk(id, { include: { all: true } });;
     }
 
     findAll() {

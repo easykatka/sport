@@ -8,6 +8,7 @@ export const getPostgresConfig = async (ConfigService: ConfigService): Promise<S
         autoLoadModels: true,
         synchronize: true,
         models: MODELS,
+        logging: false,
         ...getConfigOptions(ConfigService),
         sync: { alter: true },
     };

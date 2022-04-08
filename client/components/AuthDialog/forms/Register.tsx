@@ -5,7 +5,7 @@ import { Alert, Button } from '@mui/material';
 import { FormField } from '../../FormField';
 import { UserApi } from 'client/api';
 import { setCookie } from 'nookies';
-import { RegistrationDto } from 'client/api/types';
+import { UserDto } from 'shared/types/user';
 import axios from 'axios';
 import * as yup from 'yup';
 
@@ -23,9 +23,9 @@ const RegistrationSchema = yup.object().shape({
 
 export const RegisterForm: React.FC<LoginForm> = ({ onClose }) => {
     const [responseError, setResponseError] = React.useState(false);
-    const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
+    const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
-    const onSubmit = async (data: RegistrationDto) => {
+    const onSubmit = async (data: UserDto) => {
         setResponseError(false);
         try {
             const token = await UserApi.registration({

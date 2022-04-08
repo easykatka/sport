@@ -13,15 +13,4 @@ const Home: FC = () => {
     );
 };
 
-export const getServerSideProps = buildServerSideProps(async (ctx) => {
-    try {
-        const { token } = parseCookies(ctx);
-        const userData = token !== 'undefined' ? await UserApi.me(token) : undefined;
-        return { props: {} };
-    } catch (e) {
-        console.log(e);
-        return { props: {} };
-    }
-});
-
 export default Home;
