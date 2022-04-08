@@ -1,12 +1,9 @@
-html {
-    margin-right: calc(-1 * (100vw - 100%));
-}
+html,
 body {
     padding: 0;
     margin: 0;
     background-color: #f2f2f2 !important;
     font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
-    min-height: 100vh;
 }
 
 a {
@@ -22,21 +19,27 @@ a {
 }
 
 .content {
-    // max-width: 640px;
-    width: 100%; 
-    margin-left: 220px;
-    & > * {
-        height: 100% !important;
-        align-items: center;
-        background-color: #f2f2f2 !important;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+
+    &--full {
+        max-width: 1000px;
     }
 }
 
 .wrapper {
     display: flex;
     padding: 0 30px;
-    max-width: 1400px;
-    width: 100%;
+    padding-top: 80px;
+}
+
+.main-layout-white {
+    background-color: #fff;
+    height: 100vh;
+}
+
+.container {
     margin: 0 auto;
-    padding-top: 140px;
+    width: 680px;
 }

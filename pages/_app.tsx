@@ -8,7 +8,8 @@ import { Provider } from 'mobx-react';
 import { useStore } from 'client/hooks';
 import { UserApi } from 'client/api';
 import { parseCookies } from 'nookies';
-import { extractAppData } from '../client/ssr/extractAppData';
+import { extractAppData } from 'client/ssr/extractAppData';
+import { Header } from 'client/components/Header';
 
 export default function App({ Component, pageProps }) {
     const { initialState, appData } = pageProps;
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }) {
                     <Head>
                         <title>СОЮЗ любителей мини-футбола</title>
                     </Head>
+                    <Header />
                     <CssBaseline />
                     <Component {...pageProps} />
                 </AppDataContext.Provider>

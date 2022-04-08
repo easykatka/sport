@@ -8,4 +8,5 @@ export type UserDto = LoginDto & {
     lastName: string;
     middleName: string;
     roles?: [];
+    id?: number;
 };
