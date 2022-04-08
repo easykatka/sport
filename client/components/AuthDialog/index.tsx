@@ -33,11 +33,7 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
                     {formType === FormValues.LOGIN && (
                         <LoginForm onOpenRegister={() => setFormType(FormValues.REGISTER)} onClose={onClose} />
                     )}
-                    {formType === FormValues.REGISTER && (
-                        <RegisterForm
-                            onClose={onClose}
-                        />
-                    )}
+                    {formType === FormValues.REGISTER && <RegisterForm onClose={onClose} />}
                 </div>
             </DialogContent>
         </Dialog>

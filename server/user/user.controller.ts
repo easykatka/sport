@@ -26,7 +26,6 @@ export class UserController {
     async getProfile(@Request() req) {
         const profile = await this.userService.findById(req.user.id);
         profile.password = undefined;
-        console.log('here', profile);
         return profile;
     }
 

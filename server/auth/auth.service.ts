@@ -17,12 +17,16 @@ export class AuthService {
             throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
         }
         const user = await this.userService.createUser(dto);
-        return this.generateToken(user);
+        const token = this.generateToken(user);
+        user.password = undefined;
+        return { user, token };
     }
 
     async login(dto: LoginDto) {
         const user = await this.validateUser(dto);
-        return this.generateToken(user);
+        const token = this.generateToken(user);
+        user.password = undefined;
+        return { user, token };
     }
 
     private generateToken({ email }: Pick<UserModel, 'email'>) {

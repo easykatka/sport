@@ -9,7 +9,7 @@ export class UserService {
     constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) {}
 
     async findById(id: number) {
-        return this.userRepository.findByPk(id, { include: { all: true } });;
+        return this.userRepository.findByPk(id, { include: { all: true } });
     }
 
     findAll() {

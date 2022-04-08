@@ -1,39 +1,39 @@
 .content {
-  width: 60%;
-  margin: 30px auto;
-
-  button {
-    position: relative;
-
-    svg {
-      position: absolute;
-      left: 10px;
-      width: 24px;
-      height: 24px;
-    }
-  }
+    width: 60%;
+    margin: 30px auto;
 }
 
 .title {
-  display: block;
-  color: black !important;
-  margin-bottom: 25px !important;
-  font-weight: 500 !important;
-  text-align: center;
+    display: block;
+    color: black !important;
+    margin-bottom: 25px !important;
+    font-weight: 500 !important;
+    text-align: center;
 }
 
 .backTitle {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 
-  &:hover {
-    color: #4683d9;
-  }
+    &:hover {
+        color: #4683d9;
+    }
 
-  svg {
-    margin-right: 10px;
-    position: relative;
-    top: -1px;
-  }
+    svg {
+        margin-right: 10px;
+        position: relative;
+        top: -1px;
+    }
+}
+
+.noAccount {
+    margin-top: 20px;
+    font-size: 14px;
+    span {
+        color: #4683d9;
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
