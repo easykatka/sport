@@ -8,6 +8,9 @@ import '../client/styles/globals.scss';
 import 'macro-css';
 import { Provider } from 'mobx-react';
 import { useStore } from 'client/hooks';
+import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
+import { UserApi } from 'client/api';
+import { parseCookies } from 'nookies';
 
 export default function App({ Component, pageProps }) {
     const { appData, initialState } = pageProps;
@@ -26,3 +29,15 @@ export default function App({ Component, pageProps }) {
         </Provider>
     );
 }
+
+App.getInitialProps = buildServerSideProps(async (ctx) => {
+    console.log('🚀 ~ file: _app.tsx ~ line 34 ~ getInitialProps ~ ctx', ctx);
+    try {
+        const { token } = parseCookies(ctx);
+        const userData = token && token !== 'undefined' ? await UserApi.me(token) : undefined;
+        return { props: {} };
+    } catch (e) {
+        console.log(e);
+        return { props: {} };
+    }
+});
