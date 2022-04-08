@@ -29,7 +29,7 @@ export const theme = createTheme({
                     textTransform: 'inherit',
                     fontSize: 16,
                     transition: 'none',
-					color : '#000',
+                    color: '#000',
                     '&:active': {
                         boxShadow:
                             '0 1px 1px rgb(0 0 0 / 15%), 0 4px 7px rgb(0 0 0 / 0%), 0 -1px 0 rgb(0 0 0 / 5%), -1px 0 0 rgb(0 0 0 / 5%), 1px 0 0 rgb(0 0 0 / 5%) !important',
@@ -47,13 +47,11 @@ export const theme = createTheme({
                     },
                 },
                 containedPrimary: {
-                     backgroundColor: 'white',
-                    boxShadow:
-                        '0 1px 1px rgb(0 0 0 / 15%), 0 4px 7px rgb(0 0 0 / 5%), 0 -1px 0 rgb(0 0 0 / 5%), -1px 0 0 rgb(0 0 0 / 5%), 1px 0 0 rgb(0 0 0 / 5%)',
+                    backgroundColor: '#1a1a1a',
+                    color: 'white',
                     '&:hover': {
-                        backgroundColor: 'white',
-                        boxShadow:
-                            '0 1px 1px rgb(0 0 0 / 18%), 0 4px 7px rgb(0 0 0 / 8%), 0 -1px 0 rgb(0 0 0 / 8%), -1px 0 0 rgb(0 0 0 / 8%), 1px 0 0 rgb(0 0 0 / 15%)',
+                        backgroundColor: '#262626',
+                        color: 'white',
                     },
                 },
             },

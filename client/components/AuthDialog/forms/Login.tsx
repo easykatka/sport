@@ -21,7 +21,6 @@ interface LoginForm {
 
 const LoginSchema = yup.object().shape({
     email: yup.string().email('email введен не корректно').required('Введите email'),
-    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
 });
 
 export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister, onClose, store }) => {
@@ -80,10 +79,10 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                     <div className='d-flex align-center justify-between flex-column'>
                         <Button
                             color='primary'
-                            variant='outlined'
+                            variant='contained'
                             type='submit'
                             fullWidth
-                            disabled={!form.formState.isValid || form.formState.isSubmitting}>
+                            disabled={form.formState.isSubmitting}>
                             Войти
                         </Button>
                         <span className={styles.noAccount}>
