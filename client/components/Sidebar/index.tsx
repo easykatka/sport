@@ -7,7 +7,7 @@ import styles from './Sidebar.module.scss';
 import { useRouter } from 'next/router';
 
 const menu = [
-    { text: 'Игры', icon: <SportsSoccerIcon />, path: '/' },
+    { text: 'Игры', icon: <SportsSoccerIcon />, path: '/games' },
     { text: 'Правила', icon: <ListIcon />, path: '/rules' },
     { text: 'Рейтинг Игроков', icon: <TrendingIcon />, path: '/rating' },
 ];

@@ -28,15 +28,9 @@
     display: flex;
     align-items: center;
     font-size: 16px;
-    cursor: pointer;
     font-weight: 500;
-    margin-left: 15px;
 
     svg {
         margin-right: 10px;
-    }
-
-    &:hover {
-        color: #29b241;
     }
 }
