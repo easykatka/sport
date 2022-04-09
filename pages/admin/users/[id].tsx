@@ -62,7 +62,7 @@ const User: FC<UserProps> = ({ user }) => {
 								<AddAPhotoIcon />
 							</IconButton>
 						</label>
-						<div className="controls">
+						<div className="mt-20">
 							<Button
 								color='primary'
 								variant='contained'

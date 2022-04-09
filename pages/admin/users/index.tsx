@@ -11,14 +11,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
+import { Button } from '@mui/material';
 
 const Users: FC = ({ users }: any) => {
+	const onAddClick = () => router.push('/admin/users/add')
 	return (
 		<>
 			<Head>
 				<title>Администрирование СОЮЗ | Пользователи</title>
 			</Head>
 			<AdminLayout>
+				<Button
+					className='mb-20'
+					color='primary'
+					variant='contained'
+					onClick={onAddClick}
+					size='large'>Добавить</Button>
 				<TableContainer component={Paper}>
 					<Table>
 						<TableHead>
