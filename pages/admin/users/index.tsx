@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 
-const Rules: FC = ({ users }: any) => {
+const Users: FC = ({ users }: any) => {
 	return (
 		<>
 			<Head>
@@ -61,4 +61,4 @@ export const getServerSideProps = buildServerSideProps(async () => {
 	}
 });
 
-export default Rules;
+export default Users;

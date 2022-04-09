@@ -4,20 +4,31 @@ import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
 import { RegistrationDto } from '../auth/dto/registration.dto';
 
+const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
 export class UserService {
 	constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) { }
 
 	findById(id: number) {
-		return this.userRepository.findByPk(id, { include: { all: true } });
+		return this.userRepository.findByPk(id, {
+			include: { all: true },
+			attributes: userResponseFields
+		});
 	}
 
 	findAll() {
-		return this.userRepository.findAll({ include: { all: true } });
+		return this.userRepository.findAll({
+			include: { all: true },
+			attributes: userResponseFields
+		});
 	}
 
 	getUserByEmail(email: string) {
-		return this.userRepository.findOne({ where: { email }, include: { all: true } });
+		return this.userRepository.findOne({
+			where: { email },
+			attributes: userResponseFields,
+			include: { all: true }
+		});
 	}
 
 	async create(@Body() dto: RegistrationDto) {

@@ -23,6 +23,11 @@ export class UserController {
 		return this.userService.findAll();
 	}
 
+	@Get('/getById/:id')
+	getById(@Param('id') id: number) {
+		return this.userService.findById(id);
+	}
+
 	@UseGuards(jwtAuthGuard)
 	@Get('me')
 	async getProfile(@Request() req) {
