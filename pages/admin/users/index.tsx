@@ -50,7 +50,7 @@ const Rules: FC = ({ users }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const users = await fetch('/api/user/getAllUsers');
+		const users = await fetch('/api/user/getUsers');
 		return { users };
 	} catch (e) {
 		console.log(e);

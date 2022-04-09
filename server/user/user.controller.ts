@@ -8,9 +8,9 @@ import { jwtAuthGuard } from 'server/auth/guards/jwt.guard';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Get('/getAllUsers')
-    getAllUsers() {
-        return this.userService.getAllUsers();
+	@Get('/getUsers')
+	getUsers() {
+		return this.userService.getUsers();
     }
 
     getUserByEmail(email: string) {

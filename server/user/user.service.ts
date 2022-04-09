@@ -23,7 +23,7 @@ export class UserService {
         }
     }
 
-    getAllUsers() {
+	getUsers() {
         return this.userRepository.findAll({ include: { all: true } });
     }
 
