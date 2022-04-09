@@ -21,7 +21,7 @@ class Store {
         if (!initialState) return;
         runInAction(() => {
             this.user = initialState.user;
-            console.log('logged user: ', this.user);
+			(typeof window !== 'undefined') && console.log('logged user: ', this.user);
         });
     };
 }

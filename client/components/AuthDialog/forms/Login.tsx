@@ -14,90 +14,87 @@ import styles from '../AuthDialog.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface LoginForm {
-    onOpenRegister: () => void;
-    onClose: () => void;
-    store?: IStore;
+	onOpenRegister: () => void;
+	onClose: () => void;
+	store?: IStore;
 }
 
-const LoginSchema = yup.object().shape({
-    email: yup.string().email('email введен не корректно').required('Введите email'),
-    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
-});
 
 export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister, onClose, store }) => {
-    const [responseError, setResponseError] = React.useState(false);
-    const [showPassword, setShowPassword] = React.useState(false);
-    const form = useForm<LoginDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
+	const [responseError, setResponseError] = React.useState(false);
+	const [showPassword, setShowPassword] = React.useState(false);
+	const form = useForm<LoginDto>({ mode: 'onChange' });
 
-    const onShowPasswordChange = () => setShowPassword(!showPassword);
+	const onShowPasswordChange = () => setShowPassword(!showPassword);
 
-    const getError = (field) => form.formState.errors[field]?.message;
-    const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
+	const getError = (field) => form.formState.errors[field]?.message;
+	const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 
-    const onSubmit = async (data: LoginDto) => {
-        setResponseError(false);
-        try {
-            const { token, user } = await UserApi.login({ email: data.email, password: String(data.password) });
-            setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
-            store.user = user;
-            onClose();
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                setResponseError(error.response.data.message);
-            }
-        }
-    };
+	const onSubmit = async (data: LoginDto) => {
+		setResponseError(false);
+		try {
+			const { token, user } = await UserApi.login({ email: data.email, password: String(data.password) });
+			setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+			store.user = user;
+			onClose();
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				setResponseError(error.response.data.message);
+			}
+		}
+	};
 
-    return (
-        <div>
-            <FormProvider {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <FormField name='email' label='почта' />
-                    <FormControl fullWidth variant='outlined' size='small'>
-                        <InputLabel htmlFor='outlined-adornment-password'>
-                            {renderLabel(getError('password'), 'Пароль')}
-                        </InputLabel>
-                        <OutlinedInput
-                            {...form.register('password')}
-                            id='outlined-adornment-password'
-                            type={showPassword ? 'text' : 'password'}
-                            className='mb-20'
-                            label={form.formState.errors.password?.message || 'Пароль'}
-                            fullWidth
-                            error={!!form.formState.errors.password?.message}
-                            endAdornment={
-                                <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label='toggle password visibility'
-                                        onClick={onShowPasswordChange}
-                                        onMouseDown={onShowPasswordChange}
-                                        edge='end'>
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    </FormControl>
-                    {responseError && (
-                        <Alert className='mb-20' severity='error'>
-                            {responseError}
-                        </Alert>
-                    )}
-                    <div className='d-flex align-center justify-between flex-column'>
-                        <Button
-                            color='primary'
-                            variant='contained'
-                            type='submit'
-                            fullWidth
-                            disabled={!form.formState.isValid || form.formState.isSubmitting}>
-                            Войти
-                        </Button>
-                        <span className={styles.noAccount}>
-                            Нет аккаунта? <span onClick={onOpenRegister}>Зарегистрироваться</span>
-                        </span>
-                    </div>
-                </form>
-            </FormProvider>
-        </div>
-    );
+	return (
+		<div>
+			<FormProvider {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)}>
+					<FormField name='email' label='почта' />
+					<FormControl fullWidth variant='outlined' size='small'>
+						<InputLabel htmlFor='outlined-adornment-password'>
+							{renderLabel(getError('password'), 'Пароль')}
+						</InputLabel>
+						<OutlinedInput
+							{...form.register('password')}
+							id='outlined-adornment-password'
+							type={showPassword ? 'text' : 'password'}
+							className='mb-20'
+							label={form.formState.errors.password?.message || 'Пароль'}
+							fullWidth
+							error={!!form.formState.errors.password?.message}
+							endAdornment={
+								<InputAdornment position='end'>
+									<IconButton
+										aria-label='toggle password visibility'
+										onClick={onShowPasswordChange}
+										onMouseDown={onShowPasswordChange}
+										edge='end'>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+						/>
+					</FormControl>
+					{responseError && (
+						<Alert className='mb-20' severity='error'>
+							{responseError}
+						</Alert>
+					)}
+					<div className='d-flex align-center justify-between flex-column'>
+						<Button
+							color='primary'
+							variant='contained'
+							type='submit'
+							fullWidth
+							size='large'
+							disabled={!form.formState.isValid || form.formState.isSubmitting}>
+							Войти
+						</Button>
+						<span className={styles.noAccount}>
+							Нет аккаунта? <span onClick={onOpenRegister}>Зарегистрироваться</span>
+						</span>
+					</div>
+				</form>
+			</FormProvider>
+		</div>
+	);
 });

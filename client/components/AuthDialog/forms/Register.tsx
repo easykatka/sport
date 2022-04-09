@@ -93,8 +93,8 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             )}
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className='d-flex align-center justify-center'>
-                    <Button color='primary' variant='contained' size='small' type='submit' fullWidth>
-                        Зарегистрироватся
+					<Button color='primary' variant='contained' size='large' type='submit' fullWidth>
+                        Зарегистрироваться
                     </Button>
                 </div>
             </form>
