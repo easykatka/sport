@@ -26,7 +26,6 @@ export class UserService {
 	getUserByEmail(email: string) {
 		return this.userRepository.findOne({
 			where: { email },
-			attributes: userResponseFields,
 			include: { all: true }
 		});
 	}
