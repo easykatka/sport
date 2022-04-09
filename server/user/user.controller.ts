@@ -10,18 +10,17 @@ export class UserController {
 	constructor(private readonly userService: UserService) { }
 
 	@Get('/create')
-	createUser(dto: RegistrationDto) {
+	create(dto: RegistrationDto) {
 		return this.userService.create(dto);
 	}
-
-	@Get('/getUsers')
-	getUsers() {
-		return this.userService.findAll();
+	@Get('/update')
+	update(dto: RegistrationDto) {
+		return this.userService.update(dto);
 	}
 
-	@Get('/getUserByEmail/:email')
-	getUserByEmail(@Param('email') email: string) {
-		return this.userService.getUserByEmail(email);
+	@Get('/getAll')
+	getAll() {
+		return this.userService.findAll();
 	}
 
 	@UseGuards(jwtAuthGuard)
