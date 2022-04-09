@@ -4,25 +4,22 @@ import { AdminSidebar } from 'client/components/AdminSidebar';
 import { inject, observer } from 'mobx-react';
 import { IStore } from 'client/api/store';
 
-interface MainLayoutProps {
-	hideComments?: boolean;
+interface AdminLayoutProps {
 	hideMenu?: boolean;
-	contentFullWidth?: boolean;
-	className?: string;
 	store?: IStore;
 }
 
-export const AdminLayout: React.FC<MainLayoutProps> = inject('store')(
-	observer(({ children, contentFullWidth, hideComments, store, className }) => {
+export const AdminLayout: React.FC<AdminLayoutProps> = inject('store')(
+	observer(({ children, store }) => {
 		const { showSidebar } = store;
 		return (
-			<div className={clsx('wrapper', className)}>
+			<div className={'wrapper'}>
 				{showSidebar && (
 					<div className='leftSide'>
 						<AdminSidebar />
 					</div>
 				)}
-				<div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
+				<div className={'content-admin'}>{children}</div>
 			</div>
 		);
 	})
