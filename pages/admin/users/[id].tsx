@@ -6,16 +6,19 @@ import { fetch } from 'shared/utils/fetch';
 import { UserDto } from 'shared/types/user';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import styles from '../AuthDialog.module.scss';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FormField } from 'client/components/FormField';
+import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import styled from '@emotion/styled';
 
 interface UserProps {
 	user: UserDto;
 };
+
+const Input = styled('input')({
+	display: 'none',
+});
 
 const User: FC<UserProps> = ({ user }) => {
 	const [responseError, setResponseError] = React.useState(false);
@@ -34,7 +37,7 @@ const User: FC<UserProps> = ({ user }) => {
 	const onSubmit = async (data) => {
 		setResponseError(false);
 		try {
-
+			alert('123')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message);
@@ -50,6 +53,28 @@ const User: FC<UserProps> = ({ user }) => {
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
 						<GridData fields={fields} />
+						<label htmlFor="icon-button-file">
+							<Input accept="image/*" id="icon-button-file" type="file" />
+							<IconButton color="primary" aria-label="upload picture" component="span">
+								<AddAPhotoIcon />
+							</IconButton>
+						</label>
+						<div className="controls">
+							<Button
+								color='primary'
+								variant='contained'
+								size='large'
+								type='submit'>
+								{user.id ? 'Сохранить' : 'Создать'}
+							</Button>
+							{user.id && <IconButton color="secondary" size="large">
+								<DeleteIcon />
+							</IconButton>
+							}
+						</div>
+
+
+
 						{responseError && (
 							<Alert className='mb-20' severity='error'>
 								{responseError}
@@ -57,6 +82,7 @@ const User: FC<UserProps> = ({ user }) => {
 						)}
 					</form>
 				</FormProvider>
+
 			</AdminLayout>
 		</>
 	);
