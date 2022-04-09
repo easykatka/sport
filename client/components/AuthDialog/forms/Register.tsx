@@ -52,19 +52,24 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
         }
     };
 
+    const getError = (field) => form.formState.errors[field]?.message;
+    const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
+
     return (
         <FormProvider {...form}>
-            <FormField name='email' label='почта' />
-
+            <FormField name='email' label={renderLabel(getError('email'), 'Почта')} />
             <FormControl fullWidth variant='outlined' size='small'>
-                <InputLabel htmlFor='outlined-adornment-password'>Пароль</InputLabel>
+                <InputLabel htmlFor='outlined-adornment-password'>
+                    {renderLabel(getError('password'), 'Пароль')}
+                </InputLabel>
                 <OutlinedInput
                     {...form.register('password')}
                     id='outlined-adornment-password'
                     type={showPassword ? 'text' : 'password'}
                     className='mb-20'
-                    label='Пароль'
+                    label={form.formState.errors.password?.message || 'Пароль'}
                     fullWidth
+                    error={!!form.formState.errors.password?.message}
                     endAdornment={
                         <InputAdornment position='end'>
                             <IconButton

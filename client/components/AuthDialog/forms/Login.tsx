@@ -21,6 +21,7 @@ interface LoginForm {
 
 const LoginSchema = yup.object().shape({
     email: yup.string().email('email введен не корректно').required('Введите email'),
+    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
 });
 
 export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister, onClose, store }) => {
@@ -29,6 +30,9 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
     const form = useForm<LoginDto>({ mode: 'onChange', resolver: yupResolver(LoginSchema) });
 
     const onShowPasswordChange = () => setShowPassword(!showPassword);
+
+    const getError = (field) => form.formState.errors[field]?.message;
+    const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 
     const onSubmit = async (data: LoginDto) => {
         setResponseError(false);
@@ -50,14 +54,17 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField name='email' label='почта' />
                     <FormControl fullWidth variant='outlined' size='small'>
-                        <InputLabel htmlFor='outlined-adornment-password'>Пароль</InputLabel>
+                        <InputLabel htmlFor='outlined-adornment-password'>
+                            {renderLabel(getError('password'), 'Пароль')}
+                        </InputLabel>
                         <OutlinedInput
                             {...form.register('password')}
                             id='outlined-adornment-password'
                             type={showPassword ? 'text' : 'password'}
                             className='mb-20'
-                            label='Пароль'
+                            label={form.formState.errors.password?.message || 'Пароль'}
                             fullWidth
+                            error={!!form.formState.errors.password?.message}
                             endAdornment={
                                 <InputAdornment position='end'>
                                     <IconButton
@@ -82,7 +89,7 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                             variant='contained'
                             type='submit'
                             fullWidth
-                            disabled={form.formState.isSubmitting}>
+                            disabled={!form.formState.isValid || form.formState.isSubmitting}>
                             Войти
                         </Button>
                         <span className={styles.noAccount}>

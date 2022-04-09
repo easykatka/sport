@@ -5,22 +5,23 @@ import { TextField } from '@mui/material';
 interface FormFieldProps {
     name: string;
     label: string;
-    noErrorMessage?: boolean;
     endAdornment?: object;
     type?: string;
 }
 
-export const FormField: React.FC<FormFieldProps> = ({ name, noErrorMessage = false, ...props }) => {
+export const FormField: React.FC<FormFieldProps> = ({ name, label, ...props }) => {
     const { register, formState } = useFormContext();
+    const getError = (field) => formState.errors[field]?.message;
+    const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 
     return (
         <TextField
             {...register(name)}
+            label={renderLabel(getError(name), label)}
             className='mb-20'
             size='small'
             variant='outlined'
-            error={noErrorMessage ? undefined : !!formState.errors[name]?.message}
-            helperText={noErrorMessage ? undefined : formState.errors[name]?.message}
+            error={!!formState.errors[name]?.message}
             fullWidth
             {...props}
         />
