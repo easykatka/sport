@@ -39,7 +39,7 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
 			onClose();
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message.join(', '));
+				setResponseError(error.response.data.message.join?.(', ') || error.response.data.message);
 			}
 		}
 	};

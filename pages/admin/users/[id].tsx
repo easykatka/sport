@@ -25,6 +25,7 @@ const Input = styled('input')({
 const User: FC<UserProps> = ({ user }) => {
 	const [responseError, setResponseError] = React.useState(false);
 	const form = useForm<UserDto>({ mode: 'onChange', defaultValues: user });
+	//TODO validation и посмотреть смену пароля
 
 	const fields = [
 		{ name: 'email', label: 'Email' },
@@ -43,7 +44,7 @@ const User: FC<UserProps> = ({ user }) => {
 			router.push('/admin/users')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message.join(', '));
+				setResponseError(error.response.data.message.join?.(', ') || error.response.data.message);
 			}
 		}
 	};

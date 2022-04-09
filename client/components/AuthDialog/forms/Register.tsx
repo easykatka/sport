@@ -47,7 +47,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
 			onClose();
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message.join(', '));
+				setResponseError(error.response.data.message.join?.(', ') || error.response.data.message);
 			}
 		}
 	};

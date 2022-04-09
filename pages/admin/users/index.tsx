@@ -15,6 +15,7 @@ import { Button } from '@mui/material';
 
 const Users: FC = ({ users }: any) => {
 	const onAddClick = () => router.push('/admin/users/add')
+
 	return (
 		<>
 			<Head>
