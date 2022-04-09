@@ -24,20 +24,24 @@ const Rules: FC = ({ users }: any) => {
 						<TableHead>
 							<TableRow>
 								<TableCell>id</TableCell>
+								<TableCell>Фото</TableCell>
 								<TableCell>Фамилия</TableCell>
 								<TableCell>Имя</TableCell>
 								<TableCell>Отчество</TableCell>
-								<TableCell>Почта</TableCell>
+								<TableCell>Email</TableCell>
+								<TableCell>Телеграм</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							{users.map((user) => (
-								<TableRow key={user.id} onClick={() => router.push(`${router.asPath}/${user.id}`)}>
+								<TableRow hover key={user.id} onClick={() => router.push(`${router.asPath}/${user.id}`)}>
 									<TableCell>{user.id}</TableCell>
-									<TableCell component='th' scope='row'>{user.lastName}</TableCell>
+									<TableCell>{user.avatar}</TableCell>
+									<TableCell>{user.lastName}</TableCell>
 									<TableCell>{user.firstName}</TableCell>
 									<TableCell>{user.middleName}</TableCell>
 									<TableCell>{user.email}</TableCell>
+									<TableCell>{user.telegram}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

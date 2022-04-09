@@ -30,7 +30,7 @@ const Rules: FC = ({ roles }: any) => {
 						</TableHead>
 						<TableBody>
 							{roles.map((role) => (
-								<TableRow key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
+								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
 									<TableCell>{role.id}</TableCell>
 									<TableCell>{role.name}</TableCell>
 									<TableCell>{role.description}</TableCell>

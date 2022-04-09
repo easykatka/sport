@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
@@ -6,37 +6,33 @@ import { RegistrationDto } from '../auth/dto/registration.dto';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) {}
+	constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) { }
 
-    async findById(id: number) {
-        return this.userRepository.findByPk(id, { include: { all: true } });
-    }
+	findById(id: number) {
+		return this.userRepository.findByPk(id, { include: { all: true } });
+	}
 
-    findAll() {
-        return this.userRepository.findAll();
-    }
+	findAll() {
+		return this.userRepository.findAll({ include: { all: true } });
+	}
 
-    async update(id: number, dto) {
-        const instance = await this.findById(id);
-        if (id) {
-            return instance.update(dto);
-        }
-    }
+	getUserByEmail(email: string) {
+		return this.userRepository.findOne({ where: { email }, include: { all: true } });
+	}
 
-	getUsers() {
-        return this.userRepository.findAll({ include: { all: true } });
-    }
+	async create(@Body() dto: RegistrationDto) {
+		const salt = await genSalt(10);
+		const newUser = new this.userRepository({
+			...dto,
+			password: await hash(dto.password, salt),
+		});
+		return newUser.save();
+	}
 
-    getUserByEmail(email: string) {
-        return this.userRepository.findOne({ where: { email }, include: { all: true } });
-    }
-
-    async createUser(dto: RegistrationDto) {
-        const salt = await genSalt(10);
-        const newUser = new this.userRepository({
-            ...dto,
-            password: await hash(dto.password, salt),
-        });
-        return newUser.save();
-    }
+	async update(dto) {
+		const instance = await this.findById(dto.id);
+		if (dto.id) {
+			return instance.update(dto);
+		}
+	}
 }

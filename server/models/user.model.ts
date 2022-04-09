@@ -8,7 +8,9 @@ interface UserCreationAttrs {
 	password: string;
 	firstName?: string,
 	lastName?: string,
-	middleName?: string
+	middleName?: string,
+	telegram?: string,
+	avatar?: string
 }
 
 @Table({ tableName: 'User' })
@@ -24,6 +26,14 @@ export class UserModel extends Model<UserModel, UserCreationAttrs> {
 	@ApiProperty({ example: '1234qwer', description: 'Пароль пользователя' })
 	@Column({ type: DataType.STRING, allowNull: false })
 	password: string;
+
+	@ApiProperty({ example: '433443', description: 'Телеграм пользователя' })
+	@Column({ type: DataType.STRING, allowNull: true })
+	telegram: string;
+
+	@ApiProperty({ example: 'image.jpg', description: 'Аватар пользователя' })
+	@Column({ type: DataType.STRING, allowNull: true })
+	avatar: string;
 
 	@ApiProperty({ example: 'Имя', description: 'Имя пользователя' })
 	@Column({ type: DataType.STRING, allowNull: true })

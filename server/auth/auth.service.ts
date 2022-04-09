@@ -16,7 +16,7 @@ export class AuthService {
         if (candidate) {
             throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
         }
-        const user = await this.userService.createUser(dto);
+        const user = await this.userService.create(dto);
         const token = this.generateToken(user);
         user.password = undefined;
         return { user, token };
