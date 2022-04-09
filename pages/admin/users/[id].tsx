@@ -11,6 +11,8 @@ import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import styled from '@emotion/styled';
+import { UserApi } from 'client/api';
+import router from 'next/router';
 
 interface UserProps {
 	user: UserDto;
@@ -37,10 +39,11 @@ const User: FC<UserProps> = ({ user }) => {
 	const onSubmit = async (data) => {
 		setResponseError(false);
 		try {
-			alert('123')
+			user.id ? await UserApi.update(data) : await UserApi.create(data);
+			router.push('/admin/users')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message);
+				setResponseError(error.response.data.message.join(', '));
 			}
 		}
 	};

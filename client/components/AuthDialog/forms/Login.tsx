@@ -3,9 +3,9 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { FormField } from '../../FormField';
-import { UserApi } from 'client/api';
+import { AuthApi } from 'client/api';
 import { setCookie } from 'nookies';
-import { LoginDto } from 'shared/types/user';
+import { LoginDto } from 'shared/types/auth';
 import axios from 'axios';
 import * as yup from 'yup';
 import { inject } from 'mobx-react';
@@ -33,13 +33,13 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
 	const onSubmit = async (data: LoginDto) => {
 		setResponseError(false);
 		try {
-			const { token, user } = await UserApi.login({ email: data.email, password: String(data.password) });
+			const { token, user } = await AuthApi.login({ email: data.email, password: String(data.password) });
 			setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 			store.user = user;
 			onClose();
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message);
+				setResponseError(error.response.data.message.join(', '));
 			}
 		}
 	};

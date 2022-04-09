@@ -14,5 +14,5 @@ export class RegistrationDto {
     middleName: string;
 
     @IsString()
-    lastName: string;
+    lastName: string;	
 }

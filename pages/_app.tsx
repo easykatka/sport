@@ -6,7 +6,7 @@ import 'client/styles/globals.scss';
 import 'macro-css';
 import { Provider } from 'mobx-react';
 import { useStore } from 'client/hooks';
-import { UserApi } from 'client/api';
+import { AuthApi } from 'client/api';
 import { parseCookies } from 'nookies';
 import { extractAppData } from 'client/ssr/extractAppData';
 import { Header } from 'client/components/Header';
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
 App.getInitialProps = async ({ ctx }) => {
 	try {
 		const { token } = parseCookies(ctx);
-		const user = token && token !== 'undefined' ? await UserApi.me(token) : undefined;
+		const user = token && token !== 'undefined' ? await AuthApi.me(token) : undefined;
 		return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
 	} catch (e) {
 		if (axios.isAxiosError(e)) {

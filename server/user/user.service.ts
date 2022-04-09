@@ -1,8 +1,8 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
-import { RegistrationDto } from '../auth/dto/registration.dto';
+import { UserDto } from './dto/user-create.dto';
 
 const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
@@ -30,7 +30,7 @@ export class UserService {
 		});
 	}
 
-	async create(@Body() dto: RegistrationDto) {
+	async create(dto: UserDto) {
 		const salt = await genSalt(10);
 		const newUser = new this.userRepository({
 			...dto,
@@ -39,7 +39,7 @@ export class UserService {
 		return newUser.save();
 	}
 
-	async update(dto) {
+	async update(dto: UserDto) {
 		const instance = await this.findById(dto.id);
 		if (dto.id) {
 			return instance.update(dto);
