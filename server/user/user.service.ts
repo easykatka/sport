@@ -2,9 +2,9 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
-import { USER_NOT_FOUNDED, USER_ALREADY_REGISTERED_ERROR } from './user-constants';
-import { UserCreateDto } from './dto/user-create.dto';
-import { UserDto } from './dto/user-dto';
+import { USER_NOT_FOUNDED, USER_ALREADY_REGISTERED_ERROR } from './user.constants';
+import { UserCreateDto } from './dto/user.create.dto';
+import { UserDto } from './dto/user.dto';
 
 const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()

@@ -2,8 +2,8 @@ import { Body, Controller, Get, Param, Patch, Request, UseGuards, Post } from '@
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/auth/guards/jwt.guard';
-import { UserCreateDto } from './dto/user-create.dto';
-import { UserDto } from './dto/user-dto';
+import { UserCreateDto } from './dto/user.create.dto';
+import { UserDto } from './dto/user.dto';
 
 @ApiTags('Пользователи')
 @Controller('api/user')
