@@ -34,6 +34,7 @@ const Rules: FC = ({ roles }: any) => {
 								<TableCell>id</TableCell>
 								<TableCell>Название роли</TableCell>
 								<TableCell>Описание роли</TableCell>
+								<TableCell>Цвет</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -42,6 +43,7 @@ const Rules: FC = ({ roles }: any) => {
 									<TableCell>{role.id}</TableCell>
 									<TableCell>{role.name}</TableCell>
 									<TableCell>{role.description}</TableCell>
+									<TableCell>{role.color}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

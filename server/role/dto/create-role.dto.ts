@@ -6,5 +6,9 @@ export class CreateRoleDto {
 
 	@IsString()
 	description: string;
+
+	@IsString()
+	@IsOptional()
+	color: string;
 }
 

@@ -37,6 +37,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 	const fields = [
 		{ name: 'name', label: 'name' },
 		{ name: 'description', label: 'Описание' },
+		{ name: 'color', label: 'Цвет' },
 	]
 
 	const onSubmit = async (data) => {
