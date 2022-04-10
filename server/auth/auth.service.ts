@@ -13,10 +13,6 @@ export class AuthService {
 	constructor(private userService: UserService, private readonly jwtService: JwtService) { }
 
 	async registration(dto: RegistrationDto) {
-		const candidate = await this.userService.getUserByEmail(dto.email);
-		if (candidate) {
-			throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
-		}
 		const user = await this.userService.create(dto);
 		const token = this.generateToken(user);
 		user.password = undefined;

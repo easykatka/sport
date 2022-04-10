@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -8,14 +8,28 @@ import { CreateRoleDto } from './dto/create-role.dto';
 export class RoleController {
 	constructor(private readonly roleService: RoleService) { }
 
-	@Get('/getRoles')
-	getRoles() {
-		return this.roleService.getRoles();
+	@Post('/create')
+	create(@Body() dto:CreateRoleDto ) {
+		return this.roleService.create(dto);
+	}
+	@Post('/delete')
+	delete(@Body() { id }) {
+		return this.roleService.delete(id);
 	}
 
-	@Post()
-	create(@Body() dto: CreateRoleDto) {
-		return this.roleService.createRole(dto);
+	@Patch('/update')
+	update(@Body() dto: CreateRoleDto) {
+		return this.roleService.update(dto);
+	}
+
+	@Get('/getAll')
+	getAll() {
+		return this.roleService.getAll();
+	}
+
+	@Get('/getById/:id')
+	getById(@Param('id') id: number) {
+		return this.roleService.findById(id);
 	}
 
 	@Get('/:name')
