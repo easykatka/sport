@@ -10,10 +10,13 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
+import { UserRoleModule } from './user-role/user-role.module';
 
 declare const module: any;
 
-@Module({})
+@Module({
+  imports: [UserRoleModule]
+})
 export class AppModule {
     public static initialize(): DynamicModule {
         /* При инициализации модуля попробуем извлечь инстанс RenderModule

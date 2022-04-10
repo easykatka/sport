@@ -1,0 +1,1 @@
+export const RECORD_NOT_FOUNDED = 'Запись не найдена'
