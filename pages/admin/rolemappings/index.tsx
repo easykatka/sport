@@ -41,8 +41,8 @@ const Rules: FC = ({ rolemapping }: any) => {
 							{rolemapping.map((role) => (
 								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
 									<TableCell>{role.id}</TableCell>
-									<TableCell>{role.roleId}</TableCell>
-									<TableCell>{role.userId}</TableCell>
+									<TableCell>{role.roleName}</TableCell>
+									<TableCell>{role.userName}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

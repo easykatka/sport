@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { RoleModel } from '../models/role.model';
-import { CreateRoleDto, RoleDto } from './dto/create-role.dto';
+import { CreateRoleDto } from './dto/create-role.dto';
+import { RoleDto } from './dto/role.dto';
 import { ALREADY_REGISTERED_ERROR, ROLE_NOT_FOUNDED } from './role.constants';
 
 @Injectable()
