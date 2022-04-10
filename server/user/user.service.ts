@@ -2,8 +2,9 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
-import { NO_USER, USER_ALREADY_REGISTERED_ERROR } from './user-constants';
+import { USER_NOT_FOUNDED, USER_ALREADY_REGISTERED_ERROR } from './user-constants';
 import { UserCreateDto } from './dto/user-create.dto';
+import { UserDto } from './dto/user-dto';
 
 const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
@@ -39,7 +40,7 @@ export class UserService {
 	async update(dto: UserDto) {
 		try {
 			const instance = await this.userRepository.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(NO_USER)
+			if (!instance) throw new BadRequestException(USER_NOT_FOUNDED)
 			if (dto.password) {
 				const salt = await genSalt(10);
 				dto.password = await hash(dto.password, salt)
@@ -52,14 +53,8 @@ export class UserService {
 	}
 
 	async delete(id: string) {
-		try {
-			const instance = await this.userRepository.findByPk(id);
-			if (!instance) throw new BadRequestException(NO_USER)
-			return await instance.destroy();
-		}
-		catch (e: any) {
-			//TODO почитать про ошибки, явно не так должно быть
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+		const instance = await this.userRepository.findByPk(id);
+		if (!instance) throw new BadRequestException(USER_NOT_FOUNDED)
+		return await instance.destroy();
 	}
 }
