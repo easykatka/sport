@@ -5,7 +5,7 @@ import { FormField } from './FormField';
 interface FormFieldProps {
 	fields: {
 		name: string,
-		label: string
+		label: any
 	}[]
 }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
@@ -40,9 +40,14 @@ export class UserService {
 	}
 
 	async update(dto: UserDto) {
-		const instance = await this.findById(dto.id);
-		if (dto.id) {
-			return instance.update(dto);
+		try {
+			const instance = await this.findById(dto.id);
+			if (dto.id) {
+				return await instance.update(dto);;
+			}
+		}
+		catch (e) {
+			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
 		}
 	}
 }

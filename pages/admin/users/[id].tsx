@@ -13,6 +13,8 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import styled from '@emotion/styled';
 import { UserApi } from 'client/api';
 import router from 'next/router';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface UserProps {
 	user: UserDto;
@@ -22,9 +24,21 @@ const Input = styled('input')({
 	display: 'none',
 });
 
+const UserSchema = yup.object().shape({
+	email: yup.string().email('email введен не корректно').required('Введите email'),
+	firstName: yup.string().required('Введите своё имя'),
+	lastName: yup.string().required('Введите свою фамилию'),
+	middleName: yup.string(),
+});
+
 const User: FC<UserProps> = ({ user }) => {
 	const [responseError, setResponseError] = React.useState(false);
-	const form = useForm<UserDto>({ mode: 'onChange', defaultValues: user });
+
+	const form = useForm<UserDto>({
+		mode: 'onSubmit',
+		defaultValues: user,
+		resolver: yupResolver(UserSchema)
+	});
 	//TODO validation и посмотреть смену пароля
 
 	const fields = [
@@ -44,10 +58,13 @@ const User: FC<UserProps> = ({ user }) => {
 			router.push('/admin/users')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message.join?.(', ') || error.response.data.message);
+                console.log("🚀 ~ file: [id].tsx ~ line 61 ~ onSubmit ~ error", error.message)
+				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
 			}
 		}
 	};
+
+
 	return (
 		<>
 			<Head>
@@ -76,11 +93,8 @@ const User: FC<UserProps> = ({ user }) => {
 							</IconButton>
 							}
 						</div>
-
-
-
 						{responseError && (
-							<Alert className='mb-20' severity='error'>
+							<Alert className='mt-20' severity='error'>
 								{responseError}
 							</Alert>
 						)}
