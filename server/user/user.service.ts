@@ -41,12 +41,26 @@ export class UserService {
 
 	async update(dto: UserDto) {
 		try {
-			const instance = await this.findById(dto.id);
-			if (dto.id) {
+			const instance = await this.userRepository.findByPk(dto.id);
+			if (instance) {
 				return await instance.update(dto);;
 			}
 		}
-		catch (e) {
+		catch (e: any) {
+			//TODO почитать про ошибки, явно не так должно быть
+			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
+		}
+	}
+
+	async delete(id: string) {
+		try {
+			const instance = await this.userRepository.findByPk(id);
+			if (instance) {
+				return await instance.destroy();;
+			}
+		}
+		catch (e: any) {
+			//TODO почитать про ошибки, явно не так должно быть
 			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
 		}
 	}

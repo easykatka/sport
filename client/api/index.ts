@@ -34,5 +34,9 @@ export const UserApi = {
 
 	async update(dto: UserDto) {
 		await instance.patch('user/update', dto);
+	},
+
+	async delete(id: number) {
+		await instance.post('user/delete', {id});
 	}
 }

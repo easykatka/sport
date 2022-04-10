@@ -58,11 +58,22 @@ const User: FC<UserProps> = ({ user }) => {
 			router.push('/admin/users')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-                console.log("🚀 ~ file: [id].tsx ~ line 61 ~ onSubmit ~ error", error.message)
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
 			}
 		}
 	};
+
+	const onDelete = async () => {
+		setResponseError(false);
+		try {
+			await UserApi.delete(user.id)
+			router.push('/admin/users')
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+			}
+		}
+	}
 
 
 	return (
@@ -88,7 +99,7 @@ const User: FC<UserProps> = ({ user }) => {
 								type='submit'>
 								{user.id ? 'Сохранить' : 'Создать'}
 							</Button>
-							{user.id && <IconButton color="secondary" size="large">
+							{user.id && <IconButton color="secondary" size="large" onClick={onDelete}>
 								<DeleteIcon />
 							</IconButton>
 							}

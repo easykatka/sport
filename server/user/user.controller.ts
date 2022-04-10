@@ -11,9 +11,13 @@ export class UserController {
 
 	@Post('/create')
 	create(@Body() dto: UserDto) {
-        console.log("🚀 ~ file: user.controller.ts ~ line 14 ~ UserController ~ create ~ dto", dto)
 		return this.userService.create(dto);
 	}
+	@Post('/delete')
+	delete(@Body() { id }) {
+		return this.userService.delete(id);
+	}
+
 	@Patch('/update')
 	update(@Body() dto: UserDto) {
 		return this.userService.update(dto);
