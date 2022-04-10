@@ -25,7 +25,7 @@ const Input = styled('input')({
 });
 
 const User: FC<UserProps> = ({ user }) => {
-	const isNew = !!user.id;
+	const isNew = !user.id;
 	const [responseError, setResponseError] = React.useState(false);
 
 	const UserSchema = yup.object().shape({
@@ -33,7 +33,7 @@ const User: FC<UserProps> = ({ user }) => {
 		firstName: yup.string().required('Введите своё имя'),
 		lastName: yup.string().required('Введите свою фамилию'),
 		middleName: yup.string(),
-		...!user.id ? {
+		...isNew ? {
 			password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
 		} : {}
 	});
@@ -55,6 +55,8 @@ const User: FC<UserProps> = ({ user }) => {
 	]
 
 	const onSubmit = async (data) => {
+		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
+		console.log("🚀 ~ file: [id].tsx ~ line 43 ~ onSubmit ~ data", data)
 		setResponseError(false);
 		try {
 			isNew ? await UserApi.create(data) : await UserApi.update(data);
@@ -99,9 +101,9 @@ const User: FC<UserProps> = ({ user }) => {
 								variant='contained'
 								size='large'
 								type='submit'>
-								{user.id ? 'Сохранить' : 'Создать'}
+								{isNew ? 'Создать' : 'Сохранить'}
 							</Button>
-							{user.id && <IconButton color="secondary" size="large" onClick={onDelete}>
+							{!isNew && <IconButton color="secondary" size="large" onClick={onDelete}>
 								<DeleteIcon />
 							</IconButton>
 							}

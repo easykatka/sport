@@ -20,11 +20,12 @@ interface RoleProps {
 
 
 const Role: FC<RoleProps> = ({ role }) => {
-	const isNew = !!role.id;
+	const isNew = !role.id;
 	const [responseError, setResponseError] = React.useState(false);
 
 	const RoleShema = yup.object().shape({
 		name: yup.string().required('Введите название'),
+		description: yup.string().required('Введите описание'),
 	});
 
 	const form = useForm<UserDto>({
@@ -39,6 +40,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 	]
 
 	const onSubmit = async (data) => {
+		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
 		setResponseError(false);
 		try {
 			isNew ? await RoleApi.create(data) : await RoleApi.update(data);
@@ -78,9 +80,9 @@ const Role: FC<RoleProps> = ({ role }) => {
 								variant='contained'
 								size='large'
 								type='submit'>
-								{isNew ? 'Сохранить' : 'Создать'}
+								{isNew ? 'Создать' : 'Сохранить'}
 							</Button>
-							{isNew && <IconButton color="secondary" size="large" onClick={onDelete}>
+							{!isNew && <IconButton color="secondary" size="large" onClick={onDelete}>
 								<DeleteIcon />
 							</IconButton>
 							}
