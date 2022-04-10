@@ -32,7 +32,7 @@ const User: FC<UserProps> = ({ user }) => {
 		email: yup.string().email('email введен не корректно').required('Введите email'),
 		firstName: yup.string().required('Введите своё имя'),
 		lastName: yup.string().required('Введите свою фамилию'),
-		middleName: yup.string(),
+		middleName: yup.string().nullable(true),
 		...isNew ? {
 			password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
 		} : {}

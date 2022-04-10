@@ -2,8 +2,8 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
-import { UserDto } from './dto/user-create.dto';
-import { USER_ALREADY_REGISTERED_ERROR } from './user-constants';
+import { NO_USER, USER_ALREADY_REGISTERED_ERROR } from './user-constants';
+import { UserCreateDto } from './dto/user-create.dto';
 
 const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
@@ -11,37 +11,24 @@ export class UserService {
 	constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) { }
 
 	findById(id: number) {
-		return this.userRepository.findByPk(id, {
-			include: { all: true },
-			attributes: userResponseFields
-		});
+		return this.userRepository.findByPk(id, { include: { all: true }, attributes: userResponseFields });
 	}
 
 	findAll() {
-		return this.userRepository.findAll({
-			include: { all: true },
-			attributes: userResponseFields
-		});
+		return this.userRepository.findAll({ include: { all: true }, attributes: userResponseFields });
 	}
 
 	getUserByEmail(email: string) {
-		return this.userRepository.findOne({
-			where: { email },
-			include: { all: true }
-		});
+		return this.userRepository.findOne({ where: { email }, include: { all: true } });
 	}
 
-	async create(dto: UserDto) {
+	async create(dto: UserCreateDto) {
 		try {
 			const candidate = await this.getUserByEmail(dto.email);
-			if (candidate) {
-				throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
-			}
+			if (candidate) throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
 			const salt = await genSalt(10);
-			const newUser = new this.userRepository({
-				...dto,
-				password: await hash(dto.password, salt),
-			});
+			dto.password = await hash(dto.password, salt);
+			const newUser = new this.userRepository(dto);
 			return newUser.save();
 		}
 		catch (e: any) {
@@ -52,13 +39,12 @@ export class UserService {
 	async update(dto: UserDto) {
 		try {
 			const instance = await this.userRepository.findByPk(dto.id);
-			if (instance) {
+			if (!instance) throw new BadRequestException(NO_USER)
+			if (dto.password) {
 				const salt = await genSalt(10);
-				return await instance.update({
-					...dto,
-					...dto.password ? { password: await hash(dto.password, salt) } : {}
-				})
+				dto.password = await hash(dto.password, salt)
 			}
+			return await instance.update(dto)
 		}
 		catch (e: any) {
 			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
@@ -68,9 +54,8 @@ export class UserService {
 	async delete(id: string) {
 		try {
 			const instance = await this.userRepository.findByPk(id);
-			if (instance) {
-				return await instance.destroy();;
-			}
+			if (!instance) throw new BadRequestException(NO_USER)
+			return await instance.destroy();
 		}
 		catch (e: any) {
 			//TODO почитать про ошибки, явно не так должно быть
