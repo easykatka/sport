@@ -3,44 +3,34 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-import { UserDto } from 'shared/types/user';
+import { UserDto } from 'shared/types/UserDto';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import styled from '@emotion/styled';
-import { UserApi } from 'client/api';
+import { RoleApi, UserApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-interface UserProps {
-	user: RoleDt;
+import { RoleDto } from 'shared/types/RoleDto';
+interface RoleProps {
+	role: RoleDto;
 };
 
-const Input = styled('input')({
-	display: 'none',
-});
 
-const Role: FC<UserProps> = ({ user }) => {
+const Role: FC<RoleProps> = ({ role }) => {
+	const isNew = !!role.id;
 	const [responseError, setResponseError] = React.useState(false);
 
-	const UserSchema = yup.object().shape({
-		email: yup.string().email('email введен не корректно').required('Введите email'),
-		firstName: yup.string().required('Введите своё имя'),
-		lastName: yup.string().required('Введите свою фамилию'),
-		middleName: yup.string(),
-		...!user.id ? {
-			password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
-		} : {}
+	const RoleShema = yup.object().shape({
+		name: yup.string().required('Введите название'),
 	});
 
 	const form = useForm<UserDto>({
 		mode: 'onSubmit',
-		defaultValues: user,
-		resolver: yupResolver(UserSchema)
+		defaultValues: role,
+		resolver: yupResolver(RoleShema)
 	});
 
 	const fields = [
@@ -51,8 +41,8 @@ const Role: FC<UserProps> = ({ user }) => {
 	const onSubmit = async (data) => {
 		setResponseError(false);
 		try {
-			role.id ? await RoleApi.update(data) : await RoleApi.create(data);
-			router.push('/admin/users')
+			isNew ? await RoleApi.create(data) : await RoleApi.update(data);
+			router.push('/admin/roles')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
@@ -63,8 +53,8 @@ const Role: FC<UserProps> = ({ user }) => {
 	const onDelete = async () => {
 		setResponseError(false);
 		try {
-			await UserApi.delete(user.id)
-			router.push('/admin/users')
+			await RoleApi.delete(role.id)
+			router.push('/admin/roles')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
@@ -82,21 +72,15 @@ const Role: FC<UserProps> = ({ user }) => {
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
 						<GridData fields={fields} />
-						<label htmlFor="icon-button-file">
-							<Input accept="image/*" id="icon-button-file" type="file" />
-							<IconButton color="primary" aria-label="upload picture" component="span">
-								<AddAPhotoIcon />
-							</IconButton>
-						</label>
 						<div className="mt-20">
 							<Button
 								color='primary'
 								variant='contained'
 								size='large'
 								type='submit'>
-								{user.id ? 'Сохранить' : 'Создать'}
+								{isNew ? 'Сохранить' : 'Создать'}
 							</Button>
-							{user.id && <IconButton color="secondary" size="large" onClick={onDelete}>
+							{isNew && <IconButton color="secondary" size="large" onClick={onDelete}>
 								<DeleteIcon />
 							</IconButton>
 							}
@@ -108,7 +92,6 @@ const Role: FC<UserProps> = ({ user }) => {
 						)}
 					</form>
 				</FormProvider>
-
 			</AdminLayout>
 		</>
 	);
@@ -117,8 +100,8 @@ const Role: FC<UserProps> = ({ user }) => {
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
 	try {
 		const { id } = ctx.query;
-		const user = await fetch(`/api/role/getById/${id}`);
-		return { user };
+		const role = await fetch(`/api/role/getById/${id}`);
+		return { role };
 	} catch (e) {
 		console.log(e);
 	}

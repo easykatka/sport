@@ -6,7 +6,7 @@ import { UserService } from '../user/user.service';
 import { USER_ALREADY_REGISTERED_ERROR, WRONG_USER_DATA_ERROR } from './auth.constants';
 import { LoginDto } from './dto/login.dto';
 import { RegistrationDto } from './dto/registration.dto';
-import { UserDto } from 'shared/types/user';
+import { UserDto } from 'shared/types/UserDto';
 
 @Injectable()
 export class AuthService {

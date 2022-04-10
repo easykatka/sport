@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-import { UserDto } from 'shared/types/user';
+import { UserDto } from 'shared/types/UserDto';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
@@ -25,6 +25,7 @@ const Input = styled('input')({
 });
 
 const User: FC<UserProps> = ({ user }) => {
+	const isNew = !!user.id;
 	const [responseError, setResponseError] = React.useState(false);
 
 	const UserSchema = yup.object().shape({
@@ -42,7 +43,7 @@ const User: FC<UserProps> = ({ user }) => {
 		defaultValues: user,
 		resolver: yupResolver(UserSchema)
 	});
-	
+
 	const fields = [
 		{ name: 'email', label: 'Email' },
 		{ name: 'lastName', label: 'Фамилия' },
@@ -56,7 +57,7 @@ const User: FC<UserProps> = ({ user }) => {
 	const onSubmit = async (data) => {
 		setResponseError(false);
 		try {
-			user.id ? await UserApi.update(data) : await UserApi.create(data);
+			isNew ? await UserApi.create(data) : await UserApi.update(data);
 			router.push('/admin/users')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -76,7 +77,6 @@ const User: FC<UserProps> = ({ user }) => {
 			}
 		}
 	}
-
 
 	return (
 		<>

@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateRoleDto {
 	@IsString()
@@ -9,8 +9,3 @@ export class CreateRoleDto {
 	readonly description?: string;
 }
 
-export class RoleDto extends CreateRoleDto {
-	@IsNumber()
-	@IsOptional()
-	id?: number
-}

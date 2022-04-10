@@ -3,7 +3,7 @@ import { MainLayout } from '../client/layouts/MainLayout';
 import { fetch } from 'shared/utils/fetch';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import Head from 'next/head';
-import { UserDto } from 'shared/types/user';
+import { UserDto } from 'shared/types/UserDto';
 
 
 const Rating: FC = ({ players }) => {

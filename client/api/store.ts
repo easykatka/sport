@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
-import { UserDto } from 'shared/types/user';
+import { UserDto } from 'shared/types/UserDto';
 enableStaticRendering(typeof window === 'undefined');
 export interface IStore {
     user: UserDto | null;
