@@ -14,12 +14,11 @@ import router from 'next/router';
 import { Button } from '@mui/material';
 
 const Rules: FC = ({ rolemapping }: any) => {
-	console.log("🚀 ~ file: index.tsx ~ line 17 ~ roles", rolemapping)
 	const onAddClick = () => router.push('/admin/rolemappings/add')
 	return (
 		<>
 			<Head>
-				<title>Администрирование СОЮЗ | Пользователи</title>
+				<title>Администрирование СОЮЗ | Назначение ролей</title>
 			</Head>
 			<AdminLayout>
 				<Button
