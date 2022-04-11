@@ -12,13 +12,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 import { Button } from '@mui/material';
+import { UserSourceDto } from 'shared/types/UserSourceDto';
 
-const Roles: FC = ({ roles }: any) => {
-	const onAddClick = () => router.push('/admin/role/add')
+interface UserSourceProps {
+	usersources: UserSourceDto[]
+}
+
+const UserSource: FC<UserSourceProps> = ({ usersources }) => {
+	const onAddClick = () => router.push('/admin/usersources/add')
 	return (
 		<>
 			<Head>
-				<title>Администрирование СОЮЗ | Роли</title>
+				<title>Источники пользователя СОЮЗ | Пользователи</title>
 			</Head>
 			<AdminLayout>
 				<Button
@@ -32,18 +37,14 @@ const Roles: FC = ({ roles }: any) => {
 						<TableHead>
 							<TableRow>
 								<TableCell>id</TableCell>
-								<TableCell>Название роли</TableCell>
-								<TableCell>Описание роли</TableCell>
-								<TableCell>Цвет</TableCell>
+								<TableCell>Название источнка</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{roles.map((role) => (
-								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
-									<TableCell>{role.id}</TableCell>
-									<TableCell>{role.name}</TableCell>
-									<TableCell>{role.description}</TableCell>
-									<TableCell>{role.color}</TableCell>
+							{usersources.map((source) => (
+								<TableRow hover key={source.id} onClick={() => router.push(`${router.asPath}/${source.id}`)}>
+									<TableCell>{source.id}</TableCell>
+									<TableCell>{source.name}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>
@@ -56,11 +57,12 @@ const Roles: FC = ({ roles }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const roles = await fetch('/api/role/getAll');
-		return { roles };
+		const usersources = await fetch('/api/usersource/getAll');
+        console.log("🚀 ~ file: index.tsx ~ line 61 ~ getServerSideProps ~ usersources", usersources)
+		return { usersources };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default Roles;
+export default UserSource;

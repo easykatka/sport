@@ -77,4 +77,16 @@ export class AppController {
 	rolemapping() {
 		return {};
 	}
+	
+
+	@Get('/admin/usersource')
+	@Render('admin/usersource')
+	usersources() {
+		return {};
+	}
+	@Get('/admin/usersource/:id')
+	@Render('admin/usersource/[id]')
+	usersource() {
+		return {};
+	}
 }

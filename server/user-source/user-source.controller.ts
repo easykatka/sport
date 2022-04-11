@@ -25,6 +25,7 @@ export class UserSourceController {
 
 	@Get('/getAll')
 	getAll() {
+		console.log("HEREEEE")
 		return this.userSourceService.findAll();
 	}
 

@@ -7,6 +7,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HomeIcon from '@mui/icons-material/Home';
+import MediationIcon from '@mui/icons-material/Mediation';
 
 const path = '/admin'
 const menu = [
@@ -14,6 +15,7 @@ const menu = [
 	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/user` },
 	{ text: 'Роли', icon: <EngineeringIcon />, path: `${path}/role` },
 	{ text: 'Назначение ролей', icon: <AdminPanelSettingsIcon />, path: `${path}/rolemapping` },
+	{ text: 'Источник', icon: <MediationIcon />, path: `${path}/usersource` },
 ];
 
 export const AdminSidebar: React.FC = () => {

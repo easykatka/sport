@@ -11,49 +11,50 @@ import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
 import { UserRoleModule } from './user-role/user-role.module';
+import { UserSourceModule } from './user-source/user-source.module';
 
 declare const module: any;
 
 @Module({
-  imports: [UserRoleModule]
+	imports: [UserRoleModule]
 })
 export class AppModule {
-    public static initialize(): DynamicModule {
-        /* При инициализации модуля попробуем извлечь инстанс RenderModule
+	public static initialize(): DynamicModule {
+		/* При инициализации модуля попробуем извлечь инстанс RenderModule
 			из персистентных данных между перезагрузками модуля */
-        const renderModule =
-            module.hot?.data?.renderModule ??
-            RenderModule.forRootAsync(Next({ dev: NODE_ENV === 'development' }), {
-                viewsDir: null,
-            });
+		const renderModule =
+			module.hot?.data?.renderModule ??
+			RenderModule.forRootAsync(Next({ dev: NODE_ENV === 'development' }), {
+				viewsDir: null,
+			});
 
-        if (module.hot) {
-            /* При завершении работы старого модуля
+		if (module.hot) {
+			/* При завершении работы старого модуля
 				будем кэшировать инстанс RenderModule */
-            module.hot.dispose((data: any) => {
-                data.renderModule = renderModule;
-            });
-        }
+			module.hot.dispose((data: any) => {
+				data.renderModule = renderModule;
+			});
+		}
 
-        return {
-            module: AppModule,
-
-            controllers: [AppController],
-            providers: [AppService],
-            imports: [
-                renderModule,
-                ConfigModule.forRoot({
-                    envFilePath: `.${NODE_ENV}.env`,
-                }),
-                SequelizeModule.forRootAsync({
-                    imports: [ConfigModule],
-                    inject: [ConfigService],
-                    useFactory: getPostgresConfig,
-                }),
-                UserModule,
-                RoleModule,
-                AuthModule,
-            ],
-        };
-    }
+		return {
+			module: AppModule,
+			controllers: [AppController],
+			providers: [AppService],
+			imports: [
+				renderModule,
+				ConfigModule.forRoot({
+					envFilePath: `.${NODE_ENV}.env`,
+				}),
+				SequelizeModule.forRootAsync({
+					imports: [ConfigModule],
+					inject: [ConfigService],
+					useFactory: getPostgresConfig,
+				}),
+				UserModule,
+				RoleModule,
+				AuthModule,
+				UserSourceModule
+			],
+		};
+	}
 }

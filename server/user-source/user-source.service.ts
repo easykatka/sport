@@ -1,13 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { RECORD_ALREADY_EXIST, RECORD_NOT_FOUND } from 'server/constants';
-import { UserRoleModel } from '../models/user-role.model';
 import { UserSourceDto } from './dto/user-source.dto';
 import { UserSourceModel } from '../models/user-source';
 
 @Injectable()
 export class UserSourceService {
-	constructor(@InjectModel(UserRoleModel) private readonly userSourceRepository: typeof UserSourceModel) { }
+	constructor(@InjectModel(UserSourceModel) private readonly userSourceRepository: typeof UserSourceModel) { }
 
 	findById(id: number) {
 		return this.userSourceRepository.findByPk(id);

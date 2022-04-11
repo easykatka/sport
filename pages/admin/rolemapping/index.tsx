@@ -12,8 +12,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 import { Button } from '@mui/material';
+import { RoleMappingDto } from 'shared/types/RoleMappingDto';
 
-const Rules: FC = ({ rolemapping }: any) => {
+interface RoleMappingsProps {
+	rolemappings: RoleMappingDto[]
+}
+
+const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
 	const onAddClick = () => router.push('/admin/rolemapping/add')
 	return (
 		<>
@@ -37,7 +42,7 @@ const Rules: FC = ({ rolemapping }: any) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{rolemapping.map((role) => (
+							{rolemappings.map((role) => (
 								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
 									<TableCell>{role.id}</TableCell>
 									<TableCell>{role.roleName}</TableCell>
@@ -54,11 +59,11 @@ const Rules: FC = ({ rolemapping }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const rolemapping = await fetch('/api/rolemapping/getAll');
-		return { rolemapping };
+		const rolemappings = await fetch('/api/rolemapping/getAll');
+		return { rolemappings };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default Rules;
+export default RoleMappings;
