@@ -2,6 +2,7 @@ import axios from 'axios';
 import { LoginDto, RegistrationDto } from 'shared/types/auth';
 import { RoleDto } from 'shared/types/RoleDto';
 import { UserDto } from 'shared/types/UserDto';
+import { UserSourceDto } from '../../server/user-source/dto/user-source.dto';
 
 export const instance = axios.create({
 	baseURL: 'http://localhost:3000/api',
@@ -38,7 +39,7 @@ export const UserApi = {
 	},
 
 	async delete(id: number) {
-		await instance.post('user/delete', {id});
+		await instance.post('user/delete', { id });
 	}
 }
 
@@ -53,5 +54,19 @@ export const RoleApi = {
 
 	async delete(id: number) {
 		await instance.post('role/delete', { id });
+	}
+}
+
+export const UserSourceApi = {
+	async create(dto: UserSourceDto) {
+		await instance.post('usersource/create', dto);
+	},
+
+	async update(dto: UserSourceDto) {
+		await instance.patch('usersource/update', dto);
+	},
+
+	async delete(id: number) {
+		await instance.post('usersource/delete', { id });
 	}
 }

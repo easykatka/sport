@@ -19,7 +19,7 @@ interface UserSourceProps {
 }
 
 const UserSource: FC<UserSourceProps> = ({ usersources }) => {
-	const onAddClick = () => router.push('/admin/usersources/add')
+	const onAddClick = () => router.push(`${router.asPath}/add`)
 	return (
 		<>
 			<Head>
@@ -55,10 +55,12 @@ const UserSource: FC<UserSourceProps> = ({ usersources }) => {
 	);
 };
 
+
+const PATH = '/api/usersource';
+
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const usersources = await fetch('/api/usersource/getAll');
-        console.log("🚀 ~ file: index.tsx ~ line 61 ~ getServerSideProps ~ usersources", usersources)
+		const usersources = await fetch(`${PATH}/getAll`);
 		return { usersources };
 	} catch (e) {
 		console.log(e);

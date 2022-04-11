@@ -9,7 +9,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { RoleApi, UserApi } from 'client/api';
+import { RoleApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,7 +23,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 	const isNew = !role.id;
 	const [responseError, setResponseError] = React.useState(false);
 
-	const RoleShema = yup.object().shape({
+	const Schema = yup.object().shape({
 		name: yup.string().required('Введите название'),
 		description: yup.string().required('Введите описание'),
 	});
@@ -31,11 +31,11 @@ const Role: FC<RoleProps> = ({ role }) => {
 	const form = useForm<UserDto>({
 		mode: 'onSubmit',
 		defaultValues: role,
-		resolver: yupResolver(RoleShema)
+		resolver: yupResolver(Schema)
 	});
 
 	const fields = [
-		{ name: 'name', label: 'name' },
+		{ name: 'name', label: 'Название' },
 		{ name: 'description', label: 'Описание' },
 		{ name: 'color', label: 'Цвет' },
 	]

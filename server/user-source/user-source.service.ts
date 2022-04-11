@@ -22,7 +22,8 @@ export class UserSourceService {
 
 	async create(dto: UserSourceDto) {
 		try {
-			const candidate = this.getUserByName(dto.name);
+
+			const candidate = await this.getUserByName(dto.name);
 			if (candidate) throw new BadRequestException(RECORD_ALREADY_EXIST);
 			const record = new this.userSourceRepository(dto);
 			return record.save();

@@ -1,6 +1,7 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class UserSourceDto {
+	@IsOptional()
 	@IsNumber()
 	id: number;
 
