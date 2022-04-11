@@ -11,7 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 const path = '/admin'
 const menu = [
 	{ text: 'Основное меню', icon: <HomeIcon />, path: '/' },
-	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/users` },
+	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/user` },
 	{ text: 'Роли', icon: <EngineeringIcon />, path: `${path}/roles` },
 	{ text: 'Назначение ролей', icon: <AdminPanelSettingsIcon />, path: `${path}/rolemappings` },
 ];

@@ -60,7 +60,7 @@ const User: FC<UserProps> = ({ user }) => {
 		setResponseError(false);
 		try {
 			isNew ? await UserApi.create(data) : await UserApi.update(data);
-			router.push('/admin/users')
+			router.push('/admin/user')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
@@ -72,7 +72,7 @@ const User: FC<UserProps> = ({ user }) => {
 		setResponseError(false);
 		try {
 			await UserApi.delete(user.id)
-			router.push('/admin/users')
+			router.push('/admin/user')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);

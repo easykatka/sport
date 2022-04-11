@@ -40,14 +40,14 @@ export class AppController {
 		return {};
 	}
 
-	@Get('/admin/users')
-	@Render('admin/users')
+	@Get('/admin/user')
+	@Render('admin/user')
 	users() {
 		return {};
 	}
 
-	@Get('/admin/users/:id')
-	@Render('admin/users/[id]')
+	@Get('/admin/user/:id')
+	@Render('admin/user/[id]')
 	user() {
 		return {};
 	}
