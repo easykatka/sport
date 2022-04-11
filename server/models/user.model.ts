@@ -1,16 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BelongsToMany, Column, DataType, Model, Table } from 'sequelize-typescript';
+import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { RoleModel } from './role.model';
 import { UserRoleModel } from './user-role.model';
+import { UserSourceModel } from './user-source';
 
 interface UserCreationAttrs {
 	email: string;
 	password: string;
-	firstName?: string,
-	lastName?: string,
+	firstName: string,
+	lastName: string,
 	middleName?: string,
 	telegram?: string,
 	avatar?: string
+	sourceId?: number
 }
 
 @Table({ tableName: 'User' })
@@ -36,11 +38,11 @@ export class UserModel extends Model<UserModel, UserCreationAttrs> {
 	avatar: string;
 
 	@ApiProperty({ example: 'Имя', description: 'Имя пользователя' })
-	@Column({ type: DataType.STRING, allowNull: true })
+	@Column({ type: DataType.STRING, allowNull: false })
 	firstName: string;
 
 	@ApiProperty({ example: 'Фамилия', description: 'Фамилия пользователя' })
-	@Column({ type: DataType.STRING, allowNull: true })
+	@Column({ type: DataType.STRING, allowNull: false })
 	lastName: string;
 
 	@ApiProperty({ example: 'Отчество', description: 'Отчество пользователя' })
@@ -49,4 +51,8 @@ export class UserModel extends Model<UserModel, UserCreationAttrs> {
 
 	@BelongsToMany(() => RoleModel, () => UserRoleModel)
 	roles: RoleModel[];
+
+	@ForeignKey(() => UserSourceModel)
+	@Column({ type: DataType.INTEGER })
+	sourceId: number;
 }
