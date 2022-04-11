@@ -45,7 +45,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 		setResponseError(false);
 		try {
 			isNew ? await RoleApi.create(data) : await RoleApi.update(data);
-			router.push('/admin/roles')
+			router.push('/admin/role')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
@@ -57,7 +57,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 		setResponseError(false);
 		try {
 			await RoleApi.delete(role.id)
-			router.push('/admin/roles')
+			router.push('/admin/role')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);

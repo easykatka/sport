@@ -12,8 +12,8 @@ const path = '/admin'
 const menu = [
 	{ text: 'Основное меню', icon: <HomeIcon />, path: '/' },
 	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/user` },
-	{ text: 'Роли', icon: <EngineeringIcon />, path: `${path}/roles` },
-	{ text: 'Назначение ролей', icon: <AdminPanelSettingsIcon />, path: `${path}/rolemappings` },
+	{ text: 'Роли', icon: <EngineeringIcon />, path: `${path}/role` },
+	{ text: 'Назначение ролей', icon: <AdminPanelSettingsIcon />, path: `${path}/rolemapping` },
 ];
 
 export const AdminSidebar: React.FC = () => {

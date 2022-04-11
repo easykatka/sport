@@ -52,28 +52,28 @@ export class AppController {
 		return {};
 	}
 
-	@Get('/admin/roles')
-	@Render('admin/roles')
+	@Get('/admin/role')
+	@Render('admin/role')
 	roles() {
 		return {};
 	}
 
 
-	@Get('/admin/roles/:id')
-	@Render('admin/roles/[id]')
+	@Get('/admin/role/:id')
+	@Render('admin/role/[id]')
 	role() {
 		return {};
 	}
 
 
-	@Get('/admin/rolemappings')
-	@Render('admin/rolemappings')
+	@Get('/admin/rolemapping')
+	@Render('admin/rolemapping')
 	rolemappings() {
 		return {};
 	}
 
-	@Get('/admin/rolemappings/:id')
-	@Render('admin/rolemappings/[id]')
+	@Get('/admin/rolemapping/:id')
+	@Render('admin/rolemapping/[id]')
 	rolemapping() {
 		return {};
 	}

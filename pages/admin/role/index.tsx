@@ -14,7 +14,7 @@ import router from 'next/router';
 import { Button } from '@mui/material';
 
 const Rules: FC = ({ roles }: any) => {
-	const onAddClick = () => router.push('/admin/roles/add')
+	const onAddClick = () => router.push('/admin/role/add')
 	return (
 		<>
 			<Head>
