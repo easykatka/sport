@@ -2,9 +2,9 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from '../models/user.model';
 import { genSalt, hash } from 'bcryptjs';
-import { USER_NOT_FOUNDED, USER_ALREADY_REGISTERED_ERROR } from './user.constants';
 import { UserCreateDto } from './dto/user.create.dto';
 import { UserDto } from './dto/user.dto';
+import { RECORD_ALREADY_EXIST, RECORD_NOT_FOUND } from 'server/constants';
 
 const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
@@ -26,7 +26,7 @@ export class UserService {
 	async create(dto: UserCreateDto) {
 		try {
 			const candidate = await this.getUserByEmail(dto.email);
-			if (candidate) throw new UnauthorizedException(USER_ALREADY_REGISTERED_ERROR);
+			if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 			const salt = await genSalt(10);
 			dto.password = await hash(dto.password, salt);
 			const newUser = new this.userRepository(dto);
@@ -40,7 +40,7 @@ export class UserService {
 	async update(dto: UserDto) {
 		try {
 			const instance = await this.userRepository.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(USER_NOT_FOUNDED)
+			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
 			if (dto.password) {
 				const salt = await genSalt(10);
 				dto.password = await hash(dto.password, salt)
@@ -54,7 +54,7 @@ export class UserService {
 
 	async delete(id: string) {
 		const instance = await this.userRepository.findByPk(id);
-		if (!instance) throw new BadRequestException(USER_NOT_FOUNDED)
+		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
 		return await instance.destroy();
 	}
 }

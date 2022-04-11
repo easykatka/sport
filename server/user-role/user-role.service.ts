@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import sequelize from 'sequelize';
-
+import { RECORD_NOT_FOUND } from 'server/constants';
 import { UserRoleModel } from '../models/user-role.model';
 import { UserRoleDto } from './dto/user-role.dto';
-import { RECORD_NOT_FOUNDED } from './user-role.constants';
 
 @Injectable()
 export class UserRoleService {
@@ -33,7 +32,7 @@ export class UserRoleService {
 	async update(dto: UserRoleDto) {
 		try {
 			const instance = await this.userRepository.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(RECORD_NOT_FOUNDED)
+			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
 			return await instance.update(dto)
 		}
 		catch (e: any) {
@@ -43,7 +42,7 @@ export class UserRoleService {
 
 	async delete(id: string) {
 		const instance = await this.userRepository.findByPk(id);
-		if (!instance) throw new BadRequestException(RECORD_NOT_FOUNDED)
+		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
 		return await instance.destroy();
 	}
 

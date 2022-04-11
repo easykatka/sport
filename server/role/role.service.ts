@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { RoleModel } from '../models/role.model';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { RoleDto } from './dto/role.dto';
-import { ALREADY_REGISTERED_ERROR, ROLE_NOT_FOUNDED } from './role.constants';
+import { RECORD_ALREADY_EXIST, RECORD_NOT_FOUND } from 'server/constants';
 
 @Injectable()
 export class RoleService {
@@ -25,7 +25,7 @@ export class RoleService {
 	async create(dto: CreateRoleDto) {
 		try {
 			const oldRole = await this.getRoleByName(dto.name);
-			if (oldRole) throw new BadRequestException(ALREADY_REGISTERED_ERROR);
+			if (oldRole) throw new BadRequestException(RECORD_ALREADY_EXIST);
 			return await this.roleModel.create(dto);
 		} catch (e: any) {
 			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
@@ -35,7 +35,7 @@ export class RoleService {
 	async update(dto: RoleDto) {
 		try {
 			const instance = await this.roleModel.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(ROLE_NOT_FOUNDED);
+			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND);
 			return await instance.update(dto);
 		}
 		catch (e: any) {
@@ -45,7 +45,7 @@ export class RoleService {
 
 	async delete(id: string) {
 		const instance = await this.roleModel.findByPk(id);
-		if (!instance) throw new BadRequestException(ROLE_NOT_FOUNDED);
+		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND);
 		return await instance.destroy();
 	}
 }
