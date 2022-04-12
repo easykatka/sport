@@ -12,12 +12,10 @@ import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
 import { UserRoleModule } from './user-role/user-role.module';
 import { UserSourceModule } from './user-source/user-source.module';
+import { AttachmentModule } from './attachment/attachment.module';
 
 declare const module: any;
-
-@Module({
-	imports: [UserRoleModule]
-})
+@Module({})
 export class AppModule {
 	public static initialize(): DynamicModule {
 		/* При инициализации модуля попробуем извлечь инстанс RenderModule
@@ -53,7 +51,9 @@ export class AppModule {
 				UserModule,
 				RoleModule,
 				AuthModule,
-				UserSourceModule
+				UserSourceModule,
+				UserRoleModule,
+				AttachmentModule
 			],
 		};
 	}
