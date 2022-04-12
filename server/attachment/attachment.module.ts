@@ -3,6 +3,7 @@ import { AttachmentController } from './attachment.controller';
 import { AttachmentService } from './attachment.service';
 
 @Module({
+	imports: [ServeStaticModule],
   controllers: [AttachmentController],
   providers: [AttachmentService]
 })
