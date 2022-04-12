@@ -13,11 +13,7 @@ class Store {
 	user = null;
 	showSidebar = true;
 	constructor() {
-		makeObservable(this, {
-			user: observable,
-			hasAdminAccess: computed,
-			hydrate: action,
-		});
+		makeAutoObservable(this);
 	}
 	get hasAdminAccess() {
 		return Boolean(this.user?.roles.find(role => role.name === 'admin'));

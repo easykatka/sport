@@ -80,7 +80,7 @@ export const Header: React.FC<IHeader> = inject('store')(
 						</IconButton>
 					)}
 				</div>
-				<AuthDialog onClose={closeAuthDialog} visible={authVisible} />
+				{authVisible && <AuthDialog onClose={closeAuthDialog} visible={authVisible} />}
 			</Paper>
 		);
 	})

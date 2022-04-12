@@ -16,20 +16,22 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = inject('store')(
 	observer(({ children, contentFullWidth, hideComments, store, className }) => {
 		const { showSidebar } = store;
+
 		return (
-			<div className={clsx('wrapper', className)}>
+			<div className={clsx('wrapper', className)} >
 				{showSidebar && (
 					<div className='leftSide'>
 						<Sidebar />
 					</div>
-				)}
+				)
+				}
 				<div className={clsx('content', { 'content--full': contentFullWidth })}>{children}</div>
 				{!hideComments && (
 					<div className='rightSide'>
 						<SideComments />
 					</div>
 				)}
-			</div>
+			</div >
 		);
 	})
 );
