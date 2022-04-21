@@ -1,12 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { UserModel } from '../models/user.model';
+import { User } from 'server/user/user.entity';
 import { UserService } from '../user/user.service';
-import { USER_ALREADY_REGISTERED_ERROR, WRONG_USER_DATA_ERROR } from './auth.constants';
+import { WRONG_USER_DATA_ERROR } from './auth.constants';
 import { LoginDto } from './dto/login.dto';
 import { RegistrationDto } from './dto/registration.dto';
-import { UserDto } from 'shared/types/UserDto';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +25,7 @@ export class AuthService {
 		return { user, token };
 	}
 
-	private generateToken({ email }: Pick<UserModel, 'email'>) {
+	private generateToken({ email }: Pick<User, 'email'>) {
 		try {
 			return this.jwtService.sign({ email });
 		} catch (e) {
@@ -34,7 +33,7 @@ export class AuthService {
 		}
 	}
 
-	private async validateUser(dto: LoginDto): Promise<UserModel> {
+	private async validateUser(dto: LoginDto): Promise<User> {
 		const user = await this.userService.getUserByEmail(dto.email);
 		if (!user) {
 			throw new UnauthorizedException(WRONG_USER_DATA_ERROR);

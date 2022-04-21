@@ -1,49 +1,42 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import sequelize from 'sequelize';
+import { BadRequestException, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { RECORD_NOT_FOUND } from 'server/constants';
-import { UserRoleModel } from '../models/user-role.model';
 import { UserRoleDto } from './dto/user-role.dto';
+import { User } from '../user/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRoleService {
-	constructor(@InjectModel(UserRoleModel) private readonly userRepository: typeof UserRoleModel) { }
+	constructor(@InjectRepository(User) private readonly userRoleRepository: Repository<User>) { }
 
 	findById(id: number) {
-		return this.userRepository.findByPk(id, { include: { all: true } });
+		return this.userRoleRepository.findOne(id);
 	}
 
 	findAll() {
-		return this.userRepository.sequelize.query(`select UR.id,R.name as "userName", concat(U."lastName",' ',U."firstName") as "roleName" from "UserRole" UR
+		return this.userRoleRepository.query(`select UR.id,R.name as "userName", concat(U."lastName",' ',U."firstName") as "roleName" from "UserRole" UR
 		left join "Role" R on R.id = UR."roleId"
-		left join "User" U on U.id = UR."userId"`, { type: sequelize.QueryTypes.SELECT })
+		left join "User" U on U.id = UR."userId"`)
 	}
 
-	async create(dto: UserRoleDto) {
-		try {
-			const record = new this.userRepository(dto);
-			return record.save();
-		}
-		catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+	async create(post: UserRoleDto) {
+		const newRecord = await this.userRoleRepository.create(post);
+		return await this.userRoleRepository.save(newRecord);
 	}
 
 	async update(dto: UserRoleDto) {
-		try {
-			const instance = await this.userRepository.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
-			return await instance.update(dto)
+		await this.userRoleRepository.update(dto.id, dto);
+		const updatedRecord = await this.userRoleRepository.findOne(dto.id);
+		if (updatedRecord) {
+			return updatedRecord
 		}
-		catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async delete(id: string) {
-		const instance = await this.userRepository.findByPk(id);
-		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
-		return await instance.destroy();
+	async delete(id: number) {
+		const deleteResponse = await this.userRoleRepository.delete(id);
+		if (!deleteResponse.affected) {
+			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
+		}
 	}
-
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { LoginDto, RegistrationDto } from 'shared/types/auth';
 import { RoleDto } from 'shared/types/RoleDto';
 import { UserDto } from 'shared/types/UserDto';
-import { UserSourceDto } from '../../server/user-source/dto/user-source.dto';
+import { UserSourceDto } from '../../server/source/dto/source.dto';
 
 export const instance = axios.create({
 	baseURL: 'http://localhost:3000/api',

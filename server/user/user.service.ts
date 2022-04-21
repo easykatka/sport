@@ -1,60 +1,50 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { UserModel } from '../models/user.model';
+import { Injectable, BadRequestException, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { genSalt, hash } from 'bcryptjs';
 import { UserCreateDto } from './dto/user.create.dto';
 import { UserDto } from './dto/user.dto';
 import { RECORD_ALREADY_EXIST, RECORD_NOT_FOUND } from 'server/constants';
+import { User } from './user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-const userResponseFields = ['id', 'firstName', 'lastName', 'avatar', 'telegram', 'email', 'middleName']
 @Injectable()
 export class UserService {
-	constructor(@InjectModel(UserModel) private readonly userRepository: typeof UserModel) { }
+	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
 	findById(id: number) {
-		return this.userRepository.findByPk(id, { include: { all: true }, attributes: userResponseFields });
+		return this.userRepository.findOne(id);
 	}
 
 	findAll() {
-		return this.userRepository.findAll({ include: { all: true }, attributes: userResponseFields });
+		return this.userRepository.find();
 	}
 
-	getUserByEmail(email: string) {
-		return this.userRepository.findOne({ where: { email }, include: { all: true } });
+	getUserByEmail(email: string): Promise<User> {
+		return this.userRepository.findOne({ where: { email } });
 	}
 
 	async create(dto: UserCreateDto) {
-		try {
-			const candidate = await this.getUserByEmail(dto.email);
-			if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
-			const salt = await genSalt(10);
-			dto.password = await hash(dto.password, salt);
-			const newUser = new this.userRepository(dto);
-			return newUser.save();
-		}
-		catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+		const candidate = await this.getUserByEmail(dto.email);
+		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
+		const salt = await genSalt(10);
+		dto.password = await hash(dto.password, salt);
+		const newUser = await this.userRepository.create(dto);
+		return this.userRepository.save(newUser);
 	}
 
 	async update(dto: UserDto) {
-		try {
-			const instance = await this.userRepository.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
-			if (dto.password) {
-				const salt = await genSalt(10);
-				dto.password = await hash(dto.password, salt)
-			}
-			return await instance.update(dto)
+		await this.userRepository.update(dto.id, dto);
+		const updatedRecord = await this.userRepository.findOne(dto.id);
+		if (updatedRecord) {
+			return updatedRecord
 		}
-		catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async delete(id: string) {
-		const instance = await this.userRepository.findByPk(id);
-		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND)
-		return await instance.destroy();
+	async delete(id: number) {
+		const deleteResponse = await this.userRepository.delete(id);
+		if (!deleteResponse.affected) {
+			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
+		}
 	}
 }

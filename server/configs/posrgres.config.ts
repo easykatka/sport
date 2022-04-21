@@ -1,23 +1,19 @@
 import { ConfigService } from '@nestjs/config';
-import { SequelizeModuleOptions } from '@nestjs/sequelize';
-import { MODELS } from '../models/models';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const getPostgresConfig = async (ConfigService: ConfigService): Promise<SequelizeModuleOptions> => {
-    return {
-        dialect: 'postgres',
-        autoLoadModels: true,
-        synchronize: true,
-        models: MODELS,
-        logging: false,
-        ...getConfigOptions(ConfigService),
-        sync: { alter: true },
-    };
+export const getPostgresConfig = async (ConfigService: ConfigService): Promise<TypeOrmModuleOptions> => {
+	return {
+		type: 'postgres',
+		entities: ["server/**/*.entity.ts"],
+		synchronize: true,
+		...getConfigOptions(ConfigService),
+	};
 };
 
 const getConfigOptions = (configService: ConfigService) => ({
-    host: configService.get('POSTGRES_HOST'),
-    port: configService.get('POSTGRES_PORT'),
-    username: configService.get('POSTGRES_LOGIN'),
-    password: configService.get('POSTGRES_PASSWORD'),
-    database: configService.get('POSTGRES_DATABASE'),
+	host: configService.get('POSTGRES_HOST'),
+	port: configService.get('POSTGRES_PORT'),
+	username: configService.get('POSTGRES_LOGIN'),
+	password: configService.get('POSTGRES_PASSWORD'),
+	database: configService.get('POSTGRES_DATABASE'),
 });

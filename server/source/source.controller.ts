@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserSourceDto } from './dto/user-source.dto';
-import { UserSourceService } from './user-source.service';
+import { SourceDto } from './dto/source.dto';
+import { UserSourceService } from './source.service';
 
 
 @ApiTags('Источник из которого пользователь узнал о проекте')
@@ -10,16 +10,16 @@ export class UserSourceController {
 	constructor(private readonly userSourceService: UserSourceService) { }
 
 	@Post('/create')
-	create(@Body() dto: UserSourceDto) {
+	create(@Body() dto: SourceDto) {
 		return this.userSourceService.create(dto);
 	}
-	@Post('/delete')
+	@Delete('/delete')
 	delete(@Body() { id }) {
 		return this.userSourceService.delete(id);
 	}
 
 	@Patch('/update')
-	update(@Body() dto: UserSourceDto) {
+	update(@Body() dto: SourceDto) {
 		return this.userSourceService.update(dto);
 	}
 

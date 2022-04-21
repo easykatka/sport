@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param, Patch } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Patch, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -12,7 +12,7 @@ export class RoleController {
 	create(@Body() dto:CreateRoleDto ) {
 		return this.roleService.create(dto);
 	}
-	@Post('/delete')
+	@Delete('/delete')
 	delete(@Body() { id }) {
 		return this.roleService.delete(id);
 	}

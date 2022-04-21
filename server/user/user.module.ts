@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { UserModel } from '../models/user.model';
-import { RoleModel } from 'server/models/role.model';
-import { UserRoleModel } from '../models/user-role.model';
-
+import { User } from './user.entity';
+import { Role } from 'server/role/role.entity';
+import { UserRole } from 'server/user-role/user-role.enitity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
-    controllers: [UserController],
-    providers: [UserService],
-    imports: [SequelizeModule.forFeature([UserModel, RoleModel, UserRoleModel])],
-    exports: [UserService],
+	controllers: [UserController],
+	providers: [UserService],
+	imports: [TypeOrmModule.forFeature([User, Role, UserRole])],
+	exports: [UserService],
 })
-export class UserModule {}
+export class UserModule { }

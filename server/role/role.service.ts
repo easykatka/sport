@@ -1,51 +1,46 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { RoleModel } from '../models/role.model';
-import { CreateRoleDto } from './dto/create-role.dto';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { RoleDto } from './dto/role.dto';
-import { RECORD_ALREADY_EXIST, RECORD_NOT_FOUND } from 'server/constants';
+import {  RECORD_NOT_FOUND } from 'server/constants';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Role } from './role.entity';
+import { Repository } from 'typeorm';
+import { CreateRoleDto } from './dto/create-role.dto';
 
 @Injectable()
 export class RoleService {
-	constructor(@InjectModel(RoleModel) private readonly roleModel: typeof RoleModel) { }
+	constructor(@InjectRepository(Role) private readonly roleModel: Repository<Role>) { }
 
 	async getRoleByName(name: string) {
 		return await this.roleModel.findOne({ where: { name } });
 	}
 
 	async getAll() {
-		return await this.roleModel.findAll();
+		return await this.roleModel.find();
 	}
 
 	findById(id: number) {
-		return this.roleModel.findByPk(id)
+		return this.roleModel.findOne(id)
 	}
 
-
 	async create(dto: CreateRoleDto) {
-		try {
-			const oldRole = await this.getRoleByName(dto.name);
-			if (oldRole) throw new BadRequestException(RECORD_ALREADY_EXIST);
-			return await this.roleModel.create(dto);
-		} catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
-		}
+		const newRecord = await this.roleModel.create(dto);
+		return await this.roleModel.save(newRecord);
 	}
 
 	async update(dto: RoleDto) {
-		try {
-			const instance = await this.roleModel.findByPk(dto.id);
-			if (!instance) throw new BadRequestException(RECORD_NOT_FOUND);
-			return await instance.update(dto);
+		await this.roleModel.update(dto.id, dto);
+		const updatedRecord = await this.roleModel.findOne(dto.id);
+		if (updatedRecord) {
+			return updatedRecord
 		}
-		catch (e: any) {
-			throw new BadRequestException(e?.errors.map(i => i.message).join(', ') || 'Bad request');
+		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
+	}
+
+	async delete(id: number) {
+		const deleteResponse = await this.roleModel.delete(id);
+		if (!deleteResponse.affected) {
+			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}
 	}
 
-	async delete(id: string) {
-		const instance = await this.roleModel.findByPk(id);
-		if (!instance) throw new BadRequestException(RECORD_NOT_FOUND);
-		return await instance.destroy();
-	}
 }

@@ -6,25 +6,24 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJWTConfig } from '../configs/jwt.config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { UserModel } from '../models/user.model';
-import { RoleModel } from '../models/role.model';
-import { UserRoleModel } from '../models/user-role.model';
 import { UserModule } from '../user/user.module';
+import { User } from 'server/user/user.entity';
+import { Role } from 'server/role/role.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    controllers: [AuthController],
-    imports: [
-        SequelizeModule.forFeature([UserModel, RoleModel, UserRoleModel]),
-        ConfigModule,
-        JwtModule.registerAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: getJWTConfig,
-        }),
-        PassportModule,
-        UserModule,
-    ],
-    providers: [AuthService, JwtStrategy],
+	controllers: [AuthController],
+	imports: [
+		TypeOrmModule.forFeature([User, Role]),
+		ConfigModule,
+		JwtModule.registerAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: getJWTConfig,
+		}),
+		PassportModule,
+		UserModule,
+	],
+	providers: [AuthService, JwtStrategy],
 })
-export class AuthModule {}
+export class AuthModule { }
