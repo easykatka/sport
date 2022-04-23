@@ -1,40 +1,42 @@
-// import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Role } from '../role/role.entity';
 
 @Entity()
 export class User {
-	// @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
+	@ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
 	@PrimaryGeneratedColumn()
-	id: number;
+	public id?: number;
 
-	// @ApiProperty({ example: 'user@example.com', description: 'Почтовый адрес пользователя' })
+	@ApiProperty({ example: 'user@example.com', description: 'Почтовый адрес пользователя' })
 	@Column({ unique: true, })
-	email: string;
+	public email: string;
 
-	// @ApiProperty({ example: '1234qwer', description: 'Пароль пользователя' })
+	@ApiProperty({ example: '1234qwer', description: 'Пароль пользователя' })
+	@Exclude()
 	@Column()
-	password: string;
+	public password: string;
 
-	// @ApiProperty({ example: '433443', description: 'Телеграм пользователя' })
+	@ApiProperty({ example: '433443', description: 'Телеграм пользователя' })
 	@Column({ nullable: true })
-	telegram: string;
+	public telegram: string;
 
-	// @ApiProperty({ example: 'image.jpg', description: 'Аватар пользователя' })
+	@ApiProperty({ example: 'image.jpg', description: 'Аватар пользователя' })
 	@Column({ nullable: true })
-	avatar: string;
+	public avatar: string;
 
-	// @ApiProperty({ example: 'Имя', description: 'Имя пользователя' })
+	@ApiProperty({ example: 'Имя', description: 'Имя пользователя' })
 	@Column()
-	firstName: string;
+	public firstName: string;
 
-	// @ApiProperty({ example: 'Фамилия', description: 'Фамилия пользователя' })
+	@ApiProperty({ example: 'Фамилия', description: 'Фамилия пользователя' })
 	@Column()
-	lastName: string;
+	public lastName: string;
 
-	// @ApiProperty({ example: 'Отчество', description: 'Отчество пользователя' })
+	@ApiProperty({ example: 'Отчество', description: 'Отчество пользователя' })
 	@Column({ nullable: true })
-	middleName: string;
+	public middleName: string;
 
 	@ManyToMany(() => Role)
 	@JoinTable()

@@ -13,16 +13,13 @@ export class AuthService {
 
     async registration(dto: RegistrationDto) {
         const user = await this.userService.create(dto);
-        console.log(user, '123');
         const token = this.generateToken(user);
-        user.password = undefined;
         return { user, token };
     }
 
     async login(dto: LoginDto) {
         const user = await this.validateUser(dto);
         const token = this.generateToken(user);
-        user.password = undefined;
         return { user, token };
     }
 
