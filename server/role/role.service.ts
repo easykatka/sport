@@ -23,8 +23,12 @@ export class RoleService {
     }
 
     async create(dto: CreateRoleDto) {
-        const newRecord = await this.roleModel.create(dto);
-        return await this.roleModel.save(newRecord);
+        try {
+            const newRecord = await this.roleModel.create(dto);
+            return this.roleModel.save(newRecord);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async update(dto: RoleDto) {

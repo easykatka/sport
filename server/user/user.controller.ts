@@ -24,7 +24,7 @@ export class UserController {
     update(@Body() dto: User) {
         return this.userService.update(dto);
     }
-    @UseGuards(RoleGuard('admin'))
+
     @Get('/getAll')
     getAll() {
         return this.userService.findAll();
@@ -38,7 +38,6 @@ export class UserController {
     @UseGuards(jwtAuthGuard)
     @Get('me')
     getProfile(@Request() req) {
-        console.log('here me',req.user.id);
         return this.userService.findById(req.user.id);
     }
 

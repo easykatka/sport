@@ -34,7 +34,7 @@ export class AppController {
     }
 
     //* ADMIN
-
+    @UseGuards(RoleGuard('admin'))
     @Get('/admin')
     @Render('admin')
     admin() {
