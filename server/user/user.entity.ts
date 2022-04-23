@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany,ManyToOne, JoinTable } from 'typeorm';
 import { Role } from '../role/role.entity';
+import { Source } from '../source/source.entity';
 
 @Entity()
 export class User {
@@ -38,11 +39,10 @@ export class User {
 	@Column({ nullable: true })
 	public middleName: string;
 
-	@ManyToMany(() => Role)
+	@ManyToMany(() => Role, (role: Role) => role.users)
 	@JoinTable()
 	public roles: Role[];
 
-	// @ForeignKey(() => UserSourceModel)
-	// @Column({ type: DataType.INTEGER })
-	// sourceId: number;
+	@ManyToOne(() => Source, (source: Source) => source.users)
+	public author: User;
 }

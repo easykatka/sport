@@ -16,8 +16,7 @@ class Store {
         makeAutoObservable(this);
     }
     get hasAdminAccess() {
-        return true;
-        return Boolean(this.user?.roles?.find((role) => role.name === 'admin'));
+        return this.user?.roles?.some((role) => role.name === 'admin');
     }
 
     toggleShowSidebar = () => (this.showSidebar = !this.showSidebar);

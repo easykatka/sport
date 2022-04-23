@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
-import { WRONG_USER_DATA_ERROR } from './auth.constants';
+import { WRONG_USER_DATA_ERROR } from '../user/user.constants';
 import { LoginDto } from './dto/login.dto';
 import { RegistrationDto } from './dto/registration.dto';
 

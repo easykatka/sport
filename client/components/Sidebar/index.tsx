@@ -15,9 +15,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = inject('store')(
     observer(({ store }) => {
-        console.log(store, '1233');
         const router = useRouter();
-        console.log(store.hasAdminAccess, '123');
         const menu = [
             store.hasAdminAccess && { text: 'Администрирование', icon: <LockIcon />, path: '/admin' },
             { text: 'Игры', icon: <SportsSoccerIcon />, path: '/games' },

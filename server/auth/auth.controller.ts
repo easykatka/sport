@@ -3,7 +3,6 @@ import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { RegistrationDto } from './dto/registration.dto';
 
-@UsePipes(new ValidationPipe())
 @Controller('api/auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}

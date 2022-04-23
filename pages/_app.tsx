@@ -15,7 +15,7 @@ import axios from 'axios';
 export default function App({ Component, pageProps }) {
     const { initialState, appData } = pageProps;
     const store = useStore(initialState);
-    console.log(store, 'store');
+
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>

@@ -29,9 +29,7 @@ async function bootstrap() {
     // app.setGlobalPrefix('api')
 
     app.useGlobalPipes(new ValidationPipe());
-	app.useGlobalInterceptors(new ClassSerializerInterceptor(
-		app.get(Reflector))
-	);
+    app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
     app.enableCors({
         origin: [/^(.*)/],
@@ -46,7 +44,7 @@ async function bootstrap() {
     //* замена ошибок у рендер модуля
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
-        if (err.status !== 404) {
+        if (![404, 403].includes(err.status)) {
             res.send(err.response);
         }
     });

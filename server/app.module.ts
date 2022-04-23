@@ -8,11 +8,11 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
-import { UserRoleModule } from './user-role/user-role.module';
 import { UserSourceModule } from './source/source.module';
 import { FileModule } from './file/file.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './database/database.module';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 
 declare const module: any;
 @Module({
@@ -39,7 +39,7 @@ export class AppModule {
         return {
             module: AppModule,
             controllers: [AppController],
-            providers: [AppService],
+            providers: [AppService,JwtStrategy],
             imports: [
                 renderModule,
                 ConfigModule.forRoot({
@@ -57,8 +57,8 @@ export class AppModule {
                 RoleModule,
                 AuthModule,
                 UserSourceModule,
-                UserRoleModule,
-                // FileModule,
+                FileModule,
+
             ],
         };
     }
