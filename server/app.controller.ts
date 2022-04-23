@@ -11,6 +11,7 @@ export class AppController {
 	@Get('/')
 	@Render('index')
 	home() {
+		console.log('here')
 		return {};
 	}
 

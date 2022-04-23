@@ -25,6 +25,7 @@ const envAwareFetch = (url: string, options?: Partial<RequestInit>) => {
 
     return fetch(fetchUrl, options).then((res) =>
         res.text().then(function (text) {
+            console.log('me get:', text);
             return text ? JSON.parse(text) : {};
         })
     );

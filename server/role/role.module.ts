@@ -4,7 +4,7 @@ import { RoleController } from './role.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoleService } from './role.service';
 import { User } from '../user/user.entity';
-import { UserRole } from 'server/user-role/user-role.enitity';
+import { UserRole } from '../user-role/user-role.entity';
 @Module({
 	controllers: [RoleController],
 	providers: [RoleService],

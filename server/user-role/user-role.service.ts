@@ -4,6 +4,7 @@ import { UserRoleDto } from './dto/user-role.dto';
 import { User } from '../user/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getManager } from 'typeorm';
 
 @Injectable()
 export class UserRoleService {
@@ -13,10 +14,13 @@ export class UserRoleService {
 		return this.userRoleRepository.findOne(id);
 	}
 
-	findAll() {
-		return this.userRoleRepository.query(`select UR.id,R.name as "userName", concat(U."lastName",' ',U."firstName") as "roleName" from "UserRole" UR
+	async findAll() {
+		const entityManager = getManager();
+		const res = await entityManager.query(`select UR.id,R.name as "userName", concat(U."lastName",' ',U."firstName") as "roleName" from "UserRole" UR
 		left join "Role" R on R.id = UR."roleId"
-		left join "User" U on U.id = UR."userId"`)
+		left join "User" U on U.id = UR."userId"`);
+		console.log(res,'33333');
+		return res;
 	}
 
 	async create(post: UserRoleDto) {

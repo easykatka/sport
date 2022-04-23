@@ -9,37 +9,39 @@ import LockIcon from '@mui/icons-material/Lock';
 import { inject, observer } from 'mobx-react';
 import { IStore } from 'client/api/store';
 
-
 interface SidebarProps {
-	store?: IStore
+    store?: IStore;
 }
 
-export const Sidebar: React.FC<SidebarProps> = inject('store')(observer(({ store }) => {
-	const router = useRouter();
+export const Sidebar: React.FC<SidebarProps> = inject('store')(
+    observer(({ store }) => {
+        console.log(store, '1233');
+        const router = useRouter();
+        console.log(store.hasAdminAccess, '123');
+        const menu = [
+            store.hasAdminAccess && { text: 'Администрирование', icon: <LockIcon />, path: '/admin' },
+            { text: 'Игры', icon: <SportsSoccerIcon />, path: '/games' },
+            { text: 'Правила', icon: <ListIcon />, path: '/rules' },
+            { text: 'Рейтинг Игроков', icon: <TrendingIcon />, path: '/rating' },
+        ].filter(Boolean);
 
-	const menu = [
-		store.hasAdminAccess && { text: 'Администрирование', icon: <LockIcon />, path: '/admin' },
-		{ text: 'Игры', icon: <SportsSoccerIcon />, path: '/games' },
-		{ text: 'Правила', icon: <ListIcon />, path: '/rules' },
-		{ text: 'Рейтинг Игроков', icon: <TrendingIcon />, path: '/rating' },
-	].filter(Boolean);
-
-	return (
-		<div className={styles.menu}>
-			<ul>
-				{menu.map((obj) => (
-					<li key={obj.path}>
-						<Link href={obj.path}>
-							<a>
-								<Button variant={obj.path !== '/' && router.asPath.includes(obj.path) ? 'contained' : 'text'}>
-									{obj.icon}
-									{obj.text}
-								</Button>
-							</a>
-						</Link>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
-}));
+        return (
+            <div className={styles.menu}>
+                <ul>
+                    {menu.map((obj) => (
+                        <li key={obj.path}>
+                            <Link href={obj.path}>
+                                <a>
+                                    <Button variant={obj.path !== '/' && router.asPath.includes(obj.path) ? 'contained' : 'text'}>
+                                        {obj.icon}
+                                        {obj.text}
+                                    </Button>
+                                </a>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    })
+);

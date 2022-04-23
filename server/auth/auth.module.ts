@@ -7,8 +7,8 @@ import { getJWTConfig } from '../configs/jwt.config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserModule } from '../user/user.module';
-import { User } from 'server/user/user.entity';
-import { Role } from 'server/role/role.entity';
+import { User } from '../user/user.entity';
+import { Role } from '../role/role.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({

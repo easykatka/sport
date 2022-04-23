@@ -59,7 +59,9 @@ const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
+		console.log('here')
 		const rolemappings = await fetch('/api/rolemapping/getAll');
+		console.log(rolemappings,'123');
 		return { rolemappings };
 	} catch (e) {
 		console.log(e);
