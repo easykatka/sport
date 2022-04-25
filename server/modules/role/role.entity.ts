@@ -21,6 +21,6 @@ export class Role {
     @Column({ nullable: true })
     public color: string;
 
-	@OneToMany(() => RoleToUser, roleToUser => roleToUser.user)
-	public roles!: RoleToUser[];
+	@OneToMany(() => RoleToUser, roleToUser => roleToUser.role)
+	public users!: RoleToUser[];
 }

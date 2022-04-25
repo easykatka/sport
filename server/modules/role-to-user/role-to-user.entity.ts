@@ -10,15 +10,17 @@ export class RoleToUser {
 	public id: number;
 
 	@ApiProperty({ example: 'admin', description: 'Название роли' })
+	@Column()
 	public roleId: number;
 
 	@ApiProperty({ example: 'admin', description: 'Название роли' })
+	@Column()
 	public userId: number;
 
 	@ManyToOne(() => User, user => user.roles)
-	public user!: User;
+	public user: User;
 
 	@ManyToOne(() => Role, role => role.users)
-	public role!: Role;
+	public role: Role;
 
 }

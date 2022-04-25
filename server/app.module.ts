@@ -1,22 +1,21 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import Next from 'next';
-
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
-import { UserSourceModule } from './source/source.module';
+import { UserSourceModule } from './modules/source/source.module';
 import { FileModule } from './modules/file/file.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './modules/database/database.module';
 import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
 import { RenderSiteController } from './render-site.controller';
 import { RenderAdminController } from './render-admin.controller';
-import { RolemappingController } from './role-to-user/rolemapping.controller';
-import { RolemappingService } from './role-to-user/rolemapping.service';
+import { RolemappingController } from './modules/role-to-user/role-to-user.controller';
+import { RolemappingService } from './modules/role-to-user/role-to-user.service';
 
 declare const module: any;
 @Module({

@@ -4,7 +4,6 @@ import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/guards/jwt.guard';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './user.entity';
-import { RoleGuard } from '../guards/role.guard';
 
 @ApiTags('Пользователи')
 @Controller('api/user')
