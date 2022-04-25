@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import Next from 'next';
-import { AppController } from './app.controller';
+import { UserPagesController } from './user-pages-controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
@@ -13,6 +13,7 @@ import { FileModule } from './file/file.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './database/database.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
+import { AdminPagesController } from './admin-pages-controller';
 
 declare const module: any;
 @Module({
@@ -38,8 +39,8 @@ export class AppModule {
 
         return {
             module: AppModule,
-            controllers: [AppController],
-            providers: [AppService,JwtStrategy],
+            controllers: [UserPagesController, AdminPagesController],
+            providers: [AppService, JwtStrategy],
             imports: [
                 renderModule,
                 ConfigModule.forRoot({
@@ -58,7 +59,6 @@ export class AppModule {
                 AuthModule,
                 UserSourceModule,
                 FileModule,
-
             ],
         };
     }

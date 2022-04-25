@@ -6,7 +6,7 @@ import Head from 'next/head';
 import { UserDto } from 'shared/types/UserDto';
 
 
-const Rating: FC = ({ players }) => {
+const Rating: FC = ({ players = [] }) => {
 	return (
 		<>
 			<Head>
@@ -25,13 +25,6 @@ const Rating: FC = ({ players }) => {
 	);
 };
 
-export const getServerSideProps = buildServerSideProps(async () => {
-	try {
-		const players = await fetch('/api/user/getAll');
-		return { players };
-	} catch (e) {
-		console.log(e);
-	}
-});
+
 
 export default Rating;

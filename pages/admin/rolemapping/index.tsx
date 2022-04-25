@@ -59,10 +59,10 @@ const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		console.log('here')
 		const rolemappings = await fetch('/api/rolemapping/getAll');
-		console.log(rolemappings,'123');
-		return { rolemappings };
+		const users = await fetch('/api/user/getAll');
+		const roles = await fetch('/api/role/getAll');
+		return { rolemappings, users, roles };
 	} catch (e) {
 		console.log(e);
 	}

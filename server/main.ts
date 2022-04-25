@@ -4,12 +4,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { RenderService } from 'nest-next';
 import { NODE_ENV, PORT } from 'shared/constants/env';
 import { AppModule } from './app.module';
+import cookieParser from 'cookie-parser';
 
 declare const module: any;
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule.initialize());
-
+    app.use(cookieParser());
     //* HMR
     if (module.hot) {
         module.hot.accept();
@@ -44,7 +45,8 @@ async function bootstrap() {
     //* замена ошибок у рендер модуля
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
-        if (![404, 403].includes(err.status)) {
+
+        if (![401,404, 403].includes(err.status)) {
             res.send(err.response);
         }
     });
