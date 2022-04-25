@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Param, Patch, Post, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SourceDto } from './dto/source.dto';
-import { UserSourceService } from './source.service';
+import { Source } from './source.entity';
+import { SourceService } from './source.service';
 
 
 @ApiTags('Источник из которого пользователь узнал о проекте')
 @Controller('api/source')
 export class UserSourceController {
-	constructor(private readonly userSourceService: UserSourceService) { }
+	constructor(private readonly userSourceService: SourceService) { }
 
 	@Post('/create')
-	create(@Body() dto: SourceDto) {
+	create(@Body() dto: Source) {
 		return this.userSourceService.create(dto);
 	}
 	@Delete('/delete')
@@ -19,7 +19,7 @@ export class UserSourceController {
 	}
 
 	@Patch('/update')
-	update(@Body() dto: SourceDto) {
+	update(@Body() dto: Source) {
 		return this.userSourceService.update(dto);
 	}
 

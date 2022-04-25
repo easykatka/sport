@@ -13,15 +13,11 @@ import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './modules/database/database.module';
 import { JwtStrategy } from './modules/auth/strategies/jwt.strategy';
 import { RenderSiteController } from './render-site.controller';
+import { RoleToUserModule } from './modules/role-to-user/role-to-user.module';
 import { RenderAdminController } from './render-admin.controller';
-import { RolemappingController } from './modules/role-to-user/role-to-user.controller';
-import { RolemappingService } from './modules/role-to-user/role-to-user.service';
 
 declare const module: any;
 @Module({
-	imports: [DatabaseModule],
-	controllers: [RolemappingController],
-	providers: [RolemappingService],
 })
 export class AppModule {
 	public static initialize(): DynamicModule {
@@ -63,6 +59,8 @@ export class AppModule {
 				AuthModule,
 				UserSourceModule,
 				FileModule,
+				DatabaseModule,
+				RoleToUserModule
 			],
 		};
 	}

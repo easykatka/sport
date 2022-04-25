@@ -42,7 +42,7 @@ export class UserService {
 
 	async update(dto: User) {
 		await this.userRepository.update(dto.id, dto);
-		const updatedRecord = await this.userRepository.findOne(dto.id);
+		const updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
 		if (updatedRecord) {
 			return updatedRecord;
 		}
