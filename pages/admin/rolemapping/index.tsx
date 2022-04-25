@@ -12,14 +12,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 import { Button } from '@mui/material';
-import { Role } from 'server/modules/role/role.entity';
+import { RoleToUser } from 'server/modules/role-to-user/role-to-user.entity';
 
-interface RoleMappingsProps {
-	rolemapping: RoleMapping
+interface RoleMapping {
+	rolemapping: RoleToUser
 }
 
-const RoleMappings: FC<RoleMappingsProps> = ({ rolemapping }) => {
-	rolemapping.roleId = 12
+const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
 	const onAddClick = () => router.push('/admin/rolemapping/add')
 	return (
 		<>
@@ -60,13 +59,11 @@ const RoleMappings: FC<RoleMappingsProps> = ({ rolemapping }) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const rolemapping = await fetch('/api/rolemapping/getAll');
-		const users = await fetch('/api/user/getAll');
-		const roles = await fetch('/api/role/getAll');
-		return { rolemapping, users, roles };
+		const rolemapping = await fetch('/api/rolemapping/getAll') || [];
+		return { rolemapping  };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default RoleMappings;
+export default RoleToUser;

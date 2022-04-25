@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from 'server/modules/role/role.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from '../user/user.entity';
 
 @Entity()
@@ -17,10 +17,14 @@ export class RoleToUser {
 	@Column()
 	public userId: number;
 
-	@ManyToOne(() => User, user => user.roles)
+	@ManyToOne(() => User, user => user.roles , {
+		eager: true,
+	})
 	public user: User;
 
-	@ManyToOne(() => Role, role => role.users)
+	@ManyToOne(() => Role, role => role.users, {
+		eager: true,
+	})
 	public role: Role;
 
 }

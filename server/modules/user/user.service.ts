@@ -9,50 +9,50 @@ import { USER_NOT_FOUND } from './user.constants';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
-    findById(id: number) {
-        const user = this.userRepository.findOne({ where: { id }, relations: ['roles'] });
-        if (user) {
-            return user;
-        }
-        throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
-    }
+	findById(id: number) {
+		const user = this.userRepository.findOne({ where: { id }, relations: ['roles'] });
+		if (user) {
+			return user;
+		}
+		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+	}
 
-    findAll() {
-        return this.userRepository.find();
-    }
+	findAll() {
+		return this.userRepository.find({ relations: ['roles'] });
+	}
 
-    getUserByEmail(email: string): Promise<User> {
-        const user = this.userRepository.findOne({ where: { email }, relations: ['roles'] });
-        if (user) {
-            return user;
-        }
-        throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
-    }
+	getUserByEmail(email: string): Promise<User> {
+		const user = this.userRepository.findOne({ where: { email }, relations: ['roles'] });
+		if (user) {
+			return user;
+		}
+		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+	}
 
-    async create(dto: CreateUserDto) {
-        const candidate = await this.getUserByEmail(dto.email);
-        if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
-        const salt = await genSalt(10);
-        dto.password = await hash(dto.password, salt);
-        const newUser = await this.userRepository.create(dto);
-        return this.userRepository.save(newUser);
-    }
+	async create(dto: CreateUserDto) {
+		const candidate = await this.getUserByEmail(dto.email);
+		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
+		const salt = await genSalt(10);
+		dto.password = await hash(dto.password, salt);
+		const newUser = await this.userRepository.create(dto);
+		return this.userRepository.save(newUser);
+	}
 
-    async update(dto: User) {
-        await this.userRepository.update(dto.id, dto);
-        const updatedRecord = await this.userRepository.findOne(dto.id);
-        if (updatedRecord) {
-            return updatedRecord;
-        }
-        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
-    }
+	async update(dto: User) {
+		await this.userRepository.update(dto.id, dto);
+		const updatedRecord = await this.userRepository.findOne(dto.id);
+		if (updatedRecord) {
+			return updatedRecord;
+		}
+		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
+	}
 
-    async delete(id: number) {
-        const deleteResponse = await this.userRepository.delete(id);
-        if (!deleteResponse.affected) {
-            throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
-    }
+	async delete(id: number) {
+		const deleteResponse = await this.userRepository.delete(id);
+		if (!deleteResponse.affected) {
+			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
+		}
+	}
 }
