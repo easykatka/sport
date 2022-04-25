@@ -4,7 +4,7 @@ import { RoleGuard } from './guards/role.guard';
 
 @UseGuards(RoleGuard('admin'))
 @Controller()
-export class AdminPagesController {
+export class RenderSiteController {
     constructor(private readonly appService: AppService) {}
 
     @Get('/admin')

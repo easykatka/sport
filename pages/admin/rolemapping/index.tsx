@@ -12,13 +12,14 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 import { Button } from '@mui/material';
-import { RoleMappingDto } from 'shared/types/RoleMappingDto';
+import { Role } from 'server/modules/role/role.entity';
 
 interface RoleMappingsProps {
-	rolemappings: RoleMappingDto[]
+	rolemapping: RoleMapping
 }
 
-const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
+const RoleMappings: FC<RoleMappingsProps> = ({ rolemapping }) => {
+	rolemapping.roleId = 12
 	const onAddClick = () => router.push('/admin/rolemapping/add')
 	return (
 		<>
@@ -42,7 +43,7 @@ const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{rolemappings.map((role) => (
+							{rolemapping.map((role) => (
 								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
 									<TableCell>{role.id}</TableCell>
 									<TableCell>{role.roleName}</TableCell>
@@ -59,10 +60,10 @@ const RoleMappings: FC<RoleMappingsProps> = ({ rolemappings }: any) => {
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const rolemappings = await fetch('/api/rolemapping/getAll');
+		const rolemapping = await fetch('/api/rolemapping/getAll');
 		const users = await fetch('/api/user/getAll');
 		const roles = await fetch('/api/role/getAll');
-		return { rolemappings, users, roles };
+		return { rolemapping, users, roles };
 	} catch (e) {
 		console.log(e);
 	}
