@@ -61,10 +61,11 @@ const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
 		const rolemapping = await fetch('/api/rolemapping/getAll') || [];
+        console.log("🚀 ~ file: index.tsx ~ line 64 ~ getServerSideProps ~ rolemapping", rolemapping)
 		return { rolemapping };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default RoleToUser;
+export default RoleMappings;

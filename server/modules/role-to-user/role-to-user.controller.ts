@@ -22,6 +22,7 @@ export class RoleToUserController {
 
 	@Get('/getAll')
 	getAll() {
+		
 		return this.roleToUserService.findAll();
 	}
 

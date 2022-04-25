@@ -43,6 +43,6 @@ export class RoleToUserService {
 	}
 
 	findAll() {
-		return this.userToRolesRepository.find({ relations: ['roles', 'users'] });
+		return this.userToRolesRepository.find({ relations: ['role', 'user'] });
 	}
 }
