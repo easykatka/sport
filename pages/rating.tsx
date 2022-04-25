@@ -3,17 +3,20 @@ import { MainLayout } from '../client/layouts/MainLayout';
 import { fetch } from 'shared/utils/fetch';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import Head from 'next/head';
-import { UserDto } from 'shared/types/UserDto';
+import { User } from 'server/modules/user/user.entity';
 
+interface RatingProps {
+	users: User[]
+}
 
-const Rating: FC = ({ players = [] }) => {
+const Rating: FC<RatingProps> = ({ users = [] }) => {
 	return (
 		<>
 			<Head>
 				<title>Рейтинг игроков | СОЮЗ</title>
 			</Head>
 			<MainLayout>
-				{players.map((player) => (
+				{users.map((player) => (
 					<div>
 						<div>{player.id}</div>
 						<div>{player.email}</div>

@@ -15,7 +15,7 @@ import { Button } from '@mui/material';
 import { RoleToUser } from 'server/modules/role-to-user/role-to-user.entity';
 
 interface RoleMapping {
-	rolemapping: RoleToUser
+	rolemapping: RoleToUser[]
 }
 
 const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
@@ -45,8 +45,9 @@ const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
 							{rolemapping.map((role) => (
 								<TableRow hover key={role.id} onClick={() => router.push(`${router.asPath}/${role.id}`)}>
 									<TableCell>{role.id}</TableCell>
-									<TableCell>{role.roleName}</TableCell>
-									<TableCell>{role.userName}</TableCell>
+									<TableCell>{role.user?.email}</TableCell>
+									<TableCell>{role.role?.name}</TableCell>
+	
 								</TableRow>
 							))}
 						</TableBody>
@@ -60,7 +61,7 @@ const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
 		const rolemapping = await fetch('/api/rolemapping/getAll') || [];
-		return { rolemapping  };
+		return { rolemapping };
 	} catch (e) {
 		console.log(e);
 	}

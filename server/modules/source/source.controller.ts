@@ -5,7 +5,7 @@ import { UserSourceService } from './source.service';
 
 
 @ApiTags('Источник из которого пользователь узнал о проекте')
-@Controller('api/usersource')
+@Controller('api/source')
 export class UserSourceController {
 	constructor(private readonly userSourceService: UserSourceService) { }
 

@@ -12,13 +12,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import router from 'next/router';
 import { Button } from '@mui/material';
-import { UserSourceDto } from 'shared/types/UserSourceDto';
+import { Source as SourceEntity } from 'server/modules/source/source.entity';
 
-interface UserSourceProps {
-	usersources: UserSourceDto[]
+interface SourceProps {
+	sources: SourceEntity[]
 }
 
-const UserSource: FC<UserSourceProps> = ({ usersources }) => {
+const Source: FC<SourceProps> = ({ sources }) => {
 	const onAddClick = () => router.push(`${router.asPath}/add`)
 	return (
 		<>
@@ -41,7 +41,7 @@ const UserSource: FC<UserSourceProps> = ({ usersources }) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{usersources.map((source) => (
+							{sources.map((source) => (
 								<TableRow hover key={source.id} onClick={() => router.push(`${router.asPath}/${source.id}`)}>
 									<TableCell>{source.id}</TableCell>
 									<TableCell>{source.name}</TableCell>
@@ -56,15 +56,15 @@ const UserSource: FC<UserSourceProps> = ({ usersources }) => {
 };
 
 
-const PATH = '/api/usersource';
+const PATH = '/api/source';
 
 export const getServerSideProps = buildServerSideProps(async () => {
 	try {
-		const usersources = await fetch(`${PATH}/getAll`);
-		return { usersources };
+		const sources = await fetch(`${PATH}/getAll`);
+		return { sources };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default UserSource;
+export default Source;
