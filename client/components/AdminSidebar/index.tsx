@@ -15,7 +15,7 @@ const menu = [
 	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/user` },
 	{ text: 'Роли', icon: <EngineeringIcon />, path: `${path}/role` },
 	{ text: 'Назначение ролей', icon: <AdminPanelSettingsIcon />, path: `${path}/rolemapping` },
-	{ text: 'Источник', icon: <MediationIcon />, path: `${path}/usersource` },
+	{ text: 'Источник', icon: <MediationIcon />, path: `${path}/source` },
 ];
 
 export const AdminSidebar: React.FC = () => {

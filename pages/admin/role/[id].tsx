@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-import { UserDto } from 'shared/types/UserDto';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
@@ -13,9 +12,9 @@ import { RoleApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { RoleDto } from 'shared/types/RoleDto';
+import { Role as RoleEntity } from 'server/modules/role/role.entity';
 interface RoleProps {
-	role: RoleDto;
+	role: RoleEntity;
 };
 
 
@@ -28,7 +27,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 		description: yup.string().required('Введите описание'),
 	});
 
-	const form = useForm<UserDto>({
+	const form = useForm<RoleEntity>({
 		mode: 'onSubmit',
 		defaultValues: role,
 		resolver: yupResolver(Schema)
@@ -48,7 +47,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 			router.push('/admin/role')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				setResponseError(error.response.statusText);
 			}
 		}
 	};
@@ -60,7 +59,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 			router.push('/admin/role')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				setResponseError(error.response.statusText);
 			}
 		}
 	}

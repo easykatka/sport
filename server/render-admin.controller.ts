@@ -1,31 +1,61 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
 export class RenderAdminController {
-    constructor(private readonly appService: AppService) {}
+	constructor(private readonly appService: AppService) { }
+	@Get('/admin')
+	@Render('admin')
+	admin() {
+		return {};
+	}
 
-    @Get('/')
-    @Render('index')
-    home() {
-        return {};
-    }
+	@Get('/admin/user')
+	@Render('admin/user')
+	users() {
+		return {};
+	}
 
-    @Get('/rules/')
-    @Render('rules')
-    rules() {
-        return {};
-    }
+	@Get('/admin/user/:id')
+	@Render('admin/user/[id]')
+	user() {
+		return {};
+	}
 
-    @Get('/rating/')
-    @Render('rating')
-    rating() {
-        return {};
-    }
+	@Get('/admin/role')
+	@Render('admin/role')
+	roles() {
+		return {};
+	}
 
-    @Get('/games/')
-    @Render('games')
-    games() {
-        return {};
-    }
+	@Get('/admin/role/:id')
+	@Render('admin/role/[id]')
+	role() {
+		return {};
+	}
+
+	@Get('/admin/rolemapping')
+	@Render('admin/rolemapping')
+	rolemappings() {
+		return {};
+	}
+
+	@Get('/admin/rolemapping/:id')
+	@Render('admin/rolemapping/[id]')
+	rolemapping() {
+		return {};
+	}
+
+	@Get('/admin/source')
+	@Render('admin/source')
+	usersources() {
+		return {};
+	}
+	@Get('/admin/source/:id')
+	@Render('admin/source/[id]')
+	usersource(@Param(':id') id) {
+		console.log(id,'123')
+		return {};
+	}
+
 }

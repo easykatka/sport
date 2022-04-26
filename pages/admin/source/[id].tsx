@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-import { UserDto } from 'shared/types/UserDto';
+
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
@@ -13,9 +13,10 @@ import { UserSourceApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UserSourceDto } from 'shared/types/UserSourceDto';
+import { Source as SourceEntity } from 'server/modules/source/source.entity';
+
 interface UserSourceProps {
-	usersource: UserSourceDto;
+	usersource: SourceEntity;
 };
 
 
@@ -27,7 +28,7 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 		name: yup.string().required('Введите название'),
 	});
 
-	const form = useForm<UserDto>({
+	const form = useForm<SourceEntity>({
 		mode: 'onSubmit',
 		defaultValues: usersource,
 		resolver: yupResolver(Schema)
@@ -45,7 +46,7 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 			router.push('/admin/usersource')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				setResponseError(error.response.statusText);
 			}
 		}
 	};
@@ -57,7 +58,7 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 			router.push('/admin/usersource')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				setResponseError(error.response.statusText);
 			}
 		}
 	}

@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-import { UserDto } from 'shared/types/UserDto';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
@@ -15,9 +14,10 @@ import { UserApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { User as UserEntity } from 'server/modules/user/user.entity';
 
 interface UserProps {
-	user: UserDto;
+	user: UserEntity;
 };
 
 const Input = styled('input')({
@@ -38,7 +38,7 @@ const User: FC<UserProps> = ({ user }) => {
 		} : {}
 	});
 
-	const form = useForm<UserDto>({
+	const form = useForm<UserEntity>({
 		mode: 'onSubmit',
 		defaultValues: user,
 		resolver: yupResolver(UserSchema)
@@ -55,15 +55,14 @@ const User: FC<UserProps> = ({ user }) => {
 	]
 
 	const onSubmit = async (data) => {
-		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
-		console.log("🚀 ~ file: [id].tsx ~ line 43 ~ onSubmit ~ data", data)
+		Object.keys(data).forEach(key => data[key] === '' && delete data[key]);
 		setResponseError(false);
 		try {
 			isNew ? await UserApi.create(data) : await UserApi.update(data);
 			router.push('/admin/user')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				setResponseError(error.response.statusText);
 			}
 		}
 	};
@@ -75,7 +74,8 @@ const User: FC<UserProps> = ({ user }) => {
 			router.push('/admin/user')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+				console.log(error)
+				setResponseError(error.response.statusText);
 			}
 		}
 	}
@@ -90,7 +90,7 @@ const User: FC<UserProps> = ({ user }) => {
 					<form onSubmit={form.handleSubmit(onSubmit)}>
 						<GridData fields={fields} />
 						<label htmlFor="icon-button-file">
-							<Input accept="image/*" id="icon-button-file" type="file" />
+							{/* <Input accept="image/*" id="icon-button-file" type="file" /> */}
 							<IconButton color="primary" aria-label="upload picture" component="span">
 								<AddAPhotoIcon />
 							</IconButton>
