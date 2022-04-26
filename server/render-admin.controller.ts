@@ -56,12 +56,12 @@ export class RenderAdminController {
 
 	@Get('/admin/source')
 	@Render('admin/source')
-	usersources() {
+	sources() {
 		return {};
 	}
 	@Get('/admin/source/:id')
 	@Render('admin/source/[id]')
-	usersource(@Param(':id') id) {
+	source(@Param(':id') id) {
 		console.log(id,'123')
 		return {};
 	}

@@ -6,30 +6,30 @@ import { SourceService } from './source.service';
 
 @ApiTags('Источник из которого пользователь узнал о проекте')
 @Controller('api/source')
-export class UserSourceController {
-	constructor(private readonly userSourceService: SourceService) { }
+export class SourceController {
+	constructor(private readonly sourceService: SourceService) { }
 
 	@Post('/create')
 	create(@Body() dto: Source) {
-		return this.userSourceService.create(dto);
+		return this.sourceService.create(dto);
 	}
 	@Delete('/delete')
 	delete(@Body() { id }) {
-		return this.userSourceService.delete(id);
+		return this.sourceService.delete(id);
 	}
 
 	@Patch('/update')
 	update(@Body() dto: Source) {
-		return this.userSourceService.update(dto);
+		return this.sourceService.update(dto);
 	}
 
 	@Get('/getAll')
 	getAll() {
-		return this.userSourceService.findAll();
+		return this.sourceService.findAll();
 	}
 
 	@Get('/getById/:id')
 	getById(@Param('id') id: number) {
-		return this.userSourceService.findById(id);
+		return this.sourceService.findById(id);
 	}
 }

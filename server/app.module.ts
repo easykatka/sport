@@ -7,7 +7,7 @@ import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RenderModule } from 'nest-next';
 import { NODE_ENV } from 'shared/constants/env';
-import { UserSourceModule } from './modules/source/source.module';
+import { SourceModule } from './modules/source/source.module';
 import { FileModule } from './modules/file/file.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './modules/database/database.module';
@@ -57,7 +57,7 @@ export class AppModule {
 				UserModule,
 				RoleModule,
 				AuthModule,
-				UserSourceModule,
+				SourceModule,
 				FileModule,
 				DatabaseModule,
 				RoleToUserModule

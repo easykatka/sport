@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
-
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
@@ -15,13 +14,13 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Source as SourceEntity } from 'server/modules/source/source.entity';
 
-interface UserSourceProps {
-	usersource: SourceEntity;
+interface SourceProps {
+	source: SourceEntity;
 };
 
 
-const UserSource: FC<UserSourceProps> = ({ usersource }) => {
-	const isNew = !usersource.id;
+const Source: FC<SourceProps> = ({ source }) => {
+	const isNew = !source.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
 
 	const Schema = yup.object().shape({
@@ -30,12 +29,12 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 
 	const form = useForm<SourceEntity>({
 		mode: 'onSubmit',
-		defaultValues: usersource,
+		defaultValues: source,
 		resolver: yupResolver(Schema)
 	});
 
 	const fields = [
-		{ name: 'name', label: 'Описание' },
+		{ name: 'name', label: 'Название' },
 	]
 
 	const onSubmit = async (data) => {
@@ -43,7 +42,7 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 		setResponseError(null);
 		try {
 			isNew ? await SourceApi.create(data) : await SourceApi.update(data);
-			router.push('/admin/usersource')
+			router.push('/admin/source')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.statusText);
@@ -54,8 +53,8 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 	const onDelete = async () => {
 		setResponseError(null);
 		try {
-			await SourceApi.delete(usersource.id)
-			router.push('/admin/usersource')
+			await SourceApi.delete(source.id)
+			router.push('/admin/source')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				setResponseError(error.response.statusText);
@@ -101,11 +100,11 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
 	try {
 		const { id } = ctx.query;
-		const usersource = await fetch(`/api/usersource/getById/${id}`);
-		return { usersource };
+		const source = await fetch(`/api/source/getById/${id}`);
+		return { source };
 	} catch (e) {
 		console.log(e);
 	}
 });
 
-export default UserSource;
+export default Source;
