@@ -53,6 +53,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 	};
 
 	const onDelete = async () => {
+		console.log('heres')
 		setResponseError(false);
 		try {
 			await RoleApi.delete(role.id)
@@ -101,7 +102,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
 	try {
-		const { id } = ctx.query;
+		const id = ctx.query.id || ctx.req.params.id;
 		const role = await fetch(`/api/role/getById/${id}`);
 		return { role };
 	} catch (e) {

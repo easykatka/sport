@@ -39,7 +39,7 @@ export const UserApi = {
 	},
 
 	async delete(id: number) {
-		await instance.post('user/delete', { id });
+		await instance.delete('user/delete', { id });
 	},
 };
 
@@ -53,20 +53,21 @@ export const RoleApi = {
 	},
 
 	async delete(id: number) {
-		await instance.post('role/delete', { id });
+		console.log('here')
+		await instance.delete('role/delete', { id });
 	},
 };
 
 export const UserSourceApi = {
 	async create(dto: Source) {
-		await instance.post('usersource/create', dto);
+		await instance.post('source/create', dto);
 	},
 
 	async update(dto: Source) {
-		await instance.patch('usersource/update', dto);
+		await instance.patch('source/update', dto);
 	},
 
 	async delete(id: number) {
-		await instance.post('usersource/delete', { id });
+		await instance.delete('source/delete', { id });
 	},
 };

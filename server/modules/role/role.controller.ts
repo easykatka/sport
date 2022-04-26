@@ -9,11 +9,12 @@ export class RoleController {
 	constructor(private readonly roleService: RoleService) { }
 
 	@Post('/create')
-	create(@Body() dto:CreateRoleDto ) {
+	create(@Body() dto: CreateRoleDto) {
 		return this.roleService.create(dto);
 	}
 	@Delete('/delete')
-	delete(@Body() { id }) {
+	delete(@Body() id) {
+		console.log('controller', id)
 		return this.roleService.delete(id);
 	}
 
