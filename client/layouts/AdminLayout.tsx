@@ -7,6 +7,7 @@ import { IStore } from 'client/api/store';
 interface AdminLayoutProps {
 	hideMenu?: boolean;
 	store?: IStore;
+	children: any;
 }
 
 export const AdminLayout: React.FC<AdminLayoutProps> = inject('store')(

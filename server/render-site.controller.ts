@@ -1,8 +1,11 @@
-import { Controller, Get, Render, UseGuards } from '@nestjs/common';
+import { Controller, Get, Render, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { RoleGuard } from './guards/role.guard';
+import { ParamsInterceptor } from './interceptors/params.interceptor';
 
-@UseGuards(RoleGuard('admin'))
+
+
+@UseInterceptors(ParamsInterceptor)
 @Controller()
 export class RenderSiteController {
     constructor(private readonly appService: AppService) {}

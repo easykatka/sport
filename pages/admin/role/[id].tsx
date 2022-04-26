@@ -102,7 +102,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
 	try {
-		const id = ctx.query.id || ctx.req.params.id;
+		const { id } = ctx.query
 		const role = await fetch(`/api/role/getById/${id}`);
 		return { role };
 	} catch (e) {
