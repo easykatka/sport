@@ -20,7 +20,7 @@ interface RoleProps {
 
 const Role: FC<RoleProps> = ({ role }) => {
 	const isNew = !role.id;
-	const [responseError, setResponseError] = React.useState(false);
+	const [responseError, setResponseError] = React.useState<string | null>(null);
 
 	const Schema = yup.object().shape({
 		name: yup.string().required('Введите название'),
@@ -41,7 +41,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 
 	const onSubmit = async (data) => {
 		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
-		setResponseError(false);
+		setResponseError(null);
 		try {
 			isNew ? await RoleApi.create(data) : await RoleApi.update(data);
 			router.push('/admin/role')
@@ -54,7 +54,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 
 	const onDelete = async () => {
 		console.log('heres')
-		setResponseError(false);
+		setResponseError(null);
 		try {
 			await RoleApi.delete(role.id)
 			router.push('/admin/role')

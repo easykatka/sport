@@ -9,7 +9,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { UserSourceApi } from 'client/api';
+import { SourceApi } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,7 @@ interface UserSourceProps {
 
 const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 	const isNew = !usersource.id;
-	const [responseError, setResponseError] = React.useState(false);
+	const [responseError, setResponseError] = React.useState<string | null>(null);
 
 	const Schema = yup.object().shape({
 		name: yup.string().required('Введите название'),
@@ -40,9 +40,9 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 
 	const onSubmit = async (data) => {
 		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
-		setResponseError(false);
+		setResponseError(null);
 		try {
-			isNew ? await UserSourceApi.create(data) : await UserSourceApi.update(data);
+			isNew ? await SourceApi.create(data) : await SourceApi.update(data);
 			router.push('/admin/usersource')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -52,9 +52,9 @@ const UserSource: FC<UserSourceProps> = ({ usersource }) => {
 	};
 
 	const onDelete = async () => {
-		setResponseError(false);
+		setResponseError(null);
 		try {
-			await UserSourceApi.delete(usersource.id)
+			await SourceApi.delete(usersource.id)
 			router.push('/admin/usersource')
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

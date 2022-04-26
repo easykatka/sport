@@ -26,7 +26,7 @@ const Input = styled('input')({
 
 const User: FC<UserProps> = ({ user }) => {
 	const isNew = !user.id;
-	const [responseError, setResponseError] = React.useState(false);
+	const [responseError, setResponseError] = React.useState<string | null>(null);
 
 	const UserSchema = yup.object().shape({
 		email: yup.string().email('email введен не корректно').required('Введите email'),
@@ -56,7 +56,7 @@ const User: FC<UserProps> = ({ user }) => {
 
 	const onSubmit = async (data) => {
 		Object.keys(data).forEach(key => data[key] === '' && delete data[key]);
-		setResponseError(false);
+		setResponseError(null);
 		try {
 			isNew ? await UserApi.create(data) : await UserApi.update(data);
 			router.push('/admin/user')
@@ -68,7 +68,7 @@ const User: FC<UserProps> = ({ user }) => {
 	};
 
 	const onDelete = async () => {
-		setResponseError(false);
+		setResponseError(null);
 		try {
 			await UserApi.delete(user.id)
 			router.push('/admin/user')

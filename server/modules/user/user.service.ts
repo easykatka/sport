@@ -50,6 +50,7 @@ export class UserService {
 	}
 
 	async delete(id: number) {
+		console.log(id,'here')
 		const deleteResponse = await this.userRepository.delete(id);
 		if (!deleteResponse.affected) {
 			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);

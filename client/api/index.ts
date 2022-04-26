@@ -39,7 +39,7 @@ export const UserApi = {
 	},
 
 	async delete(id: number) {
-		await instance.delete('user/delete', { id });
+		await instance.delete('user/delete', { data: { id } });
 	},
 };
 
@@ -53,12 +53,11 @@ export const RoleApi = {
 	},
 
 	async delete(id: number) {
-		console.log('here')
-		await instance.delete('role/delete', { id });
+		await instance.delete('role/delete', { data: { id } });
 	},
 };
 
-export const UserSourceApi = {
+export const SourceApi = {
 	async create(dto: Source) {
 		await instance.post('source/create', dto);
 	},
@@ -68,6 +67,6 @@ export const UserSourceApi = {
 	},
 
 	async delete(id: number) {
-		await instance.delete('source/delete', { id });
+		await instance.delete('source/delete', { data: { id } });
 	},
 };

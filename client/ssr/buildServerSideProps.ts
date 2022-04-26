@@ -16,9 +16,7 @@ const buildServerSideProps = <P, Q extends ParsedUrlQuery = ParsedUrlQuery>(
     getServerSideProps: (ctx: GetServerSidePropsContext<Q>) => Promise<P>
 ): GetServerSideProps<StaticProps & P, Partial<StaticQuery> & Q> => {
     return async (ctx) => {
-        console.log("🚀 ~ file: buildServerSideProps.ts ~ line 19 ~ return ~ ctx32323", ctx)
-        const props = await getServerSideProps(ctx);
-	
+        const props = await getServerSideProps(ctx);	
         return {
             props: {
                 ...props,
