@@ -6,28 +6,26 @@ import Head from 'next/head';
 import { User } from 'server/modules/user/user.entity';
 
 interface RatingProps {
-	users: User[]
+    users: User[];
 }
 
 const Rating: FC<RatingProps> = ({ users = [] }) => {
-	return (
-		<>
-			<Head>
-				<title>Рейтинг игроков | СОЮЗ</title>
-			</Head>
-			<MainLayout>
-				{users.map((player) => (
-					<div>
-						<div>{player.id}</div>
-						<div>{player.email}</div>
-						<div>{player.firstName}</div>
-					</div>
-				))}
-			</MainLayout>
-		</>
-	);
+    return (
+        <>
+            <Head>
+                <title>Рейтинг игроков | СОЮЗ</title>
+            </Head>
+            <MainLayout>
+                {users.map((player) => (
+                    <div>
+                        <div>{player.id}</div>
+                        <div>{player.email}</div>
+                        <div>{player.firstname}</div>
+                    </div>
+                ))}
+            </MainLayout>
+        </>
+    );
 };
-
-
 
 export default Rating;

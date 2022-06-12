@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 @Entity()
 export class Source {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn() id: number;
+    @CreateDateColumn() public createdAt: Date;
+    @UpdateDateColumn() public updatedAt: Date;
 
-    @ApiProperty({ example: 'Vkontakte', description: 'Название источника' })
+    @ApiProperty({ example: 'Vkontakte', description: 'Название' })
     @Column({ unique: true })
-    name: string;
+    public name: string;
 }

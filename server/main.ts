@@ -45,8 +45,9 @@ async function bootstrap() {
     //* замена ошибок у рендер модуля
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
-
-        if (![401,404, 403].includes(err.status)) {
+        console.log(err, 'err');
+        if ([401, 404, 403].includes(err.status)) {
+            console.log('here');
             res.send(err.response);
         }
     });

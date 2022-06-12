@@ -43,9 +43,9 @@ const Users: FC = ({ users = [] }: any) => {
                                 <TableRow hover key={user.id} onClick={() => router.push(`${router.asPath}/${user.id}`)}>
                                     <TableCell>{user.id}</TableCell>
                                     <TableCell>{user.avatar}</TableCell>
-                                    <TableCell>{user.lastName}</TableCell>
-                                    <TableCell>{user.firstName}</TableCell>
-                                    <TableCell>{user.middleName}</TableCell>
+                                    <TableCell>{user.lastname}</TableCell>
+                                    <TableCell>{user.firstname}</TableCell>
+                                    <TableCell>{user.middlename}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.telegram}</TableCell>
                                 </TableRow>

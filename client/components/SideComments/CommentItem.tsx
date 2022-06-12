@@ -14,10 +14,10 @@ export const CommentItem: React.FC<CommentItemProps> = ({ user, text, post }) =>
     return (
         <div className={styles.commentItem}>
             <div className={styles.userInfo}>
-                <Avatar style={{ marginRight: 10 }}>{user.lastName[0]}</Avatar>
+                <Avatar style={{ marginRight: 10 }}>{user.lastname[0]}</Avatar>
                 <Link href={`/profile/${user.id}`}>
                     <a>
-                        <b>{user.lastName}</b>
+                        <b>{user.lastname}</b>
                     </a>
                 </Link>
             </div>

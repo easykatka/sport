@@ -1,13 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
-import { RoleToUser } from '../role-to-user/role-to-user.entity';
-import { User } from '../user/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Role_User } from '../role_user/role_user.entity';
 
 @Entity()
 export class Role {
-    @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
-    @PrimaryGeneratedColumn()
-    public id: number;
+    @PrimaryGeneratedColumn() public id: number;
+    @CreateDateColumn() public createdAt: Date;
+    @UpdateDateColumn() public updatedAt: Date;
 
     @ApiProperty({ example: 'admin', description: 'Название роли' })
     @Column({ unique: true })
@@ -21,6 +20,6 @@ export class Role {
     @Column({ nullable: true })
     public color: string;
 
-	@OneToMany(() => RoleToUser, roleToUser => roleToUser.role)
-	public users!: RoleToUser[];
+    //rel
+    @OneToMany(() => Role_User, (Role_User) => Role_User.role) public users!: Role_User[];
 }

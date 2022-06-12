@@ -1,31 +1,31 @@
 import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UserDto {
-	@IsNumber()
-	id: number;
+    @IsNumber()
+    id: number;
 
-	@IsEmail()
-	email: string;
+    @IsEmail()
+    email: string;
 
-	@IsString()
-	@IsOptional()
-	password?: string;
+    @IsString()
+    @IsOptional()
+    password?: string;
 
-	@IsString()
-	firstName: string;
+    @IsString()
+    firstname: string;
 
-	@IsString()
-	@IsOptional()
-	middleName?: string | null;
+    @IsString()
+    @IsOptional()
+    middlename?: string | null;
 
-	@IsString()
-	lastName: string;
+    @IsString()
+    lastname: string;
 
-	@IsString()
-	@IsOptional()
-	telegram?: string | null;
+    @IsString()
+    @IsOptional()
+    telegram?: string | null;
 
-	@IsString()
-	@IsOptional()
-	avatar?: string | null;
+    @IsString()
+    @IsOptional()
+    avatar?: string | null;
 }

@@ -1,10 +1,10 @@
 export type LoginDto = {
-	email: string;
-	password: string;
+    email: string;
+    password: string;
 };
 
 export type RegistrationDto = LoginDto & {
-	firstName: string;
-	lastName: string;
-	middleName: string;
-}
+    firstname: string;
+    lastname: string;
+    middlename: string;
+};

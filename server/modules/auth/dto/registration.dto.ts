@@ -8,11 +8,11 @@ export class RegistrationDto {
     password: string;
 
     @IsString()
-    firstName: string;
+    firstname: string;
 
     @IsString()
-    middleName: string;
+    middlename: string;
 
     @IsString()
-    lastName: string;	
+    lastname: string;
 }
