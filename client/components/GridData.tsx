@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import { FormField } from './FormField';
+import { FormField } from './inputs/FormField';
 
 interface FormFieldProps {
 	fields: {

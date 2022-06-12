@@ -1,14 +1,12 @@
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { FormField } from '../../FormField';
-import { AuthApi } from 'client/api';
+import { FormField } from '../../inputs/FormField';
+import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import { LoginDto } from 'shared/types/auth';
-import axios from 'axios';
-import * as yup from 'yup';
-import { inject } from 'mobx-react';
+import axios, { AxiosError } from 'axios';
+import { inject, useLocalStore, useObserver } from 'mobx-react';
 import { IStore } from 'client/api/store';
 import styles from '../AuthDialog.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -20,17 +18,20 @@ interface LoginForm {
 }
 
 export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister, onClose, store }) => {
-    const [responseError, setResponseError] = React.useState(false);
-    const [showPassword, setShowPassword] = React.useState(false);
+    const { Auth: AuthApi } = API;
+    const state = useLocalStore(() => ({
+        responseError: false,
+        showPassword: false,
+    }));
     const form = useForm<LoginDto>({ mode: 'onChange' });
 
-    const onShowPasswordChange = () => setShowPassword(!showPassword);
+    const onShowPasswordChange = () => (state.showPassword = !state.showPassword);
 
     const getError = (field) => form.formState.errors[field]?.message;
     const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 
     const onSubmit = async (data: LoginDto) => {
-        setResponseError(false);
+        state.responseError = false;
         try {
             const { token, user } = await AuthApi.login({ email: data.email, password: String(data.password) });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
@@ -38,14 +39,13 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
             onClose();
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log('🚀 ~ file: Login.tsx ~ line 42 ~ onSubmit ~ error', error);
-
-                setResponseError(error.response.data?.message?.join?.(', ') || error.response.data.message);
+                const { message } = error.response.data as any;
+                state.responseError = Array.isArray(message) ? message.join?.(', ') : message || '';
             }
         }
     };
 
-    return (
+    return useObserver(() => (
         <div>
             <FormProvider {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -55,7 +55,7 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                         <OutlinedInput
                             {...form.register('password')}
                             id='outlined-adornment-password'
-                            type={showPassword ? 'text' : 'password'}
+                            type={state.showPassword ? 'text' : 'password'}
                             className='mb-20'
                             label={form.formState.errors.password?.message || 'Пароль'}
                             fullWidth
@@ -67,15 +67,15 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                                         onClick={onShowPasswordChange}
                                         onMouseDown={onShowPasswordChange}
                                         edge='end'>
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {state.showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
-                    {responseError && (
+                    {state.responseError && (
                         <Alert className='mb-20' severity='error'>
-                            {responseError}
+                            {state.responseError}
                         </Alert>
                     )}
                     <div className='d-flex align-center justify-between flex-column'>
@@ -95,5 +95,5 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
                 </form>
             </FormProvider>
         </div>
-    );
+    ));
 });

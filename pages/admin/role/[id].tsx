@@ -8,7 +8,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { RoleApi } from 'client/api';
+import { API } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +18,7 @@ interface RoleProps {
 }
 
 const Role: FC<RoleProps> = ({ role }) => {
+    const { Role: RoleApi } = API;
     const isNew = !role?.id;
     const [responseError, setResponseError] = React.useState<string | null>(null);
 

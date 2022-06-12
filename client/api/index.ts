@@ -1,72 +1,84 @@
 import axios from 'axios';
-import { Role } from 'server/modules/role/role.entity';
-import { Source } from 'server/modules/source/source.entity';
-import { User } from 'server/modules/user/user.entity';
+import { Role as RoleEntity } from 'server/modules/role/role.entity';
+import { Source as SourceEntity } from 'server/modules/source/source.entity';
+import { User as UserEntity } from 'server/modules/user/user.entity';
 import { LoginDto, RegistrationDto } from 'shared/types/auth';
 
 export const instance = axios.create({
-	baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://localhost:3000/api',
 });
 
-export const AuthApi = {
-	async registration(dto: RegistrationDto) {
-		const { data } = await instance.post('auth/registration', dto);
-		return data;
-	},
+const Auth = {
+    async registration(dto: RegistrationDto) {
+        const { data } = await instance.post('auth/registration', dto);
+        return data;
+    },
 
-	async login({ email, password }: LoginDto) {
-		const { data } = await instance.post('auth/login', { email, password });
-		return data;
-	},
+    async login({ email, password }: LoginDto) {
+        const { data } = await instance.post('auth/login', { email, password });
+        return data;
+    },
 
-	async me(token: string) {
-		const { data } = await instance.get('user/me', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		return data;
-	},
+    async me(token: string) {
+        const { data } = await instance.get('user/me', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return data;
+    },
 };
 
-export const UserApi = {
-	async create(dto: User) {
-		await instance.post('user/create', dto);
-	},
+const User = {
+    async create(dto: UserEntity) {
+        await instance.post('user/create', dto);
+    },
 
-	async update(dto: User) {
-		await instance.patch('user/update', dto);
-	},
+    async update(dto: UserEntity) {
+        await instance.patch('user/update', dto);
+    },
 
-	async delete(id: number) {
-		await instance.delete('user/delete', { data: { id } });
-	},
+    async delete(id: number) {
+        await instance.delete('user/delete', { data: { id } });
+    },
 };
 
-export const RoleApi = {
-	async create(dto: Role) {
-		await instance.post('role/create', dto);
-	},
+const Role = {
+    async create(dto: RoleEntity) {
+        await instance.post('role/create', dto);
+    },
 
-	async update(dto: Role) {
-		await instance.patch('role/update', dto);
-	},
+    async update(dto: RoleEntity) {
+        await instance.patch('role/update', dto);
+    },
 
-	async delete(id: number) {
-		await instance.delete('role/delete', { data: { id } });
-	},
+    async delete(id: number) {
+        await instance.delete('role/delete', { data: { id } });
+    },
 };
 
-export const SourceApi = {
-	async create(dto: Source) {
-		await instance.post('source/create', dto);
-	},
+const Source = {
+    async getAll() {
+        const { data } = await instance.get('source/getAll');
+        return data;
+    },
 
-	async update(dto: Source) {
-		await instance.patch('source/update', dto);
-	},
+    async create(dto: SourceEntity) {
+        await instance.post('source/create', dto);
+    },
 
-	async delete(id: number) {
-		await instance.delete('source/delete', { data: { id } });
-	},
+    async update(dto: SourceEntity) {
+        await instance.patch('source/update', dto);
+    },
+
+    async delete(id: number) {
+        await instance.delete('source/delete', { data: { id } });
+    },
+};
+
+export const API = {
+    Auth,
+    Source,
+    User,
+    Role,
 };

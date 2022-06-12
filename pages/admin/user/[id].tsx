@@ -10,7 +10,7 @@ import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import styled from '@emotion/styled';
-import { UserApi } from 'client/api';
+import { API } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,6 +25,7 @@ const Input = styled('input')({
 });
 
 const User: FC<UserProps> = ({ user }) => {
+    const { User: UserApi } = API;
     const isNew = !user?.id;
     const [responseError, setResponseError] = React.useState<string | null>(null);
 

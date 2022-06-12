@@ -47,7 +47,6 @@ async function bootstrap() {
     service.setErrorHandler(async (err, req, res) => {
         console.log(err, 'err');
         if ([401, 404, 403].includes(err.status)) {
-            console.log('here');
             res.send(err.response);
         }
     });

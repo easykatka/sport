@@ -2,15 +2,16 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { FormField } from '../../FormField';
-import { AuthApi } from 'client/api';
+import { FormField } from '../../inputs/FormField';
+import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
 import * as yup from 'yup';
-import { inject } from 'mobx-react';
+import { inject, useLocalStore, useObserver } from 'mobx-react';
 import { IStore } from 'client/api/store';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RegistrationDto } from 'shared/types/auth';
+import { RecordSelect } from 'client/components/inputs/RecordSelect';
 
 interface LoginForm {
     onClose: () => void;
@@ -23,17 +24,22 @@ const RegistrationSchema = yup.object().shape({
     firstname: yup.string().required('Введите своё имя'),
     lastname: yup.string().required('Введите свою фамилию'),
     middlename: yup.string(),
+    source: yup.string().required('Укажите откуда узнали о нас'),
 });
 
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
-    const [responseError, setResponseError] = React.useState(false);
-    const [showPassword, setShowPassword] = React.useState(false);
+    const { Auth: AuthApi } = API;
+    const state = useLocalStore(() => ({
+        responseError: false,
+        showPassword: false,
+    }));
+
     const form = useForm<RegistrationDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
-    const onShowPasswordChange = () => setShowPassword(!showPassword);
+    const onShowPasswordChange = () => (state.showPassword = !state.showPassword);
 
     const onSubmit = async (data: RegistrationDto) => {
-        setResponseError(false);
+        state.responseError = false;
         try {
             const { user, token } = await AuthApi.registration({
                 email: data.email,
@@ -41,14 +47,15 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
                 firstname: data.firstname,
                 middlename: data.middlename,
                 lastname: data.lastname,
+                sourceId: data.sourceId,
             });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
             store.user = user;
             onClose();
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(error.response);
-                setResponseError(error.response.data.message?.join?.(', ') || error.response.data.message);
+                const { message } = error.response.data as any;
+                state.responseError = Array.isArray(message) ? message.join?.(', ') : message || '';
             }
         }
     };
@@ -56,7 +63,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
     const getError = (field) => form.formState.errors[field]?.message;
     const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 
-    return (
+    return useObserver(() => (
         <FormProvider {...form}>
             <FormField name='email' label={renderLabel(getError('email'), 'Почта')} />
             <FormControl fullWidth variant='outlined' size='small'>
@@ -64,7 +71,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
                 <OutlinedInput
                     {...form.register('password')}
                     id='outlined-adornment-password'
-                    type={showPassword ? 'text' : 'password'}
+                    type={state.showPassword ? 'text' : 'password'}
                     className='mb-20'
                     label={form.formState.errors.password?.message || 'Пароль'}
                     fullWidth
@@ -72,7 +79,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
                     endAdornment={
                         <InputAdornment position='end'>
                             <IconButton aria-label='toggle password visibility' onClick={onShowPasswordChange} onMouseDown={onShowPasswordChange} edge='end'>
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                {state.showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                         </InputAdornment>
                     }
@@ -81,9 +88,10 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             <FormField name='lastname' label='Фамилия' />
             <FormField name='firstname' label='Имя' />
             <FormField name='middlename' label='Отчество' />
-            {responseError && (
+            <RecordSelect name='source' label='Откуда узнал о нас?' model={API.Source} property='name' />
+            {state.responseError && (
                 <Alert className='mb-20' severity='error'>
-                    {responseError}
+                    {state.responseError}
                 </Alert>
             )}
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -94,5 +102,5 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
                 </div>
             </form>
         </FormProvider>
-    );
+    ));
 });
