@@ -1,8 +1,10 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import router from 'next/router';
+import styles from './ModelList.module.scss';
 
 export const ModelList = ({ records, columns }) => {
     const onAddClick = () => router.push(`${router.asPath}/add`);
+    console.log('🚀 ~ file: index.tsx ~ line 4 ~ styles', styles);
     return (
         <>
             <Button className='mb-20' color='primary' variant='contained' onClick={onAddClick} size='large'>

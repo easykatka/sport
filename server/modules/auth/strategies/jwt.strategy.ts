@@ -30,7 +30,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	}
 
 	async validate({ email }: Pick<User, 'email'>) {
-		console.log('try to validate')
 		return await this.userService.getUserByEmail(email);
 	}
 }
