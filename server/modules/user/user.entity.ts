@@ -7,8 +7,8 @@ import { Source } from '../source/source.entity';
 @Entity()
 export class User {
     @PrimaryGeneratedColumn() public id: number;
-    @CreateDateColumn() public createdAt: Date;
-    @UpdateDateColumn() public updatedAt: Date;
+    @CreateDateColumn({ name: 'createdat' }) public createdAt: Date;
+    @UpdateDateColumn({ name: 'updatedat' }) public updatedAt: Date;
 
     @ApiProperty({ example: 'user@example.com', description: 'email' })
     @Column({ unique: true })

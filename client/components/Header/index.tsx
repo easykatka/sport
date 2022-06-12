@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 
 import styles from './Header.module.scss';
-import { AuthDialog } from '../AuthDialog';
+import { AuthDialog } from '../auth-dialog';
 
 import { Paper, Button, IconButton, Avatar, ListItem, List } from '@mui/material';
 import { inject, observer } from 'mobx-react';

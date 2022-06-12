@@ -15,96 +15,89 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Source as SourceEntity } from 'server/modules/source/source.entity';
 
 interface SourceProps {
-	source: SourceEntity;
-};
-
+    source: SourceEntity;
+}
 
 const Source: FC<SourceProps> = ({ source }) => {
-	const isNew = !source.id;
-	const [responseError, setResponseError] = React.useState<string | null>(null);
+    const isNew = !source?.id;
+    const [responseError, setResponseError] = React.useState<string | null>(null);
 
-	const Schema = yup.object().shape({
-		name: yup.string().required('Введите название'),
-	});
+    const Schema = yup.object().shape({
+        name: yup.string().required('Введите название'),
+    });
 
-	const form = useForm<SourceEntity>({
-		mode: 'onSubmit',
-		defaultValues: source,
-		resolver: yupResolver(Schema)
-	});
+    const form = useForm<SourceEntity>({
+        mode: 'onSubmit',
+        defaultValues: source,
+        resolver: yupResolver(Schema),
+    });
 
-	const fields = [
-		{ name: 'name', label: 'Название' },
-	]
+    const fields = [{ name: 'name', label: 'Название' }];
 
-	const onSubmit = async (data) => {
-		Object.keys(data).forEach(key => data[key] === '' && delete data[key])
-		setResponseError(null);
-		try {
-			isNew ? await SourceApi.create(data) : await SourceApi.update(data);
-			router.push('/admin/source')
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.statusText);
-			}
-		}
-	};
+    const onSubmit = async (data) => {
+        Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
+        setResponseError(null);
+        try {
+            isNew ? await SourceApi.create(data) : await SourceApi.update(data);
+            router.push('/admin/source');
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setResponseError(error.response.statusText);
+            }
+        }
+    };
 
-	const onDelete = async () => {
-		setResponseError(null);
-		try {
-			await SourceApi.delete(source.id)
-			router.push('/admin/source')
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				setResponseError(error.response.statusText);
-			}
-		}
-	}
+    const onDelete = async () => {
+        setResponseError(null);
+        try {
+            await SourceApi.delete(source.id);
+            router.push('/admin/source');
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setResponseError(error.response.statusText);
+            }
+        }
+    };
 
-
-	return (
-		<>
-			<Head>
-				<title>Администрирование СОЮЗ | Источник пользователя</title>
-			</Head>
-			<AdminLayout>
-				<FormProvider {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<GridData fields={fields} />
-						<div className="mt-20">
-							<Button
-								color='primary'
-								variant='contained'
-								size='large'
-								type='submit'>
-								{isNew ? 'Создать' : 'Сохранить'}
-							</Button>
-							{!isNew && <IconButton color="secondary" size="large" onClick={onDelete}>
-								<DeleteIcon />
-							</IconButton>
-							}
-						</div>
-						{responseError && (
-							<Alert className='mt-20' severity='error'>
-								{responseError}
-							</Alert>
-						)}
-					</form>
-				</FormProvider>
-			</AdminLayout>
-		</>
-	);
+    return (
+        <>
+            <Head>
+                <title>Администрирование СОЮЗ | Источник пользователя</title>
+            </Head>
+            <AdminLayout>
+                <FormProvider {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <GridData fields={fields} />
+                        <div className='mt-20'>
+                            <Button color='primary' variant='contained' size='large' type='submit'>
+                                {isNew ? 'Создать' : 'Сохранить'}
+                            </Button>
+                            {!isNew && (
+                                <IconButton color='secondary' size='large' onClick={onDelete}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            )}
+                        </div>
+                        {responseError && (
+                            <Alert className='mt-20' severity='error'>
+                                {responseError}
+                            </Alert>
+                        )}
+                    </form>
+                </FormProvider>
+            </AdminLayout>
+        </>
+    );
 };
 
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
-	try {
-		const { id } = ctx.query;
-		const source = await fetch(`/api/source/getById/${id}`);
-		return { source };
-	} catch (e) {
-		console.log(e);
-	}
+    try {
+        const { id } = ctx.query;
+        const source = await fetch(`/api/source/getById/${id}`);
+        return { source };
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 export default Source;

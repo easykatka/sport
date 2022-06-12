@@ -5,8 +5,8 @@ import { User } from '../user/user.entity';
 @Entity()
 export class Role_User {
     @PrimaryGeneratedColumn() public id: number;
-    @CreateDateColumn() public createdAt: Date;
-    @UpdateDateColumn() public updatedAt: Date;
+    @CreateDateColumn({ name: 'createdat' }) public createdAt: Date;
+    @UpdateDateColumn({ name: 'updatedat' }) public updatedAt: Date;
     @Column() public roleId: number;
     @Column() public userId: number;
     @ManyToOne(() => User, (user) => user.roles, { eager: true }) public user: User;

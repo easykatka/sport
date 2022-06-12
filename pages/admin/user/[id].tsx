@@ -25,7 +25,7 @@ const Input = styled('input')({
 });
 
 const User: FC<UserProps> = ({ user }) => {
-    const isNew = !user.id;
+    const isNew = !user?.id;
     const [responseError, setResponseError] = React.useState<string | null>(null);
 
     const UserSchema = yup.object().shape({

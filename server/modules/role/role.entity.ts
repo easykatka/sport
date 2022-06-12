@@ -5,8 +5,8 @@ import { Role_User } from '../role_user/role_user.entity';
 @Entity()
 export class Role {
     @PrimaryGeneratedColumn() public id: number;
-    @CreateDateColumn() public createdAt: Date;
-    @UpdateDateColumn() public updatedAt: Date;
+    @CreateDateColumn({ name: 'createdat' }) public createdAt: Date;
+    @UpdateDateColumn({ name: 'updatedat' }) public updatedAt: Date;
 
     @ApiProperty({ example: 'admin', description: 'Название роли' })
     @Column({ unique: true })
