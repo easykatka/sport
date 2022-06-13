@@ -11,7 +11,7 @@ import { inject } from 'mobx-react';
 import { IStore } from 'client/api/store';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
-import { UserDto } from 'server/modules/user/dto/user.dto';
+import { UserDto } from 'shared/dto/user.dto';
 
 interface LoginForm {
 	onClose: () => void;
@@ -30,11 +30,8 @@ const RegistrationSchema = yup.object().shape({
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
 	const { Auth: AuthApi } = API;
 	const [responseError, setResponseError] = useState(null);
-	const [showPassword, setShowPassword] = useState(false)
-
-
+	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
-
 	const onShowPasswordChange = () => setShowPassword(!showPassword);
 
 	const onSubmit = async (data: UserDto) => {

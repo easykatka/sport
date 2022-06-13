@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Role as RoleEntity } from 'server/modules/role/role.entity';
 import { Source as SourceEntity } from 'server/modules/source/source.entity';
 import { User as UserEntity } from 'server/modules/user/user.entity';
-import { LoginDto } from 'server/modules/auth/dto/login.dto';
+import { LoginDto } from 'shared/dto/login.dto';
 import { RegistrationDto } from 'server/modules/auth/dto/registration.dto';
 
 export const instance = axios.create({

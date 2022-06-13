@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/guards/jwt.guard';
 import { User } from './user.entity';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from '../../../shared/dto/user.dto';
 
 @ApiTags('Пользователи')
 @Controller('api/user')

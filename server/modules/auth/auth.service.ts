@@ -4,8 +4,8 @@ import { compare } from 'bcryptjs';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { WRONG_USER_DATA_ERROR } from '../user/user.constants';
-import { LoginDto } from './dto/login.dto';
-import { UserDto } from '../user/dto/user.dto';
+import { LoginDto } from '../../../shared/dto/login.dto';
+import { UserDto } from '../../../shared/dto/user.dto';
 
 @Injectable()
 export class AuthService {

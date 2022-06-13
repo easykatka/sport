@@ -9,7 +9,7 @@ import { inject, Observer, useLocalObservable } from 'mobx-react';
 import { IStore } from 'client/api/store';
 import styles from './auth.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { LoginDto } from 'server/modules/auth/dto/login.dto';
+import { LoginDto } from 'shared/dto/login.dto';
 
 interface LoginForm {
 	onOpenRegister: () => void;
