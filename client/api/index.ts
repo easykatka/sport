@@ -3,7 +3,7 @@ import { Role as RoleEntity } from 'server/modules/role/role.entity';
 import { Source as SourceEntity } from 'server/modules/source/source.entity';
 import { User as UserEntity } from 'server/modules/user/user.entity';
 import { LoginDto } from 'shared/dto/login.dto';
-import { RegistrationDto } from 'server/modules/auth/dto/registration.dto';
+import { RegistrationDto } from 'shared/dto/registration.dto';
 import { RolemappingDto } from 'shared/dto/rolemapping.dto';
 
 export const instance = axios.create({
