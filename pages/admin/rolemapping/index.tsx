@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
 import { Rolemapping as RoleUserEntity } from 'server/modules/rolemapping/rolemapping.entity';
 import { ModelList } from 'client/components/model-list';
+import { fioShort } from 'client/helpers/fio';
 
 interface RoleMapping {
 	rolemapping: RoleUserEntity[];
@@ -13,7 +14,7 @@ interface RoleMapping {
 const RoleMappings: FC<RoleMapping> = ({ rolemapping }) => {
 	const columns = [
 		{ label: 'id', field: 'id' },
-		{ label: 'Пользователь', relation: 'user', field: 'email' },
+		{ label: 'Пользователь', relation: 'user', computed : fioShort },
 		{ label: 'Роль', relation: 'role', field: 'name' },
 	];
 	return (

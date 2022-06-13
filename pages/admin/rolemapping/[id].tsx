@@ -15,11 +15,10 @@ import { Rolemapping as Rolemapping_Entity } from 'server/modules/rolemapping/ro
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { fioShort } from 'client/helpers/fio';
 interface RoleMapping {
-	rolemapping: Rolemapping_Entity;
+	rolemapping: any;
 }
 
 const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
-	console.log("🚀 ~ file: [id].tsx ~ line 22 ~ rolemapping", rolemapping)
 	const { RoleMapping: RoleMappingApi } = API;
 	const isNew = !rolemapping?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
