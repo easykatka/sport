@@ -32,6 +32,7 @@ export default function App({ Component, pageProps }) {
 }
 
 App.getInitialProps = async ({ ctx }) => {
+    console.log("🚀 ~ file: _app.tsx ~ line 35 ~ App.getInitialProps= ~ ctx", ctx.req)
 	try {
 		const { Auth: AuthApi } = API;
 		const { token } = parseCookies(ctx);

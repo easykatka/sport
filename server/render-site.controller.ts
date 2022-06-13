@@ -5,6 +5,7 @@ import { ParamsInterceptor } from './interceptors/params.interceptor';
 
 
 
+@UseGuards() 
 @UseInterceptors(ParamsInterceptor)
 @Controller()
 export class RenderSiteController {

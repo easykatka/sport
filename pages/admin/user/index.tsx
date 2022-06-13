@@ -30,6 +30,7 @@ const Users: FC = ({ users = [] }: any) => {
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
     try {
         const users = await fetch('/api/user/getAll');
+        console.log("🚀 ~ file: index.tsx ~ line 33 ~ getServerSideProps ~ users", users)
         return { users };
     } catch (e) {
         console.log(e);

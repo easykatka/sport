@@ -24,7 +24,7 @@ export const ModelList = ({ records, columns }) => {
 							<TableRow hover key={record.id} onClick={() => router.push(`${router.asPath}/${record.id}`)}>
 								{columns.map(({ field, relation, computed }, index) => {
 									const _relation = relation ? record[relation] : null;
-									const label = _relation ? _relation[field] : field;
+									const label = _relation ? _relation[field] : record[field];
 									return <TableCell key={index}>{computed ? computed(_relation || record) : label}</TableCell>;
 								})}
 							</TableRow>

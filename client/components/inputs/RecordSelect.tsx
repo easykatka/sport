@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Observer, useLocalObservable } from 'mobx-react';
+import { runInAction } from 'mobx';
+
 
 interface FormnameProps {
 	name: string;
@@ -13,12 +15,13 @@ interface FormnameProps {
 }
 
 export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, property, computed }) => {
-	const [records, setRecords] = useState([])
-	const state = useLocalObservable(() => ({ records: [], }));
-	const fetchRecord = async () => (state.records = await model.getAll());
+	const [records, setRecords] = useState([]);
+
+	const fetchRecord = async () => (setRecords(await model.getAll()));
+
 	useEffect(() => { fetchRecord(); }, []);
 
-	const { register, formState, getValues } = useFormContext();
+	const { register, formState, getValues, control } = useFormContext();
 	const getError = (name: string) => formState.errors[name]?.message;
 	const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
 	const _label = renderLabel(getError(name), label);
@@ -26,34 +29,54 @@ export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, prop
 	const defaultValue = getValues()[name];
 
 	return (
-		<FormControl fullWidth>
-			<Observer>{() =>
-				<TextField
-					// {...register(name)}
 
-					className='mb-20'
-					size='small'
-					label={_label}
-					id={labelId}
-					error={!!formState.errors[name]?.message}
-					select
-					defaultValue={defaultValue || ""}
-					inputProps={{
-						inputRef: (ref) => {
-							if (!ref) return;
-							register(name);
-						},
-					}}
-				>
-					{
-						state.records.map((record) => <MenuItem key={record.id} value={record.id}>
-							{computed ? computed(record) : record[property]}
-						</MenuItem>)
-					}
-				</TextField>
-			}
-			</Observer>
-		</FormControl >
+		// <FormControl fullWidth>
+		// 	<InputLabel size='small' id={labelId}>{_label}</InputLabel>
+		// 	<Select
+		// 		{...register(name)}
+		// 		className='mb-20'
+		// 		size='small'
+		// 		error={!!formState.errors[name]?.message}
+		// 		label={_label}
+		// 		control={control}
+		// 		defaultValue={defaultValue || ""}
+		// 	>
+		// 		{state.records.map((record) => (
+		// 			<MenuItem key={record.id} value={record.id}>
+		// 				{computed ? computed(record) : record[property]}
+		// 			</MenuItem>
+		// 		))}
+		// 	</Select>
+		// </FormControl >
+
+		<Controller
+			name={name}
+			control={control}
+			defaultValue={''} // <---------- HERE
+			render={({ field, fieldState }) => {
+				return (
+					<FormControl fullWidth>
+						<InputLabel id={labelId}>{_label}</InputLabel>
+						<Select
+							id="stackoverflow-select"
+							label="stackoverflow"
+							labelId={labelId}
+							error={!!fieldState.error}
+							{...field}
+						>
+							{records.map((record) => (
+								<MenuItem key={record.id} value={record.id}>
+									{computed ? computed(record) : record[property]}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				);
+			}}
+		/>
+
+
+
 	)
 };
 

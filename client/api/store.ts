@@ -1,6 +1,11 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
 import { User as UserEntity } from 'server/modules/user/user.entity';
+import { configure } from "mobx"
+
+configure({
+	enforceActions: "never",
+});
 
 enableStaticRendering(typeof window === 'undefined');
 export interface IStore {
