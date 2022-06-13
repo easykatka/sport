@@ -20,7 +20,6 @@ interface IHeader {
 
 export const Header: React.FC<IHeader> = inject('store')(
 	({ store }) => {
-		const { user, toggleShowSidebar } = store;
 		const [authVisible, setAuthVisible] = React.useState(false);
 
 		const openAuthDialog = () => {
@@ -32,10 +31,10 @@ export const Header: React.FC<IHeader> = inject('store')(
 		};
 
 		useEffect(() => {
-			if (authVisible && user) {
+			if (authVisible && store.user) {
 				setAuthVisible(false);
 			}
-		}, [authVisible, user]);
+		}, [authVisible, store.user]);
 
 		const logout = () => {
 			setCookie(null, 'token', null, { maxAge: 30 * 24 * 60 * 60, path: '/' });
@@ -45,7 +44,7 @@ export const Header: React.FC<IHeader> = inject('store')(
 		return <Observer>{() => (
 			<Paper classes={{ root: styles.root }} elevation={0}>
 				<div className='d-flex align-center'>
-					<IconButton onClick={() => toggleShowSidebar()}>
+					<IconButton onClick={() => store.toggleShowSidebar()}>
 						<MenuIcon />
 					</IconButton>
 					<Link href='/'>
@@ -61,14 +60,14 @@ export const Header: React.FC<IHeader> = inject('store')(
 					<IconButton>
 						<NotificationIcon />
 					</IconButton>
-					{user ? (
+					{store.user ? (
 						<>
 							<Avatar
 								className={styles.avatar}
 								alt='Remy Sharp'
 								src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
 							/>
-							<ArrowBottom onClick={logout} />
+							<ArrowBottom onClick={logout} style={{ cursor: 'pointer' }} />
 						</>
 					) : (
 						<IconButton onClick={openAuthDialog} className={styles.loginButton}>
