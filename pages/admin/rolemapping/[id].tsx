@@ -70,8 +70,8 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 			<AdminLayout>
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<RecordSelect name='roleId' model={API.Role} property="name" label="Роль" />
-						<RecordSelect name='userId' model={API.User} property="name" label="Пользователь" computed={renderUser} />
+						<RecordSelect value='roleId' model={API.Role} property="name" label="Роль" />
+						<RecordSelect value='userId' model={API.User} label="Пользователь" computed={renderUser} />
 
 						<div className='mt-20'>
 							<Button color='primary' variant='contained' size='large' type='submit'>

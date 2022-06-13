@@ -4,14 +4,14 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { Observer, useLocalObservable } from 'mobx-react';
 
 interface FormFieldProps {
-	name: string;
+	value: string;
 	label: string;
-	property: string;
+	property?: string;
 	model: any;
 	computed?: (record: any) => string;
 }
 
-export const RecordSelect: React.FC<FormFieldProps> = ({ name, label, model, property, computed }) => {
+export const RecordSelect: React.FC<FormFieldProps> = ({ value, label, model, property, computed }) => {
 	const state = useLocalObservable(() => ({
 		records: [],
 	}));
@@ -25,21 +25,23 @@ export const RecordSelect: React.FC<FormFieldProps> = ({ name, label, model, pro
 	const { register, formState } = useFormContext();
 	const getError = (field: string) => formState.errors[field]?.message;
 	const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
-	const labels = renderLabel(getError(name), label);
+	const _label = renderLabel(getError(value), label);
+	console.log(register(value), '333')
 
 	return <Observer>{() => (
 		<FormControl fullWidth>
 			<InputLabel size='small' id={label}>
-				{labels}
+				{_label}
 			</InputLabel>
 			<Select
 				labelId={label}
 				className='mb-20'
 				size='small'
-				{...register(name)}
+				{...register(value)}
 				id='demo-simple-select'
-				error={!!formState.errors[name]?.message}
-				label={renderLabel(getError(name), label)}
+				error={!!formState.errors[value]?.message}
+				label={_label}
+
 			>
 				{state.records.map((record) => (
 					<MenuItem key={record.id} value={record.id}>

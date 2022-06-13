@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
-import styles from './Header.module.scss';
+import styles from './header.module.scss';
 import { AuthDialog } from '../auth';
 import { Paper, IconButton, Avatar } from '@mui/material';
 import { inject, observer } from 'mobx-react';
