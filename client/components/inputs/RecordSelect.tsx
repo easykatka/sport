@@ -39,10 +39,9 @@ export const RecordSelect: React.FC<FormFieldProps> = ({ name, label, model, pro
                 id='demo-simple-select'
                 error={!!formState.errors[name]?.message}
                 label={renderLabel(getError(name), label)}
-                value="1"
                 fullWidth>
                 {state.records.map((record) => (
-                    <MenuItem key={record.id} value={record.id || ''}>
+                    <MenuItem key={record.id} value={record.id}>
                         {record[property]}
                     </MenuItem>
                 ))}
