@@ -1,54 +1,63 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Observer, useLocalObservable } from 'mobx-react';
+import { Controller } from "react-hook-form";
+import ReactHookFormSelect from './ReactHookFormSelect';
 
-interface FormFieldProps {
-	value: string;
+interface FormnameProps {
+	name: string;
 	label: string;
+	//* проперти в энтити
 	property?: string;
 	model: any;
 	computed?: (record: any) => string;
 }
 
-export const RecordSelect: React.FC<FormFieldProps> = ({ value, label, model, property, computed }) => {
-	const state = useLocalObservable(() => ({
-		records: [],
-	}));
-
+export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, property, computed }) => {
+	const state = useLocalObservable(() => ({ records: [], }));
 	const fetchRecord = async () => (state.records = await model.getAll());
-
-	useEffect(() => {
-		fetchRecord();
-	}, []);
+	useEffect(() => { fetchRecord(); }, []);
 
 	const { register, formState } = useFormContext();
-	const getError = (field: string) => formState.errors[field]?.message;
+	const getError = (name: string) => formState.errors[name]?.message;
 	const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
-	const _label = renderLabel(getError(value), label);
-	console.log(register(value), '333')
+	const _label = renderLabel(getError(name), label);
+	const labelId = `${name}-label`;
 
 	return <Observer>{() => (
 		<FormControl fullWidth>
-			<InputLabel size='small' id={label}>
-				{_label}
-			</InputLabel>
+			{/* <InputLabel size='small' id={labelId}>{_label}</InputLabel>
 			<Select
-				labelId={label}
 				className='mb-20'
 				size='small'
-				{...register(value)}
-				id='demo-simple-select'
-				error={!!formState.errors[value]?.message}
+				control={control}
+				error={!!formState.errors[name]?.message}
 				label={_label}
-
 			>
 				{state.records.map((record) => (
 					<MenuItem key={record.id} value={record.id}>
 						{computed ? computed(record) : record[property]}
 					</MenuItem>
 				))}
-			</Select>
+			</Select> */}
+
+
+			<TextField
+				select
+				className='mb-20'
+				size='small'
+				label={_label}
+				id={labelId}
+				error={!!formState.errors[name]?.message}
+				{...register(name)}
+			>
+				{state.records.map((record) => (
+					<MenuItem key={record.id} value={record.id}>
+						{computed ? computed(record) : record[property]}
+					</MenuItem>
+				))}
+			</TextField>
 		</FormControl>
 	)}</Observer>;
 };

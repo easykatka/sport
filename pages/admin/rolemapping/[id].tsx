@@ -19,7 +19,7 @@ interface RoleMapping {
 }
 
 const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
-	console.log("🚀 ~ file: [id].tsx ~ line 21 ~ rolemapping", rolemapping)
+	console.log("🚀 ~ file: [id].tsx ~ line 22 ~ rolemapping", rolemapping)
 	const { RoleMapping: RoleMappingApi } = API;
 	const isNew = !rolemapping?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
@@ -36,6 +36,7 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 	});
 
 	const onSubmit = async (data) => {
+		console.log("🚀 ~ file: [id].tsx ~ line 38 ~ onSubmit ~ data", data)
 		Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
 		setResponseError(null);
 		try {
@@ -70,8 +71,8 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 			<AdminLayout>
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<RecordSelect value='roleId' model={API.Role} property="name" label="Роль" />
-						<RecordSelect value='userId' model={API.User} label="Пользователь" computed={renderUser} />
+						<RecordSelect name="roleId" model={API.Role} property="name" label="Роль" />
+						<RecordSelect name="userId" model={API.User} label="Пользователь" computed={renderUser} />
 
 						<div className='mt-20'>
 							<Button color='primary' variant='contained' size='large' type='submit'>

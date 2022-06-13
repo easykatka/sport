@@ -94,7 +94,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
 					<FormField name='lastname' label='Фамилия' />
 					<FormField name='firstname' label='Имя' />
 					<FormField name='middlename' label='Отчество' />
-					<RecordSelect value='sourceId' label='Откуда узнал о нас?' model={API.Source} property='name' />
+					<RecordSelect name='sourceId' label='Откуда узнал о нас?' model={API.Source} property='name' />
 					{state.responseError && (
 						<Alert className='mb-20' severity='error'>
 							{state.responseError}
