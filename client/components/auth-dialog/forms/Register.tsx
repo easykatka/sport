@@ -53,7 +53,6 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             store.user = user;
             onClose();
         } catch (error) {
-            console.log('🚀 ~ file: Register.tsx ~ line 56 ~ onSubmit ~ error', error);
             if (axios.isAxiosError(error)) {
                 const { message } = error.response.data as any;
                 state.responseError = Array.isArray(message) ? message.join?.(', ') : message || '';

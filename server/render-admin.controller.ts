@@ -7,7 +7,7 @@ import { ParamsInterceptor } from './interceptors/params.interceptor';
 
 
 
-// @UseGuards(RoleGuard('admin'))
+@UseGuards(RoleGuard('admin'))
 @UseInterceptors(ParamsInterceptor)
 @Controller()
 export class RenderAdminController {
