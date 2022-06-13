@@ -5,7 +5,7 @@ import { FormField } from '../inputs/FormField';
 import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
-import { inject, Observer, useLocalObservable, useObserver } from 'mobx-react';
+import { inject, Observer, useLocalObservable } from 'mobx-react';
 import { IStore } from 'client/api/store';
 import styles from './auth.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
