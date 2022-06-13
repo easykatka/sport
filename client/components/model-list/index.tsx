@@ -22,9 +22,10 @@ export const ModelList = ({ records, columns }) => {
 					<TableBody>
 						{records.map((record) => (
 							<TableRow hover key={record.id} onClick={() => router.push(`${router.asPath}/${record.id}`)}>
-								{columns.map((column) => (
-									<TableCell key={column.field}>{record[column.field]}</TableCell>
-								))}
+								{columns.map(({ field, relation }) => {
+									const label = relation ? record[relation]?.[field] : record[field];
+									return <TableCell key={label}>{label}</TableCell>;
+								})}
 							</TableRow>
 						))}
 					</TableBody>

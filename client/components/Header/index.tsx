@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import styles from './Header.module.scss';
-import { AuthDialog } from '../auth-dialog';
+import { AuthDialog } from '../auth';
 import { Paper, IconButton, Avatar } from '@mui/material';
 import { inject, observer } from 'mobx-react';
 import { IStore } from 'client/api/store';

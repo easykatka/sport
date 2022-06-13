@@ -43,7 +43,7 @@ export class AppModule {
             imports: [
                 renderModule,
                 ConfigModule.forRoot({
-                    envFilePath: `.${NODE_ENV}.env`,
+                    envFilePath: `./envs/.${NODE_ENV}.env`,
                     validationSchema: Joi.object({
                         POSTGRES_HOST: Joi.string().required(),
                         POSTGRES_PORT: Joi.number().required(),

@@ -9,7 +9,7 @@ import { useStore } from 'client/hooks';
 import { API } from 'client/api';
 import { parseCookies } from 'nookies';
 import { extractAppData } from 'client/ssr/extractAppData';
-import { Header } from 'client/components/Header';
+import { Header } from 'client/components/header';
 import axios from 'axios';
 
 export default function App({ Component, pageProps }) {

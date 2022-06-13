@@ -11,6 +11,7 @@ interface MainLayoutProps {
 	contentFullWidth?: boolean;
 	className?: string;
 	store?: IStore;
+	children?: React.ReactNode;
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = inject('store')(

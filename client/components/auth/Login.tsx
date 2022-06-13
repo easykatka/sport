@@ -1,13 +1,13 @@
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { FormField } from '../../inputs/FormField';
+import { FormField } from '../inputs/FormField';
 import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
 import { inject, Observer, useLocalObservable, useObserver } from 'mobx-react';
 import { IStore } from 'client/api/store';
-import styles from '../AuthDialog.module.scss';
+import styles from './AuthDialog.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoginDto } from 'server/modules/auth/dto/login.dto';
 

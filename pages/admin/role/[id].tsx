@@ -53,7 +53,6 @@ const Role: FC<RoleProps> = ({ role }) => {
 	};
 
 	const onDelete = async () => {
-		console.log('heres');
 		setResponseError(null);
 		try {
 			await RoleApi.delete(role.id);

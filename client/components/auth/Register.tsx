@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { FormField } from '../../inputs/FormField';
+import { FormField } from '../inputs/FormField';
 import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
@@ -47,7 +47,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
                 firstname: data.firstname,
                 middlename: data.middlename,
                 lastname: data.lastname,
-                sourceId: data.sourceId ? parseInt(data.sourceId) : null,
+                sourceId: data.sourceId ? +data.sourceId : null,
             });
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
             store.user = user;
