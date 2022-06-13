@@ -14,8 +14,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Rolemapping as Rolemapping_Entity } from 'server/modules/rolemapping/rolemapping.entity';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { fioShort } from 'client/helpers/fio';
+import { RolemappingDto } from 'shared/dto/rolemapping.dto';
 interface RoleMapping {
-	rolemapping: any;
+	rolemapping: Rolemapping_Entity;
 }
 
 const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
@@ -28,18 +29,22 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 		userId: yup.string().required('Выберите пользователя'),
 	});
 
-	const form = useForm<Rolemapping_Entity>({
-		mode: 'onSubmit',
+	const form = useForm<RolemappingDto>({
+		mode: 'onChange',
 		defaultValues: rolemapping,
 		resolver: yupResolver(Schema),
 	});
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (data: RolemappingDto) => {
 		console.log("🚀 ~ file: [id].tsx ~ line 38 ~ onSubmit ~ data", data)
 		Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
 		setResponseError(null);
 		try {
-			isNew ? await RoleMappingApi.create(data) : await RoleMappingApi.update(data);
+			isNew ? await RoleMappingApi.create(data) : await RoleMappingApi.update({
+				userId: data.userId,
+				roleId: data.roleId,
+				id: data.id
+			});
 			router.push('/admin/rolemapping');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

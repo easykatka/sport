@@ -4,6 +4,7 @@ import { Source as SourceEntity } from 'server/modules/source/source.entity';
 import { User as UserEntity } from 'server/modules/user/user.entity';
 import { LoginDto } from 'shared/dto/login.dto';
 import { RegistrationDto } from 'server/modules/auth/dto/registration.dto';
+import { RolemappingDto } from 'shared/dto/rolemapping.dto';
 
 export const instance = axios.create({
 	baseURL: 'http://localhost:3000/api',
@@ -93,11 +94,11 @@ const RoleMapping = {
 		return data;
 	},
 
-	async create(dto: SourceEntity) {
+	async create(dto: RolemappingDto) {
 		await instance.post('rolemapping/create', dto);
 	},
 
-	async update(dto: SourceEntity) {
+	async update(dto: RolemappingDto) {
 		await instance.patch('rolemapping/update', dto);
 	},
 
