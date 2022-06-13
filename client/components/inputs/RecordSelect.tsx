@@ -16,9 +16,7 @@ interface FormnameProps {
 
 export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, property, computed }) => {
 	const [records, setRecords] = useState([]);
-
 	const fetchRecord = async () => (setRecords(await model.getAll()));
-
 	useEffect(() => { fetchRecord(); }, []);
 
 	const { register, formState, getValues, control } = useFormContext();
@@ -28,55 +26,23 @@ export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, prop
 	const labelId = `${name}-label`;
 	const defaultValue = getValues()[name];
 
-	return (
+	return <FormControl fullWidth>
+		<InputLabel size='small' id={labelId}>{_label}</InputLabel>
+		<Select
+			{...register(name)}
+			className='mb-20'
+			size='small'
+			error={!!formState.errors[name]?.message}
+			label={_label}
 
-		// <FormControl fullWidth>
-		// 	<InputLabel size='small' id={labelId}>{_label}</InputLabel>
-		// 	<Select
-		// 		{...register(name)}
-		// 		className='mb-20'
-		// 		size='small'
-		// 		error={!!formState.errors[name]?.message}
-		// 		label={_label}
-		// 		control={control}
-		// 		defaultValue={defaultValue || ""}
-		// 	>
-		// 		{state.records.map((record) => (
-		// 			<MenuItem key={record.id} value={record.id}>
-		// 				{computed ? computed(record) : record[property]}
-		// 			</MenuItem>
-		// 		))}
-		// 	</Select>
-		// </FormControl >
-
-		<Controller
-			name={name}
-			control={control}
-			defaultValue={''} // <---------- HERE
-			render={({ field, fieldState }) => {
-				return (
-					<FormControl fullWidth>
-						<InputLabel id={labelId}>{_label}</InputLabel>
-						<Select
-							id="stackoverflow-select"
-							label="stackoverflow"
-							labelId={labelId}
-							error={!!fieldState.error}
-							{...field}
-						>
-							{records.map((record) => (
-								<MenuItem key={record.id} value={record.id}>
-									{computed ? computed(record) : record[property]}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
-				);
-			}}
-		/>
-
-
-
-	)
+			defaultValue={defaultValue || ""}
+		>
+			{records.map((record) => (
+				<MenuItem key={record.id} value={record.id}>
+					{computed ? computed(record) : record[property]}
+				</MenuItem>
+			))}
+		</Select>
+	</FormControl>
 };
 
