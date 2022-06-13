@@ -3,7 +3,7 @@ import { fetch } from 'shared/utils/fetch';
 import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import Head from 'next/head';
 import { AdminLayout } from 'client/layouts/AdminLayout';
-import { Role_User as RoleUserEntity } from 'server/modules/role_user/role_user.entity';
+import { Rolemapping as RoleUserEntity } from 'server/modules/rolemapping/rolemapping.entity';
 import { ModelList } from 'client/components/model-list';
 
 interface RoleMapping {

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Role_User } from '../role_user/role_user.entity';
+import { Rolemapping } from '../rolemapping/rolemapping.entity';
 import { Source } from '../source/source.entity';
 
 @Entity()
@@ -42,5 +42,5 @@ export class User {
 	//rel
 	@Column({ nullable: true }) public sourceId: number;
 	@ManyToOne(() => Source, (source) => source.users) public source: Source;
-	@OneToMany(() => Role_User, (Role_User) => Role_User.user) public roles!: Role_User[];
+	@OneToMany(() => Rolemapping, (Rolemapping) => Rolemapping.user) public roles!: Rolemapping[];
 }

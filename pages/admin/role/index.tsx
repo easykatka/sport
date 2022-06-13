@@ -13,7 +13,7 @@ interface Roles {
 const Roles: FC<Roles> = ({ roles }) => {
 	const columns = [
 		{ label: 'id', field: 'id' },
-		{ label: 'Название', field: 'email' },
+		{ label: 'Название', field: 'name' },
 		{ label: 'Описание', field: 'description' },
 		{ label: 'Цвет', field: 'color' },
 	];

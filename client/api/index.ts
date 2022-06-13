@@ -31,6 +31,11 @@ const Auth = {
 };
 
 const User = {
+	async getAll() {
+		const { data } = await instance.get('user/getAll');
+		return data;
+	},
+
 	async create(dto: UserEntity) {
 		await instance.post('user/create', dto);
 	},
@@ -45,6 +50,11 @@ const User = {
 };
 
 const Role = {
+	async getAll() {
+		const { data } = await instance.get('role/getAll');
+		return data;
+	},
+
 	async create(dto: RoleEntity) {
 		await instance.post('role/create', dto);
 	},
@@ -77,9 +87,29 @@ const Source = {
 	},
 };
 
+const RoleMapping = {
+	async getAll() {
+		const { data } = await instance.get('rolemapping/getAll');
+		return data;
+	},
+
+	async create(dto: SourceEntity) {
+		await instance.post('rolemapping/create', dto);
+	},
+
+	async update(dto: SourceEntity) {
+		await instance.patch('rolemapping/update', dto);
+	},
+
+	async delete(id: number) {
+		await instance.delete('rolemapping/delete', { data: { id } });
+	},
+};
+
 export const API = {
 	Auth,
 	Source,
 	User,
 	Role,
+	RoleMapping
 };

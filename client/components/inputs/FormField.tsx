@@ -21,7 +21,7 @@ export const FormField: React.FC<FormFieldProps> = ({ name, label, ...props }) =
             size='small'
             variant='outlined'
             error={!!formState.errors[name]?.message}
-            fullWidth
+			fullWidth
             {...props}
         />
     );
