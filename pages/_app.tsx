@@ -14,6 +14,7 @@ import axios from 'axios';
 
 export default function App({ Component, pageProps }) {
 	const { initialState, appData } = pageProps;
+	
 	const store = useStore(initialState);
 	return (
 		<Provider store={store}>
@@ -32,16 +33,18 @@ export default function App({ Component, pageProps }) {
 }
 
 App.getInitialProps = async ({ ctx }) => {
-    console.log("🚀 ~ file: _app.tsx ~ line 35 ~ App.getInitialProps= ~ ctx", ctx.req)
-	try {
-		const { Auth: AuthApi } = API;
-		const { token } = parseCookies(ctx);
-		const user = token && token !== 'undefined' ? await AuthApi.me(token) : undefined;
-		return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
-	} catch (e) {
-		if (axios.isAxiosError(e)) {
-			console.log('App initial props error: ', e.response.statusText);
+	if (ctx.req) {
+		try {
+			const { Auth: AuthApi } = API;
+			const { token } = parseCookies(ctx);
+			const user = token && token !== 'undefined' ? await AuthApi.me(token) : undefined;
+			return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
+		} catch (e) {
+			if (axios.isAxiosError(e)) {
+				console.log('App initial props error: ', e.response.statusText);
+			}
+			return { pageProps: { initialState: null, appData: {} } };
 		}
-		return { pageProps: { initialState: {}, appData: {} } };
 	}
+	return { pageProps: { initialState: null, appData: {} } };
 };
