@@ -46,7 +46,7 @@ async function bootstrap() {
     const service = app.get(RenderService);
     service.setErrorHandler(async (err, req, res) => {
         console.log(err, 'err');
-        if ([401, 404, 403].includes(err.status)) {
+        if (![404].includes(err.status)) {
             res.send(err.response);
         }
     });

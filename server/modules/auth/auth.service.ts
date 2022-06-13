@@ -5,13 +5,13 @@ import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { WRONG_USER_DATA_ERROR } from '../user/user.constants';
 import { LoginDto } from './dto/login.dto';
-import { RegistrationDto } from './dto/registration.dto';
+import { UserDto } from '../user/dto/user.dto';
 
 @Injectable()
 export class AuthService {
     constructor(private userService: UserService, private readonly jwtService: JwtService) {}
 
-    async registration(dto: RegistrationDto) {
+    async registration(dto: UserDto) {
         const user = await this.userService.create(dto);
         const token = this.generateToken(user);
         return { user, token };

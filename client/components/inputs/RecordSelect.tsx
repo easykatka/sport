@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { useLocalStore, useObserver } from 'mobx-react';
+import { useLocalObservable, useObserver } from 'mobx-react';
 
 interface FormFieldProps {
     name: string;
@@ -11,7 +11,7 @@ interface FormFieldProps {
 }
 
 export const RecordSelect: React.FC<FormFieldProps> = ({ name, label, model, property }) => {
-    const state = useLocalStore(() => ({
+    const state = useLocalObservable(() => ({
         records: [],
     }));
 
@@ -39,9 +39,12 @@ export const RecordSelect: React.FC<FormFieldProps> = ({ name, label, model, pro
                 id='demo-simple-select'
                 error={!!formState.errors[name]?.message}
                 label={renderLabel(getError(name), label)}
+                value="1"
                 fullWidth>
                 {state.records.map((record) => (
-                    <MenuItem value={record[property]}>{record[property]}</MenuItem>
+                    <MenuItem key={record.id} value={record.id || ''}>
+                        {record[property]}
+                    </MenuItem>
                 ))}
             </Select>
         </FormControl>

@@ -2,8 +2,8 @@ import { Body, Controller, Get, Param, Patch, Request, UseGuards, Post, Delete }
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/guards/jwt.guard';
-import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './user.entity';
+import { UserDto } from './dto/user.dto';
 
 @ApiTags('Пользователи')
 @Controller('api/user')
@@ -11,7 +11,7 @@ export class UserController {
 	constructor(private readonly userService: UserService) { }
 
 	@Post('/create')
-	create(@Body() dto: CreateUserDto) {
+	create(@Body() dto: UserDto) {
 		return this.userService.create(dto);
 	}
 	@Delete('/delete')

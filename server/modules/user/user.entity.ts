@@ -40,6 +40,7 @@ export class User {
     public middlename: string;
 
     //rel
-    @ManyToOne(() => Source) public source: User;
+    @Column({ nullable: true }) public sourceId: number;
+    @ManyToOne(() => Source, (source) => source.users) public source: Source;
     @OneToMany(() => Role_User, (Role_User) => Role_User.user) public roles!: Role_User[];
 }

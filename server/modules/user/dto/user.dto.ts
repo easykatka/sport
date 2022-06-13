@@ -2,7 +2,8 @@ import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UserDto {
     @IsNumber()
-    id: number;
+    @IsOptional()
+    id?: number;
 
     @IsEmail()
     email: string;
@@ -28,4 +29,8 @@ export class UserDto {
     @IsString()
     @IsOptional()
     avatar?: string | null;
+
+    @IsNumber()
+    @IsOptional()
+    sourceId?: number | null;
 }
