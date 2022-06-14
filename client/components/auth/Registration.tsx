@@ -12,6 +12,7 @@ import { IStore } from 'client/api/store';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
+import { FileInput } from '../inputs/FileInput';
 
 interface LoginForm {
 	onClose: () => void;
@@ -88,6 +89,9 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
 		<FormField name='firstname' label='Имя' />
 		<FormField name='middlename' label='Отчество' />
 		<RecordSelect name='sourceId' label='Откуда узнал о нас?' model={API.Source} property='name' />
+		<FileInput />
+
+
 		{responseError && (
 			<Alert className='mb-20' severity='error'>
 				{responseError}
