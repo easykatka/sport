@@ -5,7 +5,7 @@ import { buildServerSideProps } from 'client/ssr/buildServerSideProps';
 import { fetch } from 'shared/utils/fetch';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
-import { Alert, Button, IconButton } from '@mui/material';
+import { Alert, Button, Grid, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { API } from 'client/api';
@@ -13,6 +13,9 @@ import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Role as RoleEntity } from 'server/modules/role/role.entity';
+import { ColorPicker } from 'client/components/inputs/ColorPicker';
+import { FormField } from 'client/components/inputs/FormField';
+
 interface RoleProps {
 	role: RoleEntity;
 }
@@ -36,7 +39,6 @@ const Role: FC<RoleProps> = ({ role }) => {
 	const fields = [
 		{ name: 'name', label: 'Название' },
 		{ name: 'description', label: 'Описание' },
-		{ name: 'color', label: 'Цвет' },
 	];
 
 	const onSubmit = async (data) => {
@@ -72,7 +74,12 @@ const Role: FC<RoleProps> = ({ role }) => {
 			<AdminLayout>
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<GridData fields={fields} />
+						<Grid container spacing={2}>
+							{fields.map(({ name, label }, index) => <Grid key={index} item xs={12} md={6} xl={4}>
+								<FormField name={name} label={label} />
+							</Grid>)}
+							<Grid item xs={12} md={6} xl={4}><ColorPicker name='color' label='Цвет' /></Grid>
+						</Grid>
 						<div className='mt-20'>
 							<Button color='primary' variant='contained' size='large' type='submit'>
 								{isNew ? 'Создать' : 'Сохранить'}

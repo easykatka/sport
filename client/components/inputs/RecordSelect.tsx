@@ -26,7 +26,6 @@ export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, prop
 	const _label = renderLabel(getError(name), label);
 	const labelId = `${name}-label`;
 	return <Controller
-		rules={{ required: 'Please select a stackoverflow' }}
 		control={control}
 		name={name}
 		defaultValue={''}
