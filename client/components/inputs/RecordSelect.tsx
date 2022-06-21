@@ -10,13 +10,13 @@ interface FormnameProps {
 	label: string;
 	//* проперти в энтити
 	property?: string;
-	model: any;
+	service: any;
 	computed?: (record: any) => string;
 }
 
-export const RecordSelect: React.FC<FormnameProps> = ({ name, label, model, property, computed }) => {
+export const RecordSelect: React.FC<FormnameProps> = ({ name, label, service, property, computed }) => {
 	const [records, setRecords] = useState([]);
-	const fetchRecord = async () => (setRecords(await model.getAll()));
+	const fetchRecord = async () => (setRecords(await service.getAll()));
 	useEffect(() => { fetchRecord(); }, []);
 	const { formState, control } = useFormContext();
 	if (records.length === 0) return null;

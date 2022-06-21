@@ -9,23 +9,16 @@ import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import styled from '@emotion/styled';
-import { API } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { User as UserEntity } from 'server/modules/user/user.entity';
-
+import { UserService } from 'client/api';
 interface UserProps {
 	user: UserEntity;
 }
 
-const Input = styled('input')({
-	display: 'none',
-});
-
 const User: FC<UserProps> = ({ user }) => {
-	const { User: UserApi } = API;
 	const isNew = !user?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
 
@@ -64,7 +57,7 @@ const User: FC<UserProps> = ({ user }) => {
 		});
 		setResponseError(null);
 		try {
-			isNew ? await UserApi.create(data) : await UserApi.update(data);
+			isNew ? await UserService.create(data) : await UserService.update(data);
 			router.push('/admin/user');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -76,7 +69,7 @@ const User: FC<UserProps> = ({ user }) => {
 	const onDelete = async () => {
 		setResponseError(null);
 		try {
-			await UserApi.delete(user.id);
+			await UserService.delete(user.id);
 			router.push('/admin/user');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

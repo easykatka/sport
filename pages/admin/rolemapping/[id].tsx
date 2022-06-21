@@ -7,7 +7,6 @@ import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { API } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,12 +14,12 @@ import { Rolemapping as Rolemapping_Entity } from 'server/modules/rolemapping/ro
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { fioShort } from 'client/helpers/fio';
 import { RolemappingDto } from 'shared/dto/rolemapping.dto';
+import { RoleMappingService, RoleService, UserService } from 'client/api';
 interface RoleMapping {
 	rolemapping: Rolemapping_Entity;
 }
 
 const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
-	const { RoleMapping: RoleMappingApi } = API;
 	const isNew = !rolemapping?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
 
@@ -36,11 +35,10 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 	});
 
 	const onSubmit = async (data: RolemappingDto) => {
-		console.log("🚀 ~ file: [id].tsx ~ line 38 ~ onSubmit ~ data", data)
 		Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
 		setResponseError(null);
 		try {
-			isNew ? await RoleMappingApi.create(data) : await RoleMappingApi.update({
+			isNew ? await RoleMappingService.create(data) : await RoleMappingService.update({
 				userId: data.userId,
 				roleId: data.roleId,
 				id: data.id
@@ -56,7 +54,7 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 	const onDelete = async () => {
 		setResponseError(null);
 		try {
-			await RoleMappingApi.delete(rolemapping.id);
+			await RoleMappingService.delete(rolemapping.id);
 			router.push('/admin/rolemapping');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -75,8 +73,8 @@ const RoleMapping: FC<RoleMapping> = ({ rolemapping }) => {
 			<AdminLayout>
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)}>
-						<RecordSelect name="roleId" model={API.Role} property="name" label="Роль" />
-						<RecordSelect name="userId" model={API.User} label="Пользователь" computed={renderUser} />
+						<RecordSelect name="roleId" service={RoleService} property="name" label="Роль" />
+						<RecordSelect name="userId" service={UserService} label="Пользователь" computed={renderUser} />
 
 						<div className='mt-20'>
 							<Button color='primary' variant='contained' size='large' type='submit'>

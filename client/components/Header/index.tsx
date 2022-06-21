@@ -4,7 +4,7 @@ import styles from './header.module.scss';
 import { AuthDialog } from '../auth';
 import { Paper, IconButton, Avatar } from '@mui/material';
 import { inject, observer } from 'mobx-react';
-import { IStore } from 'client/api/store';
+import { IStore } from 'client/api/appStore';
 import { setCookie } from 'nookies';
 import {
 	AccountCircleOutlined as UserIcon,

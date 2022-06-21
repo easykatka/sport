@@ -2,14 +2,16 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { FormField } from '../inputs/FormField';
-import { API } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
 import { inject, Observer, useLocalObservable } from 'mobx-react';
-import { IStore } from 'client/api/store';
+import { IStore } from 'client/api/appStore';
 import styles from './auth.module.scss';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoginDto } from 'shared/dto/login.dto';
+import { AuthService } from 'client/api';
+
+
 
 interface LoginForm {
 	onOpenRegister: () => void;
@@ -18,7 +20,6 @@ interface LoginForm {
 }
 
 export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister, onClose, store }) => {
-	const { Auth: AuthApi } = API;
 	const state = useLocalObservable(() => ({
 		responseError: false,
 		showPassword: false,
@@ -33,7 +34,7 @@ export const LoginForm: React.FC<LoginForm> = inject('store')(({ onOpenRegister,
 	const onSubmit = async (data: LoginDto) => {
 		state.responseError = false;
 		try {
-			const { token, user } = await AuthApi.login({ email: data.email, password: String(data.password) });
+			const { token, user } = await AuthService.login({ email: data.email, password: String(data.password) });
 			setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
 			store.user = user;
 			onClose();

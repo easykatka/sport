@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { enableStaticRendering } from 'mobx-react';
-import { User as UserEntity } from 'server/modules/user/user.entity';
 import { configure } from "mobx"
+import { User } from 'server/modules/user/user.entity';
 
 configure({
 	enforceActions: "never",
@@ -9,13 +9,13 @@ configure({
 
 enableStaticRendering(typeof window === 'undefined');
 export interface IStore {
-	user: UserEntity | null;
+	user: User | null;
 	showSidebar: boolean;
 	toggleShowSidebar: () => void;
 	hasAdminAccess: boolean;
 }
 
-class Store {
+class AppStore {
 	user = null;
 	showSidebar = true;
 	constructor() {
@@ -38,7 +38,7 @@ class Store {
 
 let store;
 export function initializeStore(initialState = null) {
-	const _store = store ?? new Store();
+	const _store = store ?? new AppStore();
 	_store.hydrate(initialState);
 	if (typeof window === 'undefined') return _store;
 	if (!store) store = _store;

@@ -3,12 +3,12 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { FormField } from '../inputs/FormField';
-import { API } from 'client/api';
+import { AuthService, SourceService } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
 import * as yup from 'yup';
 import { inject } from 'mobx-react';
-import { IStore } from 'client/api/store';
+import { IStore } from 'client/api/appStore';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
@@ -29,7 +29,6 @@ const RegistrationSchema = yup.object().shape({
 });
 
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
-	const { Auth: AuthApi } = API;
 	const [responseError, setResponseError] = useState(null);
 	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
@@ -38,7 +37,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
 	const onSubmit = async (data: UserDto) => {
 		setResponseError(false);
 		try {
-			const { user, token } = await AuthApi.registration({
+			const { user, token } = await AuthService.registration({
 				email: data.email,
 				password: data.password,
 				firstname: data.firstname,
@@ -88,7 +87,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
 		<FormField name='lastname' label='Фамилия' />
 		<FormField name='firstname' label='Имя' />
 		<FormField name='middlename' label='Отчество' />
-		<RecordSelect name='sourceId' label='Откуда узнал о нас?' model={API.Source} property='name' />
+		<RecordSelect name='sourceId' label='Откуда узнал о нас?' service={SourceService} property='name' />
 		<FileInput />
 
 

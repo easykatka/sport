@@ -1,4 +1,4 @@
-import { initializeStore } from 'client/api/store';
+import { initializeStore } from 'client/api/appStore';
 import { useMemo } from 'react';
 
 export function useStore(initialState) {

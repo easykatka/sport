@@ -7,7 +7,7 @@ import styles from './Sidebar.module.scss';
 import { useRouter } from 'next/router';
 import LockIcon from '@mui/icons-material/Lock';
 import { inject, observer } from 'mobx-react';
-import { IStore } from 'client/api/store';
+import { IStore } from 'client/api/appStore';
 
 interface SidebarProps {
     store?: IStore;

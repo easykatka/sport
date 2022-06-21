@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { AdminSidebar } from 'client/components/admin-sidebar';
 import { inject, observer } from 'mobx-react';
-import { IStore } from 'client/api/store';
+import { IStore } from 'client/api/appStore';
 
 interface AdminLayoutProps {
 	hideMenu?: boolean;

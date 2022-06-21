@@ -6,22 +6,20 @@ import { fetch } from 'shared/utils/fetch';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, Grid, IconButton } from '@mui/material';
-import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { API } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Role as RoleEntity } from 'server/modules/role/role.entity';
 import { ColorPicker } from 'client/components/inputs/ColorPicker';
 import { FormField } from 'client/components/inputs/FormField';
+import { RoleService } from 'client/api';
 
 interface RoleProps {
 	role: RoleEntity;
 }
 
 const Role: FC<RoleProps> = ({ role }) => {
-	const { Role: RoleApi } = API;
 	const isNew = !role?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
 
@@ -45,7 +43,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 		Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
 		setResponseError(null);
 		try {
-			isNew ? await RoleApi.create(data) : await RoleApi.update(data);
+			isNew ? await RoleService.create(data) : await RoleService.update(data);
 			router.push('/admin/role');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -57,7 +55,7 @@ const Role: FC<RoleProps> = ({ role }) => {
 	const onDelete = async () => {
 		setResponseError(null);
 		try {
-			await RoleApi.delete(role.id);
+			await RoleService.delete(role.id);
 			router.push('/admin/role');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {

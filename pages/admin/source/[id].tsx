@@ -8,7 +8,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Alert, Button, IconButton } from '@mui/material';
 import { GridData } from 'client/components/GridData';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { API } from 'client/api';
+import { SourceService } from 'client/api';
 import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,7 +19,6 @@ interface SourceProps {
 }
 
 const Source: FC<SourceProps> = ({ source }) => {
-	const { Source: SourceApi } = API;
 	const isNew = !source?.id;
 	const [responseError, setResponseError] = React.useState<string | null>(null);
 
@@ -39,7 +38,7 @@ const Source: FC<SourceProps> = ({ source }) => {
 		Object.keys(data).forEach((key) => data[key] === '' && delete data[key]);
 		setResponseError(null);
 		try {
-			isNew ? await SourceApi.create(data) : await SourceApi.update(data);
+			isNew ? await SourceService.create(data) : await SourceService.update(data);
 			router.push('/admin/source');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -51,7 +50,7 @@ const Source: FC<SourceProps> = ({ source }) => {
 	const onDelete = async () => {
 		setResponseError(null);
 		try {
-			await SourceApi.delete(source.id);
+			await SourceService.delete(source.id);
 			router.push('/admin/source');
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
