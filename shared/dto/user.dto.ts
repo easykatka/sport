@@ -1,8 +1,8 @@
 import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UserDto {
-	@IsNumber()
 	@IsOptional()
+	@IsNumber()
 	readonly id?: number;
 
 	@IsEmail()

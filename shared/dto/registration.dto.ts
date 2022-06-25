@@ -1,30 +1,30 @@
-import { IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class RegistrationDto {
-	@IsString()
+
+	@IsEmail()
 	readonly email: string;
 
 	@IsString()
-	@MinLength(6)
-	@MaxLength(20)
-	password: string;
+	password?: string;
 
 	@IsString()
 	readonly firstname: string;
+
+	@IsString()
+	@IsOptional()
+	readonly middlename?: string | null;
 
 	@IsString()
 	readonly lastname: string;
 
 	@IsString()
 	@IsOptional()
-	readonly middlename: string;
-
-	@IsNumber()
-	@IsOptional()
-	readonly sourceId: number;
+	readonly telegram?: string | null;
 
 	@IsString()
-	@IsOptional()
-	readonly photo?: string;
-}
+	readonly photo: string | null;
 
+	@IsNumber()
+	readonly sourceId: number | null;
+}

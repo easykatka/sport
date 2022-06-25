@@ -4,7 +4,6 @@ import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/guards/jwt.guard';
 import { UserDto } from '../../../shared/dto/user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { RegistrationDto } from 'shared/dto/registration.dto';
 
 @ApiTags('Пользователи')
 @UseInterceptors(FileInterceptor('photo'))
@@ -16,7 +15,7 @@ export class UserController {
 
 	@Post('/create')
 
-	create(@Body() dto: RegistrationDto, @UploadedFile() photo) {
+	create(@Body() dto: UserDto, @UploadedFile() photo) {
 		return this.userService.create(dto, photo);
 	}
 	@Delete('/delete')

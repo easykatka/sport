@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 import { USER_NOT_FOUND } from './user.constants';
 import { UserDto } from '../../../shared/dto/user.dto';
 import { FileService } from '../file/file.service';
-import { RegistrationDto } from 'shared/dto/registration.dto';
 import { MFile } from '../file/mfile.class';
 
 @Injectable()
@@ -36,7 +35,7 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: RegistrationDto, photo?: MFile) {
+	async create(dto: UserDto, photo?: MFile) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
@@ -55,9 +54,13 @@ export class UserService {
 
 	async update(dto: UserDto, photo?: MFile) {
 		await this.userRepository.update(dto.id, dto);
-
-		const updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
+		let updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
+		console.log("🚀 ~ file: user.service.ts ~ line 59 ~ UserService ~ update ~ updatedRecord", updatedRecord)
 		if (updatedRecord) {
+			if (photo) {
+				updatedRecord.photo = await this.updatePhoto(updatedRecord.id, photo);
+				updatedRecord = await this.userRepository.save(updatedRecord);
+			}
 			return updatedRecord;
 		}
 		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
