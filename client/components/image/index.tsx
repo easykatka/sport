@@ -18,5 +18,5 @@ export const Image: React.FC<ImageProps> = ({ model, record, property, width = 1
         );
     const url = `/storage/${model}/`;
     const fileUrl = url + `${record.id}-${property}`;
-    return <NextImage loader={() => fileUrl} src={fileUrl} alt='' width={width} height={height} className={styles.image} />;
+    return <NextImage loader={() => fileUrl} src={fileUrl} unoptimized={true} alt='' width={width} height={height} className={styles.image} />;
 };

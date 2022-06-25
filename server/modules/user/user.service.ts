@@ -24,8 +24,8 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	findAll() {
-		return this.userRepository.find({ relations: ['roles', 'source'] });
+	findAll(options = {}) {
+		return this.userRepository.find({ relations: ['roles', 'source'], order: { id: "DESC" }, ...options });
 	}
 
 	getUserByEmail(email: string): Promise<User> {

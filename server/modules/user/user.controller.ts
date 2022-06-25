@@ -30,8 +30,8 @@ export class UserController {
 	}
 
 	@Get('/getAll')
-	getAll() {
-		return this.userService.findAll();
+	getAll(@Body() options) {
+		return this.userService.findAll(options);
 	}
 
 	@Get('/getById/:id')
