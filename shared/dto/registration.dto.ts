@@ -5,7 +5,7 @@ export class RegistrationDto {
 	readonly email: string;
 
 	@IsString()
-	readonly password: string;
+	password: string;
 
 	@IsString()
 	readonly firstname: string;
@@ -21,6 +21,7 @@ export class RegistrationDto {
 	readonly sourceId: number;
 
 	@IsString()
-	readonly photo: string;
+	@IsOptional()
+	readonly photo?: string;
 }
 

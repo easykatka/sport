@@ -3,34 +3,34 @@ import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 export class UserDto {
 	@IsNumber()
 	@IsOptional()
-	id?: number;
+	readonly id?: number;
 
 	@IsEmail()
-	email: string;
+	readonly email: string;
 
 	@IsString()
 	@IsOptional()
 	password?: string;
 
 	@IsString()
-	firstname: string;
+	readonly firstname: string;
 
 	@IsString()
 	@IsOptional()
-	middlename?: string | null;
+	readonly middlename?: string | null;
 
 	@IsString()
-	lastname: string;
-
-	@IsString()
-	@IsOptional()
-	telegram?: string | null;
+	readonly lastname: string;
 
 	@IsString()
 	@IsOptional()
-	photo?: string | null;
+	readonly telegram?: string | null;
+
+	@IsString()
+	@IsOptional()
+	readonly photo?: string | null;
 
 	@IsNumber()
 	@IsOptional()
-	sourceId?: number | null;
+	readonly sourceId?: number | null;
 }

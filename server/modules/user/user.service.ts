@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { USER_NOT_FOUND } from './user.constants';
 import { UserDto } from '../../../shared/dto/user.dto';
 import { FileService } from '../file/file.service';
+import { RegistrationDto } from 'shared/dto/registration.dto';
 
 @Injectable()
 export class UserService {
@@ -34,7 +35,7 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: UserDto) {
+	async create(dto: RegistrationDto) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
