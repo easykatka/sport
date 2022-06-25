@@ -8,6 +8,7 @@ import { USER_NOT_FOUND } from './user.constants';
 import { UserDto } from '../../../shared/dto/user.dto';
 import { FileService } from '../file/file.service';
 import { MFile } from '../file/mfile.class';
+import { RegistrationDto } from 'shared/dto/registration.dto';
 
 @Injectable()
 export class UserService {
@@ -35,7 +36,7 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: UserDto, photo?: MFile) {
+	async create(dto: RegistrationDto, photo?: MFile) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
@@ -48,14 +49,14 @@ export class UserService {
 		}
 		return newUser;
 	}
-	async updatePhoto(id, photo) {
+	async updatePhoto(id: number, photo: MFile) {
 		return await this.fileService.createFile(photo, 'user', id, 'photo');
 	}
 
 	async update(dto: UserDto, photo?: MFile) {
+		console.log("🚀 ~ file: user.service.ts ~ line 56 ~ UserService ~ update ~ dto", dto);
 		await this.userRepository.update(dto.id, dto);
 		let updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
-		console.log("🚀 ~ file: user.service.ts ~ line 59 ~ UserService ~ update ~ updatedRecord", updatedRecord)
 		if (updatedRecord) {
 			if (photo) {
 				updatedRecord.photo = await this.updatePhoto(updatedRecord.id, photo);

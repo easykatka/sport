@@ -1,7 +1,6 @@
 import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class RegistrationDto {
-
 	@IsEmail()
 	readonly email: string;
 
@@ -22,9 +21,9 @@ export class RegistrationDto {
 	@IsOptional()
 	readonly telegram?: string | null;
 
-	@IsString()
 	readonly photo: string | null;
 
 	@IsNumber()
 	readonly sourceId: number | null;
+
 }
