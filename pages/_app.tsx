@@ -36,7 +36,7 @@ App.getInitialProps = async ({ ctx }) => {
 	if (ctx.req) {
 		try {
 			const { token } = parseCookies(ctx);
-			const user = token && token !== 'undefined' ? await AuthService.me(token) : undefined;
+			const user = token && token !== 'undefined' && token !== 'null' ? await AuthService.me(token) : undefined;
 			return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
 		} catch (e) {
 			if (axios.isAxiosError(e)) {

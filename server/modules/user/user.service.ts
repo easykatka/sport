@@ -54,7 +54,6 @@ export class UserService {
 	}
 
 	async update(dto: UserDto, photo?: MFile) {
-		console.log("🚀 ~ file: user.service.ts ~ line 56 ~ UserService ~ update ~ dto", dto);
 		await this.userRepository.update(dto.id, dto);
 		let updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
 		if (updatedRecord) {
