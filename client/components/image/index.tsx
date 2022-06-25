@@ -14,6 +14,7 @@ export const Image: React.FC<ImageProps> = ({ record, property, width = 100, hei
                 {noImageLabel}
             </div>
         );
-    const filename = `${record.id}-${property}`;
+    const url = 'http://localhost:3000/storage/user/';
+    const filename = url + `${record.id}-${property}`;
     return <img width={width} height={height} src={filename} className={styles.image} />;
 };
