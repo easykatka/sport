@@ -8,6 +8,7 @@ import { USER_NOT_FOUND } from './user.constants';
 import { UserDto } from '../../../shared/dto/user.dto';
 import { FileService } from '../file/file.service';
 import { RegistrationDto } from 'shared/dto/registration.dto';
+import { MFile } from '../file/mfile.class';
 
 @Injectable()
 export class UserService {
@@ -35,20 +36,24 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: RegistrationDto) {
+	async create(dto: RegistrationDto, photo?: MFile) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
 		dto.password = await hash(dto.password, salt);
-		const newUser = await this.userRepository.create(dto);
-		return this.userRepository.save(newUser);
+		let newUser = await this.userRepository.create(dto);
+		newUser = await this.userRepository.save(newUser);
+		if (photo) {
+			newUser.photo = await this.updatePhoto(newUser.id, photo);
+			newUser = await this.userRepository.save(newUser);
+		}
+		return newUser;
 	}
 	async updatePhoto(id, photo) {
-		// dto.photo = await this.fileService.createFile(photo, 'user', );
-		return '123';
+		return await this.fileService.createFile(photo, 'user', id, 'photo');
 	}
 
-	async update(dto: UserDto) {
+	async update(dto: UserDto, photo?: MFile) {
 		await this.userRepository.update(dto.id, dto);
 
 		const updatedRecord = await this.userRepository.findOneBy({ id: dto.id });

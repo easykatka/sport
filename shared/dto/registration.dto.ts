@@ -1,10 +1,12 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class RegistrationDto {
 	@IsString()
 	readonly email: string;
 
 	@IsString()
+	@MinLength(6)
+	@MaxLength(20)
 	password: string;
 
 	@IsString()
@@ -18,6 +20,7 @@ export class RegistrationDto {
 	readonly middlename: string;
 
 	@IsNumber()
+	@IsOptional()
 	readonly sourceId: number;
 
 	@IsString()

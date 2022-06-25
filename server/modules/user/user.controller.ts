@@ -17,7 +17,7 @@ export class UserController {
 	@Post('/create')
 
 	create(@Body() dto: RegistrationDto, @UploadedFile() photo) {
-		return this.userService.create(dto);
+		return this.userService.create(dto, photo);
 	}
 	@Delete('/delete')
 	delete(@Body() { id }) {
@@ -26,7 +26,7 @@ export class UserController {
 
 	@Patch('/update')
 	update(@Body() dto: UserDto, @UploadedFile() photo) {
-		return this.userService.update(dto);
+		return this.userService.update(dto, photo);
 	}
 
 	@Get('/getAll')
