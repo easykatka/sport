@@ -12,14 +12,14 @@ interface IProps {
 
 const Users: FC<IProps> = ({ users = [] }) => {
 	const columns = [
-		{ label: 'id', field: 'id' },
-		{ label: 'Фото', field: 'avatar' },
-		{ label: 'Фамилия', field: 'lastname' },
-		{ label: 'Имя', field: 'firstname' },
-		{ label: 'Отчество', field: 'middlename' },
-		{ label: 'Email', field: 'email' },
-		{ label: 'Телеграм', field: 'telegram' },
-	];
+        { label: 'id', field: 'id' },
+        { label: 'Фото', field: 'photo' },
+        { label: 'Фамилия', field: 'lastname' },
+        { label: 'Имя', field: 'firstname' },
+        { label: 'Отчество', field: 'middlename' },
+        { label: 'Email', field: 'email' },
+        { label: 'Телеграм', field: 'telegram' },
+    ];
 	return (
 		<>
 			<Head>

@@ -25,7 +25,7 @@ export class User {
 
 	@ApiProperty({ example: 'image.jpg', description: 'Аватар' })
 	@Column({ nullable: true })
-	public avatar: string;
+	public photo: string;
 
 	@ApiProperty({ example: 'Имя', description: 'Имя' })
 	@Column()

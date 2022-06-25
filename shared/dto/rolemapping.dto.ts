@@ -1,13 +1,5 @@
-import { IsNumber, IsOptional } from 'class-validator';
-
 export class RolemappingDto {
-	@IsNumber()
-	@IsOptional()
-	id?: number;
-
-	@IsNumber()
-	userId: number;
-
-	@IsNumber()
-	roleId: number;
+	readonly id?: number;
+	readonly userId: number;
+	readonly roleId: number;
 }

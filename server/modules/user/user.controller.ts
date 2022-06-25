@@ -12,7 +12,7 @@ export class UserController {
 
 	@Post('/create')
 	create(@Body() dto: UserDto) {
-		return this.userService.create(dto);
+		return this.userService.create(dto, photo);
 	}
 	@Delete('/delete')
 	delete(@Body() { id }) {

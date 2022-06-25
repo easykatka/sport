@@ -64,7 +64,7 @@ export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
                         {store.user ? (
                             <>
                                 <Avatar
-                                    className={styles.avatar}
+                                    className={styles.photo}
                                     alt='Remy Sharp'
                                     src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
                                 />

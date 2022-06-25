@@ -41,14 +41,14 @@ const User: FC<UserProps> = ({ user }) => {
 	});
 
 	const fields = [
-		{ name: 'email', label: 'Email' },
-		{ name: 'lastname', label: 'Фамилия' },
-		{ name: 'firstname', label: 'Имя' },
-		{ name: 'middlename', label: 'Отчество' },
-		{ name: 'telegram', label: 'Телеграм' },
-		{ name: 'password', label: 'Пароль' },
-		{ name: 'avatar', label: 'Фото' },
-	];
+        { name: 'email', label: 'Email' },
+        { name: 'lastname', label: 'Фамилия' },
+        { name: 'firstname', label: 'Имя' },
+        { name: 'middlename', label: 'Отчество' },
+        { name: 'telegram', label: 'Телеграм' },
+        { name: 'password', label: 'Пароль' },
+        { name: 'photo', label: 'Фото' },
+    ];
 
 	const onSubmit = async (data) => {
 		Object.keys(data).forEach((key) => {

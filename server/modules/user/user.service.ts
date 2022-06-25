@@ -31,7 +31,7 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: UserDto) {
+	async create(dto: UserDto, photo: any) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
@@ -42,7 +42,6 @@ export class UserService {
 	}
 
 	async update(dto: User) {
-		console.log('salt', dto)
 		await this.userRepository.update(dto.id, dto);
 
 		const updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
