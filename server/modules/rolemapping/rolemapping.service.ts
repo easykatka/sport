@@ -41,7 +41,7 @@ export class RolemappingService {
 		throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	findAll() {
-		return this.rolemappingRepository.find({ relations: ['role', 'user'] });
+	findAll(options = {}) {
+		return this.rolemappingRepository.find({ relations: ['role', 'user'], order: { id: "DESC" }, ...options });
 	}
 }

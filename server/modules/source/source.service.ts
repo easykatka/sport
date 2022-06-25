@@ -11,8 +11,8 @@ export class SourceService {
 		return this.sourceRepository.findOneBy({ id });
 	}
 
-	findAll() {
-		return this.sourceRepository.find();
+	findAll(options = {}) {
+		return this.sourceRepository.find({ order: { id: "DESC" }, ...options });
 	}
 
 	getSourceByName(name: string) {

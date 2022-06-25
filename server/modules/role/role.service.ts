@@ -14,8 +14,8 @@ export class RoleService {
 		return await this.roleModel.findOne({ where: { name } });
 	}
 
-	async getAll() {
-		return await this.roleModel.find();
+	async getAll(options) {
+		return await this.roleModel.find({ order: { id: "DESC" }, ...options });
 	}
 
 	findById(id: number) {
@@ -42,7 +42,7 @@ export class RoleService {
 
 	async delete(id: number) {
 		const deleteResponse = await this.roleModel.delete(id);
-        console.log("🚀 ~ file: role.service.ts ~ line 45 ~ RoleService ~ delete ~ deleteResponse", deleteResponse)
+		console.log("🚀 ~ file: role.service.ts ~ line 45 ~ RoleService ~ delete ~ deleteResponse", deleteResponse)
 		if (!deleteResponse.affected) {
 			throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND);
 		}

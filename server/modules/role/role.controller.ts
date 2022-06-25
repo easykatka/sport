@@ -24,8 +24,8 @@ export class RoleController {
 	}
 
 	@Get('/getAll')
-	getAll() {
-		return this.roleService.getAll();
+	getAll(@Body() options) {
+		return this.roleService.getAll(options);
 	}
 
 	@Get('/getById/:id')

@@ -21,8 +21,8 @@ export class RolemappingController {
 	}
 
 	@Get('/getAll')
-	getAll() {
-		return this.RolemappingService.findAll();
+	getAll(@Body() options) {
+		return this.RolemappingService.findAll(options);
 	}
 
 	@Get('/getById/:id')

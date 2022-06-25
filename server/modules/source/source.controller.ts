@@ -24,8 +24,8 @@ export class SourceController {
 	}
 
 	@Get('/getAll')
-	getAll() {
-		return this.sourceService.findAll();
+	getAll(@Body() options) {
+		return this.sourceService.findAll(options);
 	}
 
 	@Get('/getById/:id')
