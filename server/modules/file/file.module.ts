@@ -4,13 +4,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { path } from 'app-root-path';
 
 @Module({
-    imports: [
-        ServeStaticModule.forRoot({
-            rootPath: `${path}/storage`,
-            serveRoot: `static/`,
-        }),
-    ],
-    providers: [FileService],
+	imports: [
+		ServeStaticModule.forRoot({
+			rootPath: `${path}/storage`,
+			serveRoot: `/storage/`,
+		}),
+	],
+	providers: [FileService],
 	exports: [FileService]
 })
-export class FileModule {}
+export class FileModule { }
