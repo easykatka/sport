@@ -6,10 +6,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { USER_NOT_FOUND } from './user.constants';
 import { UserDto } from '../../../shared/dto/user.dto';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class UserService {
-	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
+	constructor(@InjectRepository(User) private readonly userRepository: Repository<User>,
+		private readonly fileService: FileService
+	) { }
 
 	findById(id: number) {
 		const user = this.userRepository.findOne({ where: { id }, relations: ['roles', 'source'] });
@@ -31,17 +34,20 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: UserDto, photo: any) {
+	async create(dto: UserDto) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
-
 		dto.password = await hash(dto.password, salt);
 		const newUser = await this.userRepository.create(dto);
 		return this.userRepository.save(newUser);
 	}
+	async updatePhoto(id, photo) {
+		// dto.photo = await this.fileService.createFile(photo, 'user', );
+		return '123';
+	}
 
-	async update(dto: User) {
+	async update(dto: UserDto) {
 		await this.userRepository.update(dto.id, dto);
 
 		const updatedRecord = await this.userRepository.findOneBy({ id: dto.id });

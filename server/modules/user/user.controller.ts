@@ -1,18 +1,22 @@
-import { Body, Controller, Get, Param, Patch, Request, UseGuards, Post, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Request, UseGuards, Post, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { jwtAuthGuard } from 'server/guards/jwt.guard';
-import { User } from './user.entity';
 import { UserDto } from '../../../shared/dto/user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Пользователи')
+@UseInterceptors(FileInterceptor('photo'))
 @Controller('api/user')
 export class UserController {
-	constructor(private readonly userService: UserService) { }
+	constructor(
+		private readonly userService: UserService,
+	) { }
 
 	@Post('/create')
-	create(@Body() dto: UserDto) {
-		return this.userService.create(dto, photo);
+
+	create(@Body() dto: UserDto, @UploadedFile() photo) {
+		return this.userService.create(dto);
 	}
 	@Delete('/delete')
 	delete(@Body() { id }) {
@@ -20,7 +24,7 @@ export class UserController {
 	}
 
 	@Patch('/update')
-	update(@Body() dto: User) {
+	update(@Body() dto: UserDto, @UploadedFile() photo) {
 		return this.userService.update(dto);
 	}
 

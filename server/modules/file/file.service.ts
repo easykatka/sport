@@ -1,26 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { AttachmentElementResponse } from './dto/attachment-element.response';
-import { format } from 'date-fns';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { path } from 'app-root-path';
 import { ensureDir, writeFile } from 'fs-extra';
-import { MFile } from './mfile.class';
-import sharp from 'sharp';
+import { WRITE_FILE_ERROR } from 'server/constants';
+
 
 @Injectable()
 export class FileService {
-	async saveFiles(files: MFile[]): Promise<AttachmentElementResponse[]> {
-		const dateFolder = format(new Date(), 'yyy-MM-dd');
-		const uploadFolder = `${path}/storage/${dateFolder}`;
-		await ensureDir(uploadFolder);
-		const res: AttachmentElementResponse[] = [];
-		for (const file of files) {
-			writeFile(`${uploadFolder}/${file.originalname}`, file.buffer);
-			res.push({ url: `${dateFolder}/${file.originalname}`, name: file.originalname })
+	async createFile(file, modelName, id, property): Promise<string> {
+		try {
+			const fileName = `${id}-${property}`;
+			const uploadFolder = `${path}/storage/${modelName}`;
+			await ensureDir(uploadFolder);
+			writeFile(`${uploadFolder}/${fileName}`, file.buffer);
+			return fileName;
+		} catch (e) {
+			throw new InternalServerErrorException(WRITE_FILE_ERROR);
 		}
-		return res;
 	}
-
-	convertToWebp(file: Buffer): Promise<Buffer> {
-		return sharp(file).webp().toBuffer();
-	}
-} ``
+} 
