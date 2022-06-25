@@ -12,7 +12,7 @@ export class FileService {
 			const uploadFolder = `${path}/storage/${modelName}`;
 			await ensureDir(uploadFolder);
 			writeFile(`${uploadFolder}/${fileName}`, file.buffer);
-			return fileName;
+			return file.originalname;
 		} catch (e) {
 			throw new InternalServerErrorException(WRITE_FILE_ERROR);
 		}
