@@ -13,37 +13,37 @@ import { Header } from 'client/components/Header';
 import axios from 'axios';
 
 export default function App({ Component, pageProps }) {
-	const { initialState, appData } = pageProps;
+    const { initialState, appData } = pageProps;
 
-	const store = useStore(initialState);
-	return (
-		<Provider store={store}>
-			<ThemeProvider theme={theme}>
-				<AppDataContext.Provider value={appData}>
-					<Head>
-						<title>СОЮЗ любителей мини-футбола</title>
-					</Head>
-					<Header />
-					<CssBaseline />
-					<Component {...pageProps} />
-				</AppDataContext.Provider>
-			</ThemeProvider>
-		</Provider>
-	);
+    const store = useStore(initialState);
+    return (
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <AppDataContext.Provider value={appData}>
+                    <Head>
+                        <title>СОЮЗ любителей мини-футбола</title>
+                    </Head>
+                    <Header />
+                    <CssBaseline />
+                    <Component {...pageProps} />
+                </AppDataContext.Provider>
+            </ThemeProvider>
+        </Provider>
+    );
 }
 
 App.getInitialProps = async ({ ctx }) => {
-	if (ctx.req) {
-		try {
-			const { token } = parseCookies(ctx);
-			const user = token && token !== 'undefined' && token !== 'null' ? await AuthService.me(token) : undefined;
-			return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
-		} catch (e) {
-			if (axios.isAxiosError(e)) {
-				console.log('App initial props error: ', e.response.statusText);
-			}
-			return { pageProps: { initialState: null, appData: {} } };
-		}
-	}
-	return { pageProps: { initialState: null, appData: {} } };
+    if (ctx.req) {
+        try {
+            const { token } = parseCookies(ctx);
+            const user = token && token !== 'undefined' && token !== 'null' ? await AuthService.me(token) : undefined;
+            return { pageProps: { initialState: { user }, appData: extractAppData(ctx) } };
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log('App initial props error: ', e.response.statusText);
+            }
+            return { pageProps: { initialState: null, appData: extractAppData(ctx) } };
+        }
+    }
+    return { pageProps: { initialState: null, appData: extractAppData(ctx) } };
 };

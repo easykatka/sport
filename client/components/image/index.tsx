@@ -1,4 +1,5 @@
 import styles from './image.module.scss';
+import NextImage from 'next/image';
 
 interface ImageProps {
     record: { id: number };
@@ -6,15 +7,16 @@ interface ImageProps {
     width?: number;
     height?: number;
     noImageLabel?: string;
+    model: string;
 }
-export const Image: React.FC<ImageProps> = ({ record, property, width = 100, height = 100, noImageLabel = 'Нет фото' }) => {
+export const Image: React.FC<ImageProps> = ({ model, record, property, width = 100, height = 100, noImageLabel = 'Нет фото' }) => {
     if (!record[property])
         return (
             <div className={[styles.image, styles.skeleton].join(' ')} style={{ width, height }}>
                 {noImageLabel}
             </div>
         );
-    const url = 'http://localhost:3000/storage/user/';
-    const filename = url + `${record.id}-${property}`;
-    return <img width={width} height={height} src={filename} className={styles.image} />;
+    const url = `/storage/${model}/`;
+    const fileUrl = url + `${record.id}-${property}`;
+    return <NextImage loader={() => fileUrl} src={fileUrl} alt='' width={width} height={height} className={styles.image} />;
 };

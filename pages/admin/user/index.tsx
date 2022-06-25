@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Users: FC<IProps> = ({ users = [] }) => {
-    const renderImage = (record) => <Image record={record} property='photo' />;
+    const renderImage = (record) => <Image record={record} property='photo' model='user' />;
     const columns = [
         { label: 'id', field: 'id' },
         { label: 'Фото', field: 'photo', computed: renderImage },
