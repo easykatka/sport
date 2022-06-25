@@ -2,6 +2,8 @@ import { RolemappingDto } from 'shared/dto/rolemapping.dto';
 import { instance } from '.';
 
 export class RoleMappingService {
+	model = 'rolemapping';
+
 	static async getAll() {
 		const { data } = await instance.get('rolemapping/getAll');
 		return data;
