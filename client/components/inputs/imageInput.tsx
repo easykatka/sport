@@ -3,18 +3,18 @@ import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import NextImage from 'next/image';
 
-
 export const ImageInput = ({ title = 'Загрузить изображение', onChange }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
-	useEffect(() => {
-		if (selectedImage) {
-			setImageUrl(URL.createObjectURL(selectedImage));
-		}
-	}, [selectedImage]);
+    useEffect(() => {
+        if (selectedImage) {
+            setImageUrl(URL.createObjectURL(selectedImage));
+        }
+    }, [selectedImage]);
 
     const handleCapture = (e) => {
+        alert('123');
         setSelectedImage(e.target.files[0]);
         onChange?.();
     };
@@ -23,7 +23,7 @@ export const ImageInput = ({ title = 'Загрузить изображение'
         <>
             <input accept='image/*' type='file' id='select-image' style={{ display: 'none' }} onChange={handleCapture} />
             <label htmlFor='select-image'>
-                <Button variant='contained' color='primary' component='span' className='mb-20'>
+                <Button variant='contained' color='primary' className='mb-20'>
                     {title}
                 </Button>
             </label>
