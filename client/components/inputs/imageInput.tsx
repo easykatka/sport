@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 
-export const FileInput = ({ title = 'Загрузить изображение' }) => {
+export const ImageInput = ({ title = 'Загрузить изображение' }) => {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
 

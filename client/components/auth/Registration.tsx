@@ -12,7 +12,7 @@ import { IStore } from 'client/api/appStore';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
-import { ImageInput } from '../inputs/imageInput';
+import { ImageInput } from '../inputs/ImageInput';
 
 interface LoginForm {
     onClose: () => void;
