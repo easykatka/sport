@@ -13,6 +13,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
 import { ImageInput } from '../inputs';
+import { PasswordInput } from '../inputs/PasswortInput';
 
 interface LoginForm {
     onClose: () => void;
@@ -31,9 +32,8 @@ const RegistrationSchema = yup.object().shape({
 
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
     const [responseError, setResponseError] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
+
     const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
-    const onShowPasswordChange = () => setShowPassword(!showPassword);
 
     const onSubmit = async (data: UserDto) => {
         setResponseError(false);
@@ -58,31 +58,10 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
         }
     };
 
-    const getError = (field) => form.formState.errors[field]?.message;
-    const renderLabel = (error, defaultLabel) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
-
     return (
         <FormProvider {...form}>
-            <FormField name='email' label={renderLabel(getError('email'), 'Почта')} />
-            <FormControl fullWidth variant='outlined' size='small'>
-                <InputLabel htmlFor='outlined-adornment-password'>{renderLabel(getError('password'), 'Пароль')}</InputLabel>
-                <OutlinedInput
-                    {...form.register('password')}
-                    id='outlined-adornment-password'
-                    type={showPassword ? 'text' : 'password'}
-                    className='mb-20'
-                    label={form.formState.errors.password?.message || 'Пароль'}
-                    fullWidth
-                    error={!!form.formState.errors.password?.message}
-                    endAdornment={
-                        <InputAdornment position='end'>
-                            <IconButton aria-label='toggle password visibility' onClick={onShowPasswordChange} onMouseDown={onShowPasswordChange} edge='end'>
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-            </FormControl>
+            <FormField name='email' label='Почта' />
+            <PasswordInput name='password' label='Пароль' />
             <FormField name='lastname' label='Фамилия' />
             <FormField name='firstname' label='Имя' />
             <FormField name='middlename' label='Отчество' />
