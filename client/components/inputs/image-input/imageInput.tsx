@@ -22,7 +22,7 @@ export const ImageInput = ({ title = 'Загрузить изображение'
             <input accept='image/*' type='file' id='select-image' onChange={handleCapture} />
             <label htmlFor='select-image'>
                 <div style={{ width, height }} className={selectedImage ? styles.preview : styles.noImage}>
-                    {imageUrl && selectedImage ? <NextImage src={imageUrl} alt={selectedImage.name} height={height} width={width} layout='fixed' /> : title}
+                    {imageUrl && selectedImage ? <NextImage src={imageUrl} alt={selectedImage.name} height={height} width={width} objectFit='contain' /> : title}
                 </div>
             </label>
         </div>
