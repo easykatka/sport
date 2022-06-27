@@ -86,7 +86,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             <FormField name='firstname' label='Имя' />
             <FormField name='middlename' label='Отчество' />
             <RecordSelect name='sourceId' label='Откуда узнал о нас?' service={SourceService} property='name' />
-            <ImageInput width={150} height={150} title="Добавить фото" onChange={() => {}} />
+            <ImageInput name='image' label='Фото' width={150} height={150} title='Добавить фото' />
 
             {responseError && (
                 <Alert className='mb-20' severity='error'>
