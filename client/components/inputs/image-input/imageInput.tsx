@@ -37,6 +37,7 @@ export const ImageInput = ({ title = 'Загрузить изображение'
             name={name}
             defaultValue={''}
             render={({ field }) => {
+                console.log(field, '123');
                 return (
                     <FormControl fullWidth>
                         <label htmlFor='select-image' id={labelId} className={styles.imageInput}>

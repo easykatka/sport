@@ -26,6 +26,7 @@ const RegistrationSchema = yup.object().shape({
     lastname: yup.string().required('Введите свою фамилию'),
     middlename: yup.string(),
     sourceId: yup.string().required('Укажите откуда узнали о нас'),
+    photo: yup.string().required('Добавьте фото'),
 });
 
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
@@ -86,7 +87,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             <FormField name='firstname' label='Имя' />
             <FormField name='middlename' label='Отчество' />
             <RecordSelect name='sourceId' label='Откуда узнал о нас?' service={SourceService} property='name' />
-            <ImageInput name='image' label='Фото' width={150} height={150} title='Добавить фото' />
+            <ImageInput name='photo' label='Фото' width={250} height={250} title='Добавить фото' />
 
             {responseError && (
                 <Alert className='mb-20' severity='error'>

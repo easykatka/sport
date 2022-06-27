@@ -2,7 +2,6 @@
 	input {
 		display: none;
 	}
-	margin-bottom: 20px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -19,6 +18,10 @@
 	.noImage,
 	.preview img {
 		cursor: pointer;
-		border-radius: 15px;
+		border-radius: 10%;
+	}
+	.noImage,
+	.preview {
+		margin: 20px 0;
 	}
 }
