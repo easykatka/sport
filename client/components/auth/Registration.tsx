@@ -12,7 +12,7 @@ import { IStore } from 'client/api/appStore';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
-import { ImageInput } from '../inputs/ImageInput';
+import { ImageInput } from '../inputs';
 
 interface LoginForm {
     onClose: () => void;
@@ -86,7 +86,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
             <FormField name='firstname' label='Имя' />
             <FormField name='middlename' label='Отчество' />
             <RecordSelect name='sourceId' label='Откуда узнал о нас?' service={SourceService} property='name' />
-            <ImageInput />
+            <ImageInput width={150} height={150} title="Добавить фото" onChange={() => {}} />
 
             {responseError && (
                 <Alert className='mb-20' severity='error'>

@@ -1,0 +1,22 @@
+.imageInput {
+	input {
+		display: none;
+	}
+	margin: 0 auto 20px auto;
+	display: flex;
+	justify-content: center;
+
+	.noImage {
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 2px dashed rgb(26, 26, 26);
+		padding: 30px;
+	}
+	.noImage,
+	.preview img {
+		cursor: pointer;
+		border-radius: 15px;
+	}
+}
