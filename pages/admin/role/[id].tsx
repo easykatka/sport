@@ -11,7 +11,7 @@ import router from 'next/router';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Role as RoleEntity } from 'server/modules/role/role.entity';
-import { ColorPicker } from 'client/components/inputs/ColorPicker';
+import { ColorPicker } from 'client/components/inputs/ColorInput';
 import { FormField } from 'client/components/inputs/FormField';
 import { RoleService } from 'client/api';
 

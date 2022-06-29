@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { FormField } from '../inputs/FormField';
 import { AuthService, SourceService } from 'client/api';
 import { setCookie } from 'nookies';
@@ -9,11 +9,10 @@ import axios from 'axios';
 import * as yup from 'yup';
 import { inject } from 'mobx-react';
 import { IStore } from 'client/api/appStore';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
 import { ImageInput } from '../inputs';
-import { PasswordInput } from '../inputs/PasswortInput';
+import { PasswordInput } from '../inputs/PasswordInput';
 
 interface LoginForm {
     onClose: () => void;
@@ -36,6 +35,7 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
     const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
     const onSubmit = async (data: UserDto) => {
+        console.log('🚀 ~ file: Registration.tsx ~ line 38 ~ onSubmit ~ data', data);
         setResponseError(false);
         try {
             const { user, token } = await AuthService.registration({
