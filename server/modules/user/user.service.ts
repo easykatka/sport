@@ -36,7 +36,7 @@ export class UserService {
 		throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
 	}
 
-	async create(dto: RegistrationDto, photo?: MFile) {
+	async create(dto: UserDto, photo: MFile) {
 		const candidate = await this.getUserByEmail(dto.email);
 		if (candidate) throw new UnauthorizedException(RECORD_ALREADY_EXIST);
 		const salt = await genSalt(10);
@@ -44,21 +44,20 @@ export class UserService {
 		let newUser = await this.userRepository.create(dto);
 		newUser = await this.userRepository.save(newUser);
 		if (photo) {
-			newUser.photo = await this.updatePhoto(newUser.id, photo);
-			newUser = await this.userRepository.save(newUser);
+			newUser.photo = await this.uploadPhoto(newUser.id, photo);
 		}
-		return newUser;
+		return this.userRepository.save(newUser);
 	}
-	async updatePhoto(id: number, photo: MFile) {
-		return await this.fileService.createFile(photo, 'user', id, 'photo');
+	async uploadPhoto(id: number, photo: MFile) {
+		return this.fileService.createFile(photo, 'user', id, 'photo');
 	}
 
-	async update(dto: UserDto, photo?: MFile) {
+	async update(dto: UserDto, photo: MFile) {
 		await this.userRepository.update(dto.id, dto);
 		let updatedRecord = await this.userRepository.findOneBy({ id: dto.id });
 		if (updatedRecord) {
 			if (photo) {
-				updatedRecord.photo = await this.updatePhoto(updatedRecord.id, photo);
+				updatedRecord.photo = await this.uploadPhoto(updatedRecord.id, photo);
 				updatedRecord = await this.userRepository.save(updatedRecord);
 			}
 			return updatedRecord;

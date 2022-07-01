@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class RegistrationDto {
 	@IsEmail()
@@ -20,10 +20,7 @@ export class RegistrationDto {
 	@IsString()
 	@IsOptional()
 	readonly telegram?: string | null;
-
-	readonly photo: string | null;
-
-	@IsNumber()
+	readonly photo: string | Blob;
 	readonly sourceId: number | null;
 
 }

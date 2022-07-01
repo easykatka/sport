@@ -19,4 +19,11 @@ export class UserService {
 	static async delete(id: number) {
 		await instance.delete(this.entity + '/delete', { data: { id } });
 	}
+
+	static async uploadPhoto(id: any, photo: any) {
+		// const formData = new FormData([c]);
+		// formData.append('photo', photo, photo.name);
+		// formData.append('id', String(id));
+		// await instance.post(this.entity + '/uploadPhoto', { photo });
+	}
 }

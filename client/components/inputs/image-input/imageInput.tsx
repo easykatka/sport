@@ -36,19 +36,17 @@ export const ImageInput = ({ title = 'Загрузить изображение'
             defaultValue={''}
             render={({ field }) => {
                 return (
-                    <FormControl fullWidth>
-                        <label htmlFor='select-image' id={labelId} className={styles.imageInput}>
-                            {_label}
-                            <Input accept='image/*' id='select-image' type='file' onChange={(e) => handleCapture(e, field)} />
-                            <div style={{ width, height }} className={imagePreviewUrl ? styles.preview : styles.noImage}>
-                                {imagePreviewUrl ? (
-                                    <NextImage src={imagePreviewUrl} alt={field.value?.name} height={height} width={width} objectFit='contain' />
-                                ) : (
-                                    title
-                                )}
-                            </div>
-                        </label>
-                    </FormControl>
+                    <label htmlFor='select-image' id={labelId} className={styles.imageInput}>
+                        {_label}
+                        <input accept='image/*' id='select-image' type='file' onChange={(e) => handleCapture(e, field)} />
+                        <div style={{ width, height }} className={imagePreviewUrl ? styles.preview : styles.noImage}>
+                            {imagePreviewUrl ? (
+                                <NextImage src={imagePreviewUrl} alt={field.value?.name} height={height} width={width} objectFit='contain' />
+                            ) : (
+                                title
+                            )}
+                        </div>
+                    </label>
                 );
             }}
         />

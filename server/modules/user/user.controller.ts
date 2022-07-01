@@ -7,15 +7,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { RegistrationDto } from 'shared/dto/registration.dto';
 
 @ApiTags('Пользователи')
-@UseInterceptors(FileInterceptor('photo'))
 @Controller('api/user')
 export class UserController {
 	constructor(
 		private readonly userService: UserService,
 	) { }
 
-	@Post('/create')
 
+	@Post('/create')
 	create(@Body() dto: RegistrationDto, @UploadedFile() photo) {
 		return this.userService.create(dto, photo);
 	}

@@ -3,7 +3,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
 import { FormField } from '../inputs/FormField';
-import { AuthService, SourceService } from 'client/api';
+import { AuthService, SourceService, UserService } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -20,13 +20,13 @@ interface LoginForm {
 }
 
 const RegistrationSchema = yup.object().shape({
-    email: yup.string().email('email введен не корректно').required('Введите email'),
-    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
-    firstname: yup.string().required('Введите своё имя'),
-    lastname: yup.string().required('Введите свою фамилию'),
-    middlename: yup.string(),
-    sourceId: yup.string().required('Укажите откуда узнали о нас'),
-    photo: yup.string().required('Добавьте фото'),
+    // email: yup.string().email('email введен не корректно').required('Введите email'),
+    // password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
+    // firstname: yup.string().required('Введите своё имя'),
+    // lastname: yup.string().required('Введите свою фамилию'),
+    // middlename: yup.string(),
+    // sourceId: yup.number().required('Укажите откуда узнали о нас'),
+    photo: yup.mixed().required('Добавьте фото'),
 });
 
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
@@ -35,9 +35,10 @@ export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, sto
     const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
 
     const onSubmit = async (data: UserDto) => {
-        console.log('🚀 ~ file: Registration.tsx ~ line 38 ~ onSubmit ~ data', data);
         setResponseError(false);
         try {
+            // console.log(data.photo, '123');
+            // await UserService.uploadPhoto(1, data.photo);
             const { user, token } = await AuthService.registration({
                 email: data.email,
                 password: data.password,
