@@ -13,6 +13,7 @@ import {
     NotificationsNoneOutlined as NotificationIcon,
     SmsOutlined as MessageIcon,
 } from '@mui/icons-material';
+import { fileURL } from 'client/helpers/fileUrl';
 
 interface IHeader {
     store?: IStore;
@@ -39,7 +40,10 @@ export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
         setCookie(null, 'token', null, { maxAge: 30 * 24 * 60 * 60, path: '/' });
         store.user = null;
     };
-
+    const { user } = store;
+    const catURL = 'https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/';
+    const avatarURL = user && user.photo ? fileURL({ id: user.id, model: 'user', property: 'photo' }) : catURL;
+    console.log(avatarURL, '123');
     return (
         <Paper classes={{ root: styles.root }} elevation={0}>
             <div className='d-flex align-center'>
@@ -63,11 +67,7 @@ export const Header: React.FC<IHeader> = inject('store')(({ store }) => {
                         </IconButton>
                         {store.user ? (
                             <>
-                                <Avatar
-                                    className={styles.photo}
-                                    alt='Remy Sharp'
-                                    src='https://leonardo.osnova.io/5ffeac9a-a0e5-5be6-98af-659bfaabd2a6/-/scale_crop/108x108/-/format/webp/'
-                                />
+                                <Avatar className={styles.photo} alt='Remy Sharp' src={avatarURL} />
                                 <ArrowBottom onClick={logout} style={{ cursor: 'pointer' }} />
                             </>
                         ) : (

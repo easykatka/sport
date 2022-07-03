@@ -1,0 +1,1 @@
+export const fileURL = ({ id, model, property }) => `/storage/${model}/${id}-${property}`

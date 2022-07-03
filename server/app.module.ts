@@ -19,49 +19,47 @@ import Joi from 'joi';
 declare const module: any;
 @Module({})
 export class AppModule {
-    public static initialize(): DynamicModule {
-        /* При инициализации модуля попробуем извлечь инстанс RenderModule
-			из персистентных данных между перезагрузками модуля */
-        const renderModule =
-            module.hot?.data?.renderModule ??
-            RenderModule.forRootAsync(Next({ dev: NODE_ENV === 'development' }), {
-                viewsDir: null,
-            });
+	public static initialize(): DynamicModule {
+		// При инициализации модуля попробуем извлечь инстанс RenderModuleиз персистентных данных между перезагрузками модуля 
+		const renderModule =
+			module.hot?.data?.renderModule ??
+			RenderModule.forRootAsync(Next({ dev: NODE_ENV === 'development' }), {
+				viewsDir: null,
+			});
 
-        if (module.hot) {
-            /* При завершении работы старого модуля
-				будем кэшировать инстанс RenderModule */
-            module.hot.dispose((data: any) => {
-                data.renderModule = renderModule;
-            });
-        }
+		if (module.hot) {
+			// При завершении работы старого модуля будем кэшировать инстанс RenderModule
+			module.hot.dispose((data: any) => {
+				data.renderModule = renderModule;
+			});
+		}
 
-        return {
-            module: AppModule,
-            controllers: [RenderAdminController, RenderSiteController],
-            providers: [AppService, JwtStrategy],
-            imports: [
-                renderModule,
-                ConfigModule.forRoot({
-                    envFilePath: `./envs/.${NODE_ENV}.env`,
-                    validationSchema: Joi.object({
-                        POSTGRES_HOST: Joi.string().required(),
-                        POSTGRES_PORT: Joi.number().required(),
-                        POSTGRES_LOGIN: Joi.string().required(),
-                        POSTGRES_PASSWORD: Joi.string().required(),
-                        POSTGRES_DATABASE: Joi.string().required(),
-                        PORT: Joi.number(),
-                        JWT_SECRET: Joi.string().required(),
-                    }),
-                }),
-                UserModule,
-                RoleModule,
-                AuthModule,
-                SourceModule,
-                FileModule,
-                DatabaseModule,
-                RolemappingModule,
-            ],
-        };
-    }
+		return {
+			module: AppModule,
+			controllers: [RenderAdminController, RenderSiteController],
+			providers: [AppService, JwtStrategy],
+			imports: [
+				renderModule,
+				ConfigModule.forRoot({
+					envFilePath: `./envs/.${NODE_ENV}.env`,
+					validationSchema: Joi.object({
+						POSTGRES_HOST: Joi.string().required(),
+						POSTGRES_PORT: Joi.number().required(),
+						POSTGRES_LOGIN: Joi.string().required(),
+						POSTGRES_PASSWORD: Joi.string().required(),
+						POSTGRES_DATABASE: Joi.string().required(),
+						PORT: Joi.number(),
+						JWT_SECRET: Joi.string().required(),
+					}),
+				}),
+				UserModule,
+				RoleModule,
+				AuthModule,
+				SourceModule,
+				FileModule,
+				DatabaseModule,
+				RolemappingModule,
+			],
+		};
+	}
 }
