@@ -10,7 +10,7 @@ interface FormFieldProps {
 export const FormField: React.FC<FormFieldProps> = ({ name, label }) => {
 	const { register, formState } = useFormContext();
 	const getError = (field: string) => formState.errors[field]?.message;
-	const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
+	const renderLabel = (error: string, defaultLabel: string) => (error ? <span className='error'>{error}</span> : defaultLabel);
 
 	return (
 		<TextField

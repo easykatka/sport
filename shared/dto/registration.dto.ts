@@ -16,7 +16,6 @@ export class RegistrationDto {
 
 	@IsString()
 	lastname: string;
-
 	photo: string | Blob;
 	sourceId: number | null;
 }

@@ -15,7 +15,7 @@ export class UserController {
 
 
 	@Post('/create')
-	create(@Body() dto: RegistrationDto, @UploadedFile() photo) {
+	create(@Body() dto: UserDto, @UploadedFile() photo) {
 		return this.userService.create(dto, photo);
 	}
 	@Delete('/delete')

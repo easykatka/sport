@@ -7,13 +7,13 @@ import { WRONG_USER_DATA_ERROR } from '../user/user.constants';
 import { LoginDto } from '../../../shared/dto/login.dto';
 import { RegistrationDto } from 'shared/dto/registration.dto';
 import { MFile } from '../file/mfile.class';
+import { UserDto } from 'shared/dto/user.dto';
 
 @Injectable()
 export class AuthService {
 	constructor(private userService: UserService, private readonly jwtService: JwtService) { }
 
-	async registration(dto: RegistrationDto, photo: MFile) {
-        console.log("🚀 ~ file: auth.service.ts ~ line 16 ~ AuthService ~ registration ~ photo", photo)
+	async registration(dto: UserDto, photo: MFile) {
 		const user = await this.userService.create(dto, photo);
 		const token = this.generateToken(user);
 		return { user, token };

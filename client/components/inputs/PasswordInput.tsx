@@ -8,7 +8,7 @@ export const PasswordInput = ({ name, label }) => {
     const [showPassword, setShowPassword] = useState(false);
     const onShowPasswordChange = () => setShowPassword(!showPassword);
     const getError = (field: string) => formState.errors[field]?.message;
-    const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
+    const renderLabel = (error: string, defaultLabel: string) => (error ? <span className='error'>{error}</span> : defaultLabel);
 
     return (
         <FormControl fullWidth variant='outlined' size='small'>

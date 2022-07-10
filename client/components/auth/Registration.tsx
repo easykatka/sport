@@ -25,7 +25,7 @@ const RegistrationSchema = yup.object().shape({
     firstname: yup.string().required('Введите своё имя'),
     lastname: yup.string().required('Введите свою фамилию'),
     middlename: yup.string(),
-    sourceId: yup.number().required('Укажите откуда узнали о нас'),
+    sourceId: yup.number().typeError('Укажите откуда узнали о нас'),
     photo: yup.mixed().required('Добавьте фото'),
 });
 

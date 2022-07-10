@@ -23,7 +23,7 @@ export const RecordSelect: React.FC<FormnameProps> = ({ name, label, service, pr
     if (records.length === 0) return null;
 
     const getError = (name: string) => formState.errors[name]?.message;
-    const renderLabel = (error: string, defaultLabel: string) => (error ? <span style={{ color: 'red' }}>{error}</span> : defaultLabel);
+    const renderLabel = (error: string, defaultLabel: string) => (error ? <span className='error'>{error}</span> : defaultLabel);
     const _label = renderLabel(getError(name), label);
     const labelId = `${name}-label`;
     return (

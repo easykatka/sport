@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { RegistrationDto } from 'shared/dto/registration.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MFile } from '../file/mfile.class';
+import { UserDto } from 'shared/dto/user.dto';
 
 
 
@@ -13,9 +14,7 @@ export class AuthController {
 
 	@UseInterceptors(FileInterceptor('photo'))
 	@Post('registration')
-	registration(@Body() dto: RegistrationDto, @UploadedFile() photo: MFile) {
-		console.log("🚀 ~ file: auth.controller.ts ~ line 16 ~ AuthController ~ registration ~ photo", photo)
-		console.log("🚀 ~ file: auth.controller.ts ~ line 16 ~ AuthController ~ registration ~ photo", dto)
+	registration(@Body() dto: UserDto, @UploadedFile() photo: MFile) {
 		return this.authService.registration(dto, photo);
 	}
 
