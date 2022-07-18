@@ -32,7 +32,11 @@ export const ImageInput = ({ title = 'Загрузить изображение'
                         {_label}
                         <input accept='image/*' id='select-image' type='file' onChange={(e) => handleCapture(e, field)} />
                         <div style={{ width, height }} className={imagePreviewUrl ? styles.preview : styles.noImage}>
-                            {imageUrl ? <NextImage src={imageUrl} alt={field.value?.name} height={height} width={width} objectFit='contain' /> : title}
+                            {imageUrl ? (
+                                <NextImage loader={() => imageUrl} src={imageUrl} alt={field.value?.name} height={height} width={width} objectFit='contain' />
+                            ) : (
+                                title
+                            )}
                         </div>
                     </label>
                 );

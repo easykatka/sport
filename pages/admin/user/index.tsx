@@ -34,7 +34,7 @@ const Users: FC<IProps> = ({ users = [] }) => {
     );
 };
 
-export const getServerSideProps = buildServerSideProps(async (ctx) => {
+export const getServerSideProps = buildServerSideProps(async () => {
     try {
         const users = await fetch('/api/user/getAll');
         return { users };

@@ -1,51 +1,31 @@
 import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert, Button } from '@mui/material';
 import { FormField } from '../inputs/FormField';
 import { AuthService, SourceService } from 'client/api';
 import { setCookie } from 'nookies';
 import axios from 'axios';
-import * as yup from 'yup';
 import { inject } from 'mobx-react';
 import { IStore } from 'client/api/appStore';
 import { RecordSelect } from 'client/components/inputs/RecordSelect';
 import { UserDto } from 'shared/dto/user.dto';
 import { ImageInput } from '../inputs';
 import { PasswordInput } from '../inputs/PasswordInput';
+import { userValidation } from 'client/validation/user';
 
 interface LoginForm {
     onClose: () => void;
     store?: IStore;
 }
-
-const RegistrationSchema = yup.object().shape({
-    email: yup.string().email('email введен не корректно').required('Введите email'),
-    password: yup.string().min(6, 'Длина пароля не менее 6 символов').required('Пароль обязателен'),
-    firstname: yup.string().required('Введите своё имя'),
-    lastname: yup.string().required('Введите свою фамилию'),
-    middlename: yup.string(),
-    sourceId: yup.number().typeError('Укажите откуда узнали о нас'),
-    photo: yup.mixed().required('Добавьте фото'),
-});
-
 export const RegisterForm: React.FC<LoginForm> = inject('store')(({ onClose, store }) => {
     const [responseError, setResponseError] = useState(null);
 
-    const form = useForm<UserDto>({ mode: 'onChange', resolver: yupResolver(RegistrationSchema) });
+    const form = useForm<UserDto>({ mode: 'onChange', resolver: userValidation });
 
     const onSubmit = async (data: UserDto) => {
         setResponseError(false);
         try {
-            const { user, token } = await AuthService.registration({
-                email: data.email,
-                password: data.password,
-                firstname: data.firstname,
-                middlename: data.middlename,
-                lastname: data.lastname,
-                sourceId: data.sourceId ? +data.sourceId : null,
-                photo: data.photo,
-            });
+            const { user, token } = await AuthService.registration(data);
             setCookie(null, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
             store.user = user;
             onClose();

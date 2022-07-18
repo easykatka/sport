@@ -20,7 +20,8 @@ interface UserProps {
 }
 
 const User: FC<UserProps> = ({ user }) => {
-    const isNew = !user?.id;
+    const { id, photo } = user;
+    const isNew = !id;
     const [responseError, setResponseError] = React.useState<string | null>(null);
 
     const UserSchema = yup.object().shape({
@@ -79,7 +80,8 @@ const User: FC<UserProps> = ({ user }) => {
         }
     };
 
-    const photoUrl = user.id && user.photo && fileURL({ id: user.id, model: 'user', property: 'photo' });
+    const photoUrl = id && photo && fileURL({ id, model: 'user', property: 'photo' });
+    console.log("🚀 ~ file: [id].tsx ~ line 84 ~ photoUrl", photoUrl)
 
     return (
         <>
@@ -90,7 +92,7 @@ const User: FC<UserProps> = ({ user }) => {
                 <FormProvider {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <GridData fields={fields} />
-                        <ImageInput name='photo' label='Фото' url={photoUrl}/>
+                        <ImageInput name='photo' label='Фото' url={photoUrl} />
                         <div className='mt-20'>
                             <Button color='primary' variant='contained' size='large' type='submit'>
                                 {isNew ? 'Создать' : 'Сохранить'}
