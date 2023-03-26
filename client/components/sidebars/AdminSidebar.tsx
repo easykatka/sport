@@ -9,7 +9,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HomeIcon from '@mui/icons-material/Home';
 import MediationIcon from '@mui/icons-material/Mediation';
 
-const path = '/admin'
+const path = '/admin';
 const menu = [
 	{ text: 'Основное меню', icon: <HomeIcon />, path: '/' },
 	{ text: 'Пользователи', icon: <PersonIcon />, path: `${path}/user` },

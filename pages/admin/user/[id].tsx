@@ -81,7 +81,7 @@ const User: FC<UserProps> = ({ user }) => {
     };
 
     const photoUrl = id && photo && fileURL({ id, model: 'user', property: 'photo' });
-    console.log("🚀 ~ file: [id].tsx ~ line 84 ~ photoUrl", photoUrl)
+    console.log('🚀 ~ file: [id].tsx ~ line 84 ~ photoUrl', photoUrl);
 
     return (
         <>
@@ -118,7 +118,7 @@ const User: FC<UserProps> = ({ user }) => {
 export const getServerSideProps = buildServerSideProps(async (ctx) => {
     try {
         const { id } = ctx.query;
-        const user = Number.isInteger(+id) ? await fetch(`/api/user/getById/${id}`) : null;
+        const user = await fetch(`/api/user/getById/${id}`);
         return { user };
     } catch (e) {
         console.log(e);

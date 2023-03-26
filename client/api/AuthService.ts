@@ -4,7 +4,6 @@ import { instance } from '.';
 
 export class AuthService {
 	static async registration(dto: RegistrationDto) {
-        console.log("🚀 ~ file: AuthService.ts ~ line 7 ~ AuthService ~ registration ~ dto", typeof dto.photo);
 		const formData = new FormData();
 		Object.keys(dto).forEach(key => formData.append(key, dto[key]));
 		const { data } = await instance.post('auth/registration', formData);

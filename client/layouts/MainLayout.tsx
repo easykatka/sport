@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Sidebar } from '../components/sidebar';
+import { Sidebar } from '../components/sidebars';
 import { SideComments } from '../components/side-comments';
 import { inject, observer } from 'mobx-react';
 import { IStore } from 'client/api/appStore';
